@@ -1,4 +1,6 @@
-public class Predator extends Creature{
+package entities.creatures;
+
+public class Predator extends Creature {
     private int attackPower;
 
     @Override

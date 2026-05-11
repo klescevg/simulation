@@ -1,4 +1,6 @@
-public class Herbivore extends Creature{
+package entities.creatures;
+
+public class Herbivore extends Creature {
     @Override
     public void makeMove() {
         //if grass is near
