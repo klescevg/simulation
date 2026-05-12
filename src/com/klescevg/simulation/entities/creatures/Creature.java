@@ -1,6 +1,6 @@
-package entities.creatures;
+package com.klescevg.simulation.entities.creatures;
 
-import entities.Entity;
+import com.klescevg.simulation.entities.Entity;
 
 public abstract class Creature extends Entity {
     private int speed;

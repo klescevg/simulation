@@ -1,4 +1,4 @@
-package entities.creatures;
+package com.klescevg.simulation.entities.creatures;
 
 public class Predator extends Creature {
     private int attackPower;

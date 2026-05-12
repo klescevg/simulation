@@ -1,4 +1,4 @@
-package entities.creatures;
+package com.klescevg.simulation.entities.creatures;
 
 public class Herbivore extends Creature {
     @Override

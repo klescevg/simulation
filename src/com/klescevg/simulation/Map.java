@@ -1,4 +1,6 @@
-import entities.Entity;
+package com.klescevg.simulation;
+
+import com.klescevg.simulation.entities.Entity;
 
 import java.util.HashMap;
 
@@ -21,8 +23,8 @@ public class Map {
     }
 
     public void display(){
-        for (int y = 1; y <= sideLength; y++){
-            for (int x = 1; x <= sideLength; x++) {
+        for (int y = 0; y < sideLength; y++){
+            for (int x = 0; x < sideLength; x++) {
                 if (map.containsKey(new Coordinates(x, y))){
                     System.out.print(" X ");
                 } else {
