@@ -1,4 +1,6 @@
 package entities.objects;
 
-public class Grass {
+import entities.Entity;
+
+public class Grass extends Entity {
 }
