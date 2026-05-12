@@ -1,5 +1,5 @@
 package com.klescevg.simulation;
 
 public enum Symbol {
-    G, R, T, H, P
+    G, R, T, C, H, P
 }

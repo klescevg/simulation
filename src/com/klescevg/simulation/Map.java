@@ -14,7 +14,11 @@ public class Map {
 
     public void addEntity(Coordinates entityCoordinates, Entity entity){
         if (entityCoordinates.x() < sideLength && entityCoordinates.y() < sideLength) {
-            map.put(entityCoordinates, entity);
+            if(!map.containsKey(entityCoordinates)) {
+                map.put(entityCoordinates, entity);
+            } else {
+                System.out.println("Cell is already full");
+            }
         }
     }
 
@@ -24,14 +28,16 @@ public class Map {
 
     public void display(){
         for (int y = 0; y < sideLength; y++){
+            StringBuilder line = new StringBuilder();
             for (int x = 0; x < sideLength; x++) {
-                if (map.containsKey(new Coordinates(x, y))){
-                    System.out.print(" X ");
+                Coordinates coordinates = new Coordinates(x, y);
+                if (map.containsKey(coordinates)){
+                    line.append(" ").append(map.get(coordinates).symbol).append(" ");
                 } else {
-                    System.out.print(" _ ");
+                    line.append(" _ ");
                 }
             }
-            System.out.println();
+            System.out.println(line);
         }
 
         for (Coordinates i : map.keySet()){
