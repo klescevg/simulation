@@ -3,6 +3,7 @@ package com.klescevg.simulation;
 import com.klescevg.simulation.entities.Entity;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class MapImp2 {
     private int sideLength;
@@ -10,6 +11,10 @@ public class MapImp2 {
 
     public MapImp2(int sideLength) {
         this.sideLength = sideLength;
+    }
+
+    public int sideLength() {
+        return sideLength;
     }
 
     public void addEntity(Entity entity, Coordinates position) {
@@ -26,6 +31,10 @@ public class MapImp2 {
         if (!map.containsValue(newPosition)) {
             map.replace(entity, newPosition);
         }
+    }
+
+    public Set<Entity> getEntities(){
+        return map.keySet();
     }
 
     public void display() {

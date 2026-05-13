@@ -2,7 +2,9 @@ package com.klescevg.simulation;
 
 import com.klescevg.simulation.entities.Entity;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 public class MapImp1 {
     private int sideLength;
@@ -10,6 +12,10 @@ public class MapImp1 {
 
     public MapImp1(int length) {
         this.sideLength = length;
+    }
+
+    public int sideLength() {
+        return sideLength;
     }
 
     public void addEntity(Coordinates entityCoordinates, Entity entity) {
@@ -27,6 +33,10 @@ public class MapImp1 {
         } else {
             System.out.println("New position is already full");
         }
+    }
+
+    public Collection<Entity> getEntities(){
+        return map.values();
     }
 
     public void clearCell(Coordinates coordinates) {
