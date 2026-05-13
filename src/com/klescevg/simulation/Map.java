@@ -12,26 +12,33 @@ public class Map {
         this.sideLength = length;
     }
 
-    public void addEntity(Coordinates entityCoordinates, Entity entity){
-        if (entityCoordinates.x() < sideLength && entityCoordinates.y() < sideLength) {
-            if(!map.containsKey(entityCoordinates)) {
-                map.put(entityCoordinates, entity);
-            } else {
-                System.out.println("Cell is already full");
-            }
+    public void addEntity(Coordinates entityCoordinates, Entity entity) {
+        if (!map.containsKey(entityCoordinates)) {
+            map.put(entityCoordinates, entity);
+        } else {
+            System.out.println("Cell is already full");
         }
     }
 
-    public void clearCell(Coordinates coordinates){
+    public void moveEntity(Coordinates initialPosition, Coordinates newPosition) {
+        if(!map.containsKey(newPosition)) {
+            addEntity(newPosition, map.get(initialPosition));
+            clearCell(initialPosition);
+        } else {
+            System.out.println("New position is already full");
+        }
+    }
+
+    public void clearCell(Coordinates coordinates) {
         map.remove(coordinates);
     }
 
-    public void display(){
-        for (int y = 0; y < sideLength; y++){
+    public void display() {
+        for (int y = 0; y < sideLength; y++) {
             StringBuilder line = new StringBuilder();
             for (int x = 0; x < sideLength; x++) {
                 Coordinates coordinates = new Coordinates(x, y);
-                if (map.containsKey(coordinates)){
+                if (map.containsKey(coordinates)) {
                     line.append(" ").append(map.get(coordinates).symbol).append(" ");
                 } else {
                     line.append(" _ ");
@@ -40,7 +47,7 @@ public class Map {
             System.out.println(line);
         }
 
-        for (Coordinates i : map.keySet()){
+        for (Coordinates i : map.keySet()) {
             System.out.print(i + " - ");
             System.out.println(map.get(i));
         }

@@ -19,7 +19,8 @@ public class Main {
         map.addEntity(treeCoordinates, tree);
         map.display();
         //map.clearCell(grassCoordinates1);
-        //map.display();
+        map.moveEntity(grassCoordinates, random(10));
+        map.display();
     }
 
     public static Coordinates random(int bound){
