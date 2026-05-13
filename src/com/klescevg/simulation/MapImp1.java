@@ -35,8 +35,21 @@ public class MapImp1 {
         }
     }
 
+    public Entity getEntity(Coordinates position){
+        return map.get(position);
+    }
+
     public Collection<Entity> getEntities(){
         return map.values();
+    }
+
+    public Coordinates getEntityCoordinates(Entity entity){
+        for (Coordinates c : map.keySet()){
+            if (map.get(c) == entity){
+                return c;
+            }
+        }
+        return null;
     }
 
     public void clearCell(Coordinates coordinates) {
