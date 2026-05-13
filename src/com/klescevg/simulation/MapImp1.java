@@ -4,11 +4,11 @@ import com.klescevg.simulation.entities.Entity;
 
 import java.util.HashMap;
 
-public class Map {
+public class MapImp1 {
     private int sideLength;
     private final HashMap<Coordinates, Entity> map = new HashMap<>();
 
-    public Map(int length) {
+    public MapImp1(int length) {
         this.sideLength = length;
     }
 

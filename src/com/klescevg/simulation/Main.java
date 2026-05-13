@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        Map map = new Map(10);
+        MapImp1 map1 = new MapImp1(10);
         Grass grass = new Grass();
         Rock rock = new Rock();
         Tree tree = new Tree();
@@ -14,13 +14,13 @@ public class Main {
         Coordinates grassCoordinates = random(10);
         Coordinates rockCoordinates = random(10);
         Coordinates treeCoordinates = random(10);
-        map.addEntity(grassCoordinates, grass);
-        map.addEntity(rockCoordinates, rock);
-        map.addEntity(treeCoordinates, tree);
-        map.display();
-        //map.clearCell(grassCoordinates1);
-        map.moveEntity(grassCoordinates, random(10));
-        map.display();
+        map1.addEntity(grassCoordinates, grass);
+        map1.addEntity(rockCoordinates, rock);
+        map1.addEntity(treeCoordinates, tree);
+        map1.display();
+        //map1.clearCell(grassCoordinates1);
+        map1.moveEntity(grassCoordinates, random(10));
+        map1.display();
     }
 
     public static Coordinates random(int bound){
