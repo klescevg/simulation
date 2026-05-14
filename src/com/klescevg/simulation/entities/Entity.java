@@ -8,4 +8,23 @@ public abstract class Entity {
     public Entity(Symbol symbol){
         this.symbol = symbol;
     }
+
+    @Override
+    public boolean equals(Object comparedObject){
+        if (this == comparedObject){
+            return true;
+        }
+
+        if (!(comparedObject instanceof Entity)){
+            return false;
+        }
+
+        Entity comparedEntity = (Entity) comparedObject;
+
+        if (this.symbol.equals(comparedEntity.symbol)){
+            return true;
+        }
+
+        return false;
+    }
 }
