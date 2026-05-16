@@ -13,4 +13,20 @@ public abstract class Creature extends Entity {
         this.healthPoints = healthPoints;
         this.speed = speed;
     }
+
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
+    public void setHealthPoints(int healthPoints) {
+        this.healthPoints = healthPoints;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
 }
