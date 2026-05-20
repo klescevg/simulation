@@ -1,12 +1,13 @@
 package com.klescevg.simulation;
 
 import com.klescevg.simulation.entities.Entity;
-import com.klescevg.simulation.entities.objects.*;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.klescevg.simulation.CoordinatesGenerator.random;
 
 public class MapImp1 {
     private int sideLength;
@@ -28,11 +29,14 @@ public class MapImp1 {
 
     public void addEntity(Coordinates entityCoordinates, Entity entity) {
         map.putIfAbsent(entityCoordinates, entity);
-/*        if (!map.containsKey(entityCoordinates)) {
-            map.put(entityCoordinates, entity);
-        } else {
-            System.out.println("Cell is already full");
-        }*/
+    }
+
+    public void addEntityToRandomPosition(Entity entity) {
+        Coordinates randomCoordinates = random(sideLength);
+        while (!isCellEmpty(randomCoordinates)) {
+            randomCoordinates = random(sideLength);
+        }
+        map.put(randomCoordinates, entity);
     }
 
     public void moveEntity(Coordinates initialPosition, Coordinates newPosition) {
@@ -98,7 +102,7 @@ public class MapImp1 {
     }
 
     public void clearCell(Coordinates coordinates) {
-        map.remove(coordinates);
+        map.replace(coordinates, null);
     }
 
     public void display() {
@@ -114,10 +118,6 @@ public class MapImp1 {
             }
             System.out.println(line);
         }
-
-        for (Coordinates i : map.keySet()) {
-            System.out.print(i + " - ");
-            System.out.println(map.get(i));
-        }
+        System.out.println();
     }
 }
