@@ -1,12 +1,14 @@
 package com.klescevg.simulation.entities.creatures;
 
+import com.klescevg.simulation.MapImp1;
+import com.klescevg.simulation.PathFinder;
 import com.klescevg.simulation.Symbol;
 import com.klescevg.simulation.entities.Entity;
 
 public abstract class Creature extends Entity {
-    private int healthPoints;
-    private int speed;
-    public abstract void makeMove();
+    protected int healthPoints;
+    protected int speed;
+    public abstract void makeMove(MapImp1 map, PathFinder pathFinder);
 
     public Creature(Symbol symbol, int healthPoints, int speed){
         super(symbol);
