@@ -40,7 +40,7 @@ public class MapImp1 {
     }
 
     public void moveEntity(Coordinates initialPosition, Coordinates newPosition) {
-        if(!map.containsKey(newPosition)) {
+        if (isCellEmpty(newPosition)) {
             addEntity(newPosition, map.get(initialPosition));
             clearCell(initialPosition);
         } else {
@@ -49,55 +49,55 @@ public class MapImp1 {
     }
 
     //работает даже при вложении нового объекта координат
-    public Entity getEntity(Coordinates coordinates){
+    public Entity getEntity(Coordinates coordinates) {
         return map.get(coordinates);
     }
 
-    public Coordinates getEntityCoordinates(Entity entity){
-        for (Coordinates c : map.keySet()){
-            if (map.get(c) == entity){
+    public Coordinates getEntityCoordinates(Entity entity) {
+        for (Coordinates c : map.keySet()) {
+            if (map.get(c) == entity) {
                 return c;
             }
         }
         return null;
     }
 
-    public Collection<Entity> getEntities(){
+    public Collection<Entity> getEntities() {
         return map.values();
     }
 
-    public Set<Coordinates> getCoordinates(){
+    public Set<Coordinates> getCoordinates() {
         return map.keySet();
     }
 
-    public Set<Coordinates> getBorderCells(Coordinates coordinates){
+    public Set<Coordinates> getBorderCells(Coordinates coordinates) {
         Set<Coordinates> borderCells = new HashSet<>();
 
-        Coordinates left = new Coordinates(coordinates.x()-1, coordinates.y());
-        Coordinates right = new Coordinates(coordinates.x()+1, coordinates.y());
-        Coordinates top = new Coordinates(coordinates.x(), coordinates.y()-1);
-        Coordinates bottom = new Coordinates(coordinates.x(), coordinates.y()+1);
+        Coordinates left = new Coordinates(coordinates.x() - 1, coordinates.y());
+        Coordinates right = new Coordinates(coordinates.x() + 1, coordinates.y());
+        Coordinates top = new Coordinates(coordinates.x(), coordinates.y() - 1);
+        Coordinates bottom = new Coordinates(coordinates.x(), coordinates.y() + 1);
 
-        if (map.containsKey(left)){
+        if (map.containsKey(left)) {
             borderCells.add(left);
         }
 
-        if (map.containsKey(right)){
+        if (map.containsKey(right)) {
             borderCells.add(right);
         }
 
-        if (map.containsKey(top)){
+        if (map.containsKey(top)) {
             borderCells.add(top);
         }
 
-        if (map.containsKey(bottom)){
+        if (map.containsKey(bottom)) {
             borderCells.add(bottom);
         }
 
         return borderCells;
     }
 
-    public boolean isCellEmpty(Coordinates coordinates){
+    public boolean isCellEmpty(Coordinates coordinates) {
         return map.get(coordinates) == null;
     }
 
