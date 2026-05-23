@@ -1,13 +1,13 @@
 package com.klescevg.simulation;
 
-public class MapRenderer {
+public class MapConsoleRenderer {
     private final Map map;
 
-    public MapRenderer(Map map){
+    public MapConsoleRenderer(Map map){
         this.map = map;
     }
 
-    public void displayInTerminal() {
+    public void render() {
         for (int y = 0; y < map.sideLength(); y++) {
             StringBuilder line = new StringBuilder();
             for (int x = 0; x < map.sideLength(); x++) {
