@@ -6,14 +6,14 @@ import com.klescevg.simulation.entities.creatures.*;
 import java.util.*;
 
 public class PathFinder {
-    Map map;
+    WorldMap worldMap;
 
-    public PathFinder(Map map) {
-        this.map = map;
+    public PathFinder(WorldMap worldMap) {
+        this.worldMap = worldMap;
     }
 
     public Stack<Coordinates> getPathToEntityBFS(Entity startEntity, Entity goalEntity) {
-        Coordinates start = map.getEntityCoordinates(startEntity);
+        Coordinates start = worldMap.getEntityCoordinates(startEntity);
         Coordinates goal = null;
 
         Set<Coordinates> visitedNodes = new HashSet<>();
@@ -26,14 +26,14 @@ public class PathFinder {
         while (!queue.isEmpty()) {
             Coordinates current = queue.poll();
 
-            if (!map.isCellEmpty(current) && map.getEntity(current).equals(goalEntity)) {
+            if (!worldMap.isCellEmpty(current) && worldMap.getEntity(current).equals(goalEntity)) {
                 goal = current;
                 break;
             }
 
-            for (Coordinates neighbor : map.getBorderCells(current)) {
+            for (Coordinates neighbor : worldMap.getBorderCells(current)) {
                 if (!visitedNodes.contains(neighbor)
-                        && (map.isCellEmpty(neighbor) || map.getEntity(neighbor).equals(goalEntity))) {
+                        && (worldMap.isCellEmpty(neighbor) || worldMap.getEntity(neighbor).equals(goalEntity))) {
                     visitedNodes.add(neighbor);
                     parentNodes.put(neighbor, current);
                     queue.add(neighbor);

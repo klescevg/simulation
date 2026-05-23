@@ -1,7 +1,7 @@
 package com.klescevg.simulation.entities.creatures;
 
 import com.klescevg.simulation.Coordinates;
-import com.klescevg.simulation.Map;
+import com.klescevg.simulation.WorldMap;
 import com.klescevg.simulation.PathFinder;
 import com.klescevg.simulation.Symbol;
 import com.klescevg.simulation.entities.objects.Grass;
@@ -18,24 +18,24 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    public void makeMove(Map map, PathFinder pathFinder) {
+    public void makeMove(WorldMap worldMap, PathFinder pathFinder) {
         Stack<Coordinates> path = pathFinder.getPathToEntityBFS(this, new Grass());
 
         if (path != null && !path.isEmpty()){
             if (path.size() - 1 <= speed){
-                eatGrass(map, path);
+                eatGrass(worldMap, path);
             } else {
-                moveToGrass(map, path);
+                moveToGrass(worldMap, path);
             }
         }
     }
 
-    private void eatGrass(Map map, Stack<Coordinates> path){
-        map.clearCell(path.getFirst());
-        map.moveEntity(path.getLast(), path.getFirst());
+    private void eatGrass(WorldMap worldMap, Stack<Coordinates> path){
+        worldMap.clearCell(path.getFirst());
+        worldMap.moveEntity(path.getLast(), path.getFirst());
     }
 
-    private void moveToGrass(Map map, Stack<Coordinates> path){
+    private void moveToGrass(WorldMap worldMap, Stack<Coordinates> path){
         Coordinates initialPosition = path.pop();
         Coordinates nextPosition = null;
 
@@ -43,6 +43,6 @@ public class Herbivore extends Creature {
             nextPosition = path.pop();
         }
 
-        map.moveEntity(initialPosition, nextPosition);
+        worldMap.moveEntity(initialPosition, nextPosition);
     }
 }

@@ -1,7 +1,7 @@
 package com.klescevg.simulation.entities.creatures;
 
 import com.klescevg.simulation.Coordinates;
-import com.klescevg.simulation.Map;
+import com.klescevg.simulation.WorldMap;
 import com.klescevg.simulation.PathFinder;
 import com.klescevg.simulation.Symbol;
 
@@ -16,30 +16,30 @@ public class Predator extends Creature {
     }
 
     @Override
-    public void makeMove(Map map, PathFinder pathFinder) {
+    public void makeMove(WorldMap worldMap, PathFinder pathFinder) {
         Stack<Coordinates> path = pathFinder.getPathToEntityBFS(this, new Herbivore());
 
         if (path != null && !path.isEmpty()){
             if (path.size() - 1 <= speed){
-                attackPrey(map, path);
+                attackPrey(worldMap, path);
             } else {
-                moveToPrey(map, path);
+                moveToPrey(worldMap, path);
             }
         }
     }
 
-    private void attackPrey(Map map, Stack<Coordinates> path){
-        Creature prey = (Creature) map.getEntity(path.getLast());
+    private void attackPrey(WorldMap worldMap, Stack<Coordinates> path){
+        Creature prey = (Creature) worldMap.getEntity(path.getLast());
         if (prey.healthPoints <= attackPower){
-            map.clearCell(path.getFirst());
-            map.moveEntity(path.getLast(), path.getFirst());
+            worldMap.clearCell(path.getFirst());
+            worldMap.moveEntity(path.getLast(), path.getFirst());
         } else {
             prey.setHealthPoints(prey.healthPoints - attackPower);
-            map.moveEntity(path.getLast(), path.get(1));
+            worldMap.moveEntity(path.getLast(), path.get(1));
         }
     }
 
-    private void moveToPrey(Map map, Stack<Coordinates> path){
+    private void moveToPrey(WorldMap worldMap, Stack<Coordinates> path){
         Coordinates initialPosition = path.pop();
         Coordinates nextPosition = null;
 
@@ -47,6 +47,6 @@ public class Predator extends Creature {
             nextPosition = path.pop();
         }
 
-        map.moveEntity(initialPosition, nextPosition);
+        worldMap.moveEntity(initialPosition, nextPosition);
     }
 }

@@ -9,11 +9,11 @@ import java.util.Set;
 
 import static com.klescevg.simulation.CoordinatesGenerator.random;
 
-public class Map {
+public class WorldMap {
     private int sideLength;
     private final HashMap<Coordinates, Entity> map = new HashMap<>();
 
-    public Map(int length) {
+    public WorldMap(int length) {
         this.sideLength = length;
 
         for (int i = 0; i < sideLength; i++) {
