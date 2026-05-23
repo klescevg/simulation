@@ -6,9 +6,9 @@ import com.klescevg.simulation.entities.creatures.*;
 import java.util.*;
 
 public class PathFinder {
-    MapImp1 map;
+    Map map;
 
-    public PathFinder(MapImp1 map) {
+    public PathFinder(Map map) {
         this.map = map;
     }
 
@@ -17,7 +17,7 @@ public class PathFinder {
         Coordinates goal = null;
 
         Set<Coordinates> visitedNodes = new HashSet<>();
-        Map<Coordinates, Coordinates> parentNodes = new HashMap<>();
+        java.util.Map<Coordinates, Coordinates> parentNodes = new HashMap<>();
 
         Queue<Coordinates> queue = new LinkedList<>();
         queue.add(start);

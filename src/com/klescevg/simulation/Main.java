@@ -6,7 +6,7 @@ import com.klescevg.simulation.entities.objects.*;
 
 public class Main {
     public static void main(String[] args) {
-        MapImp1 map1 = new MapImp1(10);
+        Map map1 = new Map(10);
         PathFinder pathFinder = new PathFinder(map1);
         Herbivore herbivore1 = new Herbivore(100, 2);
         Herbivore herbivore2 = new Herbivore(100, 2);

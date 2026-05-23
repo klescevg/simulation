@@ -1,7 +1,7 @@
 package com.klescevg.simulation.entities.creatures;
 
 import com.klescevg.simulation.Coordinates;
-import com.klescevg.simulation.MapImp1;
+import com.klescevg.simulation.Map;
 import com.klescevg.simulation.PathFinder;
 import com.klescevg.simulation.Symbol;
 import com.klescevg.simulation.entities.objects.Grass;
@@ -18,7 +18,7 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    public void makeMove(MapImp1 map, PathFinder pathFinder) {
+    public void makeMove(Map map, PathFinder pathFinder) {
         Stack<Coordinates> path = pathFinder.getPathToEntityBFS(this, new Grass());
 
         if (path != null && !path.isEmpty()){
@@ -30,12 +30,12 @@ public class Herbivore extends Creature {
         }
     }
 
-    private void eatGrass(MapImp1 map, Stack<Coordinates> path){
+    private void eatGrass(Map map, Stack<Coordinates> path){
         map.clearCell(path.getFirst());
         map.moveEntity(path.getLast(), path.getFirst());
     }
 
-    private void moveToGrass(MapImp1 map, Stack<Coordinates> path){
+    private void moveToGrass(Map map, Stack<Coordinates> path){
         Coordinates initialPosition = path.pop();
         Coordinates nextPosition = null;
 
