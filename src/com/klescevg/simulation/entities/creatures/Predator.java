@@ -8,7 +8,7 @@ import com.klescevg.simulation.Symbol;
 import java.util.Stack;
 
 public class Predator extends Creature {
-    private int attackPower;
+    private final int attackPower;
 
     public Predator(int healthPoints, int speed, int attackPower){
         super(Symbol.P, healthPoints, speed);

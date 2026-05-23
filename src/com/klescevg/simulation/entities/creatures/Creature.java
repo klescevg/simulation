@@ -7,7 +7,7 @@ import com.klescevg.simulation.entities.Entity;
 
 public abstract class Creature extends Entity {
     protected int healthPoints;
-    protected int speed;
+    protected final int speed;
     public abstract void makeMove(Map map, PathFinder pathFinder);
 
     public Creature(Symbol symbol, int healthPoints, int speed){
@@ -26,9 +26,5 @@ public abstract class Creature extends Entity {
 
     public int getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
     }
 }
