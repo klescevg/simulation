@@ -7,6 +7,7 @@ import com.klescevg.simulation.entities.objects.*;
 public class Main {
     public static void main(String[] args) {
         Map map1 = new Map(10);
+        MapRenderer mapRenderer = new MapRenderer(map1);
         PathFinder pathFinder = new PathFinder(map1);
         Herbivore herbivore1 = new Herbivore(100, 2);
         Herbivore herbivore2 = new Herbivore(100, 2);
@@ -28,7 +29,7 @@ public class Main {
         //map1.addEntityToRandomPosition(new Grass());
         //map1.addEntityToRandomPosition(new Grass());
 
-        map1.display();
+        mapRenderer.displayInTerminal();
         //Coordinates goal = pathFinder.getEntityCoordinates(herbivore, new Grass());
         //System.out.println(goal);
         //System.out.println(pathFinder.getDistanceToEntity(herbivore, new Grass()));
@@ -51,7 +52,7 @@ public class Main {
                 herbivore2.makeMove(map1, pathFinder);
             }
             predator.makeMove(map1, pathFinder);
-            map1.display();
+            mapRenderer.displayInTerminal();
         }
     }
 }

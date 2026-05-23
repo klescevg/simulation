@@ -104,20 +104,4 @@ public class Map {
     public void clearCell(Coordinates coordinates) {
         map.replace(coordinates, null);
     }
-
-    public void display() {
-        for (int y = 0; y < sideLength; y++) {
-            StringBuilder line = new StringBuilder();
-            for (int x = 0; x < sideLength; x++) {
-                Coordinates coordinates = new Coordinates(x, y);
-                if (!isCellEmpty(coordinates)) {
-                    line.append(" ").append(map.get(coordinates).symbol).append(" ");
-                } else {
-                    line.append(" _ ");
-                }
-            }
-            System.out.println(line);
-        }
-        System.out.println();
-    }
 }
