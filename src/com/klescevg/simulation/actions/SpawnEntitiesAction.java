@@ -14,9 +14,9 @@ public class SpawnEntitiesAction extends Action{
 
     @Override
     public void execute(WorldMap worldMap) {
-        for (EntityFactory e : entityCounts.keySet()){
-            for (int i = 0; i < entityCounts.get(e); i++) {
-                worldMap.addEntityToRandomPosition(e.create());
+        for (EntityFactory factory : entityCounts.keySet()){
+            for (int i = 0; i < entityCounts.get(factory); i++) {
+                worldMap.addEntityToRandomPosition(factory.create());
             }
         }
     }
