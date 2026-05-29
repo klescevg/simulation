@@ -6,7 +6,7 @@ import com.klescevg.simulation.entities.creatures.*;
 import java.util.*;
 
 public class PathFinder {
-    WorldMap worldMap;
+    private WorldMap worldMap;
 
     public PathFinder(WorldMap worldMap) {
         this.worldMap = worldMap;
