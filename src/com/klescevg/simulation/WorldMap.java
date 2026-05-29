@@ -2,10 +2,7 @@ package com.klescevg.simulation;
 
 import com.klescevg.simulation.entities.Entity;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static com.klescevg.simulation.CoordinatesGenerator.random;
 
@@ -48,7 +45,6 @@ public class WorldMap {
         }
     }
 
-    //работает даже при вложении нового объекта координат
     public Entity getEntity(Coordinates coordinates) {
         return map.get(coordinates);
     }
@@ -63,7 +59,13 @@ public class WorldMap {
     }
 
     public Collection<Entity> getEntities() {
-        return map.values();
+        Collection<Entity> entities = new ArrayList<>();
+        for (Entity entity : map.values()){
+            if (entity != null){
+                entities.add(entity);
+            }
+        }
+        return entities;
     }
 
     public Set<Coordinates> getCoordinates() {
