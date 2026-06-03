@@ -40,8 +40,6 @@ public class WorldMap {
         if (isCellEmpty(newPosition)) {
             addEntity(newPosition, map.get(initialPosition));
             clearCell(initialPosition);
-        } else {
-            System.out.println("New position is already full");
         }
     }
 
