@@ -17,11 +17,9 @@ public class MoveCreaturesAction extends Action{
     @Override
     public void execute(WorldMap worldMap) {
         for (Entity entity : worldMap.getEntities()){
-            if (worldMap.getEntityCoordinates(entity) != null){
-                if (entity instanceof Herbivore){
-                    ((Herbivore) entity).makeMove(worldMap, pathFinder);
-                } else if (entity instanceof Predator){
-                    ((Predator) entity).makeMove(worldMap, pathFinder);
+            if (worldMap.getEntityCoordinates(entity) != null) {
+                if (entity instanceof Creature) {
+                    ((Creature) entity).makeMove(worldMap, pathFinder);
                 }
             }
         }
