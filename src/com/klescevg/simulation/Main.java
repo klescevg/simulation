@@ -12,29 +12,17 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        WorldMap worldMap = new WorldMap(10);
-        WorldMapConsoleRenderer worldMapConsoleRenderer = new WorldMapConsoleRenderer(worldMap);
-        PathFinder pathFinder = new PathFinder(worldMap);
+        WorldMap worldMap = new WorldMap(7);
+        SimulationConfig simulationConfig = new SimulationConfig(4, 4, 7, 2,
+                1, 100, 2, 100, 2, 30);
 
-        Map<EntityFactory, Integer> entityCounts = getEntityCountsMap();
-        SpawnEntitiesAction spawnEntitiesAction = new SpawnEntitiesAction(entityCounts);
-        spawnEntitiesAction.execute(worldMap);
+        Simulation simulation = new Simulation(worldMap, getEntityCountsMap(simulationConfig));
 
-        worldMapConsoleRenderer.render();
+        simulation.startSimulation();
 
-        MoveCreaturesAction moveCreaturesAction = new MoveCreaturesAction(pathFinder);
-
-        for (int i = 1; i <= 5; i++) {
-            System.out.println("Day " + i + ":");
-            moveCreaturesAction.execute(worldMap);
-            worldMapConsoleRenderer.render();
-        }
     }
 
-    private static Map<EntityFactory, Integer> getEntityCountsMap() {
-        SimulationConfig simulationConfig = new SimulationConfig(5, 5, 5, 2,
-                1, 100, 2, 100, 3, 35);
-
+    private static Map<EntityFactory, Integer> getEntityCountsMap(SimulationConfig simulationConfig) {
         EntityFactory treeFactory = new TreeFactory();
         EntityFactory rockFactory = new RockFactory();
         EntityFactory grassFactory = new GrassFactory();
