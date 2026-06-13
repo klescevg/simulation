@@ -14,8 +14,8 @@ public class Simulation {
     private WorldMapConsoleRenderer worldMapConsoleRenderer;
     private List<Action> initActions;
     private List<Action> turnActions;
-    private boolean isRunning;
-    private boolean isPaused;
+    private volatile boolean running = false;
+    private volatile boolean paused = false;
 
     public Simulation(WorldMap worldMap, Map<EntityFactory, Integer> entityCounts) {
         turnCount = 0;
@@ -28,9 +28,6 @@ public class Simulation {
         //turnActions.add(new SpawnEntityAction(new HerbivoreFactory(simulationConfig.herbivoreHealthPoints(), simulationConfig.herbivoreSpeed())));
 
         executeActions(initActions);
-
-        isRunning = false;
-        isPaused = false;
     }
 
     public void nextTurn() {
@@ -41,24 +38,35 @@ public class Simulation {
     }
 
     public void startSimulation() {
-        isRunning = true;
+        running = true;
 
-        while (isRunning) {
-            if (!worldMap.getEntities().contains(new Grass()) ||
-                    !worldMap.getEntities().contains(new Herbivore())) {
-                break;
-            }
-            nextTurn();
-            try{
+        while (running) {
+            try {
+                if (paused) {
+                    Thread.sleep(1000);
+                    continue;
+                }
+
+                if (!worldMap.getEntities().contains(new Grass()) ||
+                        !worldMap.getEntities().contains(new Herbivore())) {
+                    running = false;
+                    break;
+                }
+
+                nextTurn();
                 Thread.sleep(1000);
-            } catch (Exception e){
+            } catch (Exception e) {
 
             }
         }
     }
 
     public void pauseSimulation() {
-        isPaused = true;
+        this.paused = true;
+    }
+
+    public void resumeSimulation() {
+        this.paused = false;
     }
 
     public void executeActions(List<Action> actions) {
