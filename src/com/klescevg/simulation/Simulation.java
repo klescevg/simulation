@@ -1,6 +1,7 @@
 package com.klescevg.simulation;
 
 import com.klescevg.simulation.actions.*;
+import com.klescevg.simulation.entities.Entity;
 import com.klescevg.simulation.entities.creatures.Herbivore;
 import com.klescevg.simulation.entities.objects.Grass;
 import com.klescevg.simulation.factories.*;
@@ -47,8 +48,14 @@ public class Simulation {
                     continue;
                 }
 
-                if (!worldMap.getEntities().contains(new Grass()) ||
-                        !worldMap.getEntities().contains(new Herbivore())) {
+                boolean isFinished = true;
+                for (Entity entity : worldMap.getEntities()){
+                    if ((entity instanceof Herbivore)){
+                        isFinished = false;
+                    }
+                }
+
+                if (isFinished){
                     running = false;
                     break;
                 }
