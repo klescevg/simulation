@@ -104,4 +104,13 @@ public class WorldMap {
     public void clearCell(Coordinates coordinates) {
         map.replace(coordinates, null);
     }
+
+    public boolean isEntityTypePresent(Class<?> entityType){
+        for (Entity mapEntity : getEntities()){
+            if (entityType.isInstance(mapEntity)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

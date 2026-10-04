@@ -50,7 +50,7 @@ public class Simulation {
 
                 boolean isFinished = true;
                 for (Entity entity : worldMap.getEntities()){
-                    if ((entity instanceof Herbivore)){
+                    if (worldMap.isEntityTypePresent(Herbivore.class)){
                         isFinished = false;
                     }
                 }
