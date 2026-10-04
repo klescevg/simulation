@@ -17,7 +17,7 @@ public class Predator extends Creature {
 
     @Override
     public void makeMove(WorldMap worldMap, PathFinder pathFinder) {
-        Stack<Coordinates> path = pathFinder.getPathToEntityBFS(this, new Herbivore());
+        Stack<Coordinates> path = pathFinder.getPathToEntityBFS(this, Herbivore.class);
 
         if (path != null && !path.isEmpty()){
             if (path.size() - 1 <= speed){

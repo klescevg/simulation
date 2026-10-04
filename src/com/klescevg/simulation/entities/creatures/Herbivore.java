@@ -19,7 +19,7 @@ public class Herbivore extends Creature {
 
     @Override
     public void makeMove(WorldMap worldMap, PathFinder pathFinder) {
-        Stack<Coordinates> path = pathFinder.getPathToEntityBFS(this, new Grass());
+        Stack<Coordinates> path = pathFinder.getPathToEntityBFS(this, Grass.class);
 
         if (path != null && !path.isEmpty()){
             if (path.size() - 1 <= speed){
