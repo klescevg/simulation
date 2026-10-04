@@ -48,14 +48,7 @@ public class Simulation {
                     continue;
                 }
 
-                boolean isFinished = true;
-                for (Entity entity : worldMap.getEntities()){
-                    if (worldMap.isEntityTypePresent(Herbivore.class)){
-                        isFinished = false;
-                    }
-                }
-
-                if (isFinished){
+                if (!worldMap.isEntityTypePresent(Herbivore.class)) {
                     running = false;
                     break;
                 }
