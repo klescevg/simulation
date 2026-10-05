@@ -13,9 +13,9 @@ public class WorldMapConsoleRenderer {
             for (int x = 0; x < worldMap.sideLength(); x++) {
                 Coordinates coordinates = new Coordinates(x, y);
                 if (!worldMap.isCellEmpty(coordinates)) {
-                    line.append(" ").append(worldMap.getEntity(coordinates).symbol).append(" ");
+                    line.append(" ").append(worldMap.getEntity(coordinates).symbol.getColoredIcon()).append(" ");
                 } else {
-                    line.append(" _ ");
+                    line.append(" . ");
                 }
             }
             System.out.println(line);

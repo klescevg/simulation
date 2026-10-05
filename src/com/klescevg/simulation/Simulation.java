@@ -1,9 +1,7 @@
 package com.klescevg.simulation;
 
 import com.klescevg.simulation.actions.*;
-import com.klescevg.simulation.entities.Entity;
-import com.klescevg.simulation.entities.creatures.Herbivore;
-import com.klescevg.simulation.entities.objects.Grass;
+import com.klescevg.simulation.entities.creatures.*;
 import com.klescevg.simulation.factories.*;
 
 import java.util.List;
@@ -33,6 +31,7 @@ public class Simulation {
 
     public void nextTurn() {
         turnCount++;
+        System.out.print("\033[H\033[2J");
         System.out.println(turnCount);
         executeActions(turnActions);
         worldMapConsoleRenderer.render();
@@ -54,7 +53,7 @@ public class Simulation {
                 }
 
                 nextTurn();
-                Thread.sleep(1000);
+                Thread.sleep(500);
             } catch (Exception e) {
 
             }
