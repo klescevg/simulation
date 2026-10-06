@@ -1,7 +1,9 @@
 package com.klescevg.simulation;
 
 import com.klescevg.simulation.actions.*;
-import com.klescevg.simulation.entities.creatures.*;
+import com.klescevg.simulation.entities.*;
+import com.klescevg.simulation.entities.creatures.Herbivore;
+import com.klescevg.simulation.entities.creatures.Predator;
 import com.klescevg.simulation.factories.*;
 
 import java.util.List;
@@ -22,8 +24,7 @@ public class Simulation {
         worldMapConsoleRenderer = new WorldMapConsoleRenderer(worldMap);
 
         initActions = List.of(new SpawnEntitiesAction(entityCounts));
-        turnActions = List.of(new MoveCreaturesAction(new PathFinder(worldMap)));
-        //turnActions.add(new SpawnEntityAction(new GrassFactory()));
+        turnActions = List.of(new SpawnEntityAction(new GrassFactory()), new MoveCreaturesAction(new PathFinder(worldMap)), new HungerAction());
         //turnActions.add(new SpawnEntityAction(new HerbivoreFactory(simulationConfig.herbivoreHealthPoints(), simulationConfig.herbivoreSpeed())));
 
         executeActions(initActions);
