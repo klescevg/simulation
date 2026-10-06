@@ -62,7 +62,7 @@ public class Simulation {
                 nextTurn();
                 Thread.sleep(2000);
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         }
     }
