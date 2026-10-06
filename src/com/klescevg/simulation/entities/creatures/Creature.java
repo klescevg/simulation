@@ -36,6 +36,10 @@ public abstract class Creature extends Entity {
         }
     }
 
+    public void heal(int amount){
+        healthPoints += amount;
+    }
+
     public boolean isAlive(){
         return healthPoints > 0;
     }
