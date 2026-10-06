@@ -27,4 +27,16 @@ public abstract class Creature extends Entity {
     public int getSpeed() {
         return speed;
     }
+
+    public void takeDamage(int amount){
+        if (healthPoints > amount) {
+            healthPoints -= amount;
+        } else {
+            healthPoints = 0;
+        }
+    }
+
+    public boolean isAlive(){
+        return healthPoints > 0;
+    }
 }
