@@ -66,6 +66,16 @@ public class WorldMap {
         return entities;
     }
 
+    public <T extends Entity> Collection<T> getEntitiesOfType(Class<T> type){
+        Collection<T> result = new ArrayList<>();
+        for (Entity entity : map.values()){
+            if (type.isInstance(entity)){
+                result.add(type.cast(entity));
+            }
+        }
+        return result;
+    }
+
     public Set<Coordinates> getCoordinates() {
         return map.keySet();
     }
