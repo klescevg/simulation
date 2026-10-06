@@ -29,13 +29,13 @@ public class Predator extends Creature {
     }
 
     private void attackPrey(WorldMap worldMap, Stack<Coordinates> path){
-        Creature prey = (Creature) worldMap.getEntity(path.getLast());
+        Creature prey = (Creature) worldMap.getEntity(path.getFirst());
         if (prey.healthPoints <= attackPower){
             worldMap.clearCell(path.getFirst());
             worldMap.moveEntity(path.getLast(), path.getFirst());
+            heal(70);
         } else {
-            prey.setHealthPoints(prey.healthPoints - attackPower);
-            worldMap.moveEntity(path.getLast(), path.get(1));
+            prey.takeDamage(attackPower);
         }
     }
 
