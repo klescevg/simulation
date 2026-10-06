@@ -8,6 +8,7 @@ import com.klescevg.simulation.Symbol;
 import java.util.Stack;
 
 public class Predator extends Creature {
+    private static final int PREY_HEAL = 70;
     private final int attackPower;
 
     public Predator(int healthPoints, int speed, int attackPower){
@@ -33,7 +34,7 @@ public class Predator extends Creature {
         if (prey.healthPoints <= attackPower){
             worldMap.clearCell(path.getFirst());
             worldMap.moveEntity(path.getLast(), path.getFirst());
-            heal(70);
+            heal(PREY_HEAL);
         } else {
             prey.takeDamage(attackPower);
         }

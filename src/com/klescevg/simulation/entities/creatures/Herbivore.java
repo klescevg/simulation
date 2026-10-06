@@ -9,6 +9,8 @@ import com.klescevg.simulation.entities.objects.Grass;
 import java.util.Stack;
 
 public class Herbivore extends Creature {
+    private static final int GRASS_HEAL = 30;
+
     public Herbivore() {
         super(Symbol.H, 0, 0);
     }
@@ -33,7 +35,7 @@ public class Herbivore extends Creature {
     private void eatGrass(WorldMap worldMap, Stack<Coordinates> path) {
         worldMap.clearCell(path.getFirst());
         worldMap.moveEntity(path.getLast(), path.getFirst());
-        heal(50);
+        heal(GRASS_HEAL);
     }
 
     private void moveToGrass(WorldMap worldMap, Stack<Coordinates> path) {
