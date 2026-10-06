@@ -11,10 +11,6 @@ import java.util.Stack;
 public class Herbivore extends Creature {
     private static final int GRASS_HEAL = 30;
 
-    public Herbivore() {
-        super(Symbol.H, 0, 0);
-    }
-
     public Herbivore(int healthPoints, int speed) {
         super(Symbol.H, healthPoints, speed);
     }
