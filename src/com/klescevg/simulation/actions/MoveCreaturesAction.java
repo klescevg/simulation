@@ -7,20 +7,18 @@ import com.klescevg.simulation.entities.creatures.Creature;
 import com.klescevg.simulation.entities.creatures.Herbivore;
 import com.klescevg.simulation.entities.creatures.Predator;
 
-public class MoveCreaturesAction extends Action{
+public class MoveCreaturesAction extends Action {
     private PathFinder pathFinder;
 
-    public MoveCreaturesAction(PathFinder pathFinder){
+    public MoveCreaturesAction(PathFinder pathFinder) {
         this.pathFinder = pathFinder;
     }
 
     @Override
     public void execute(WorldMap worldMap) {
-        for (Entity entity : worldMap.getEntities()){
-            if (worldMap.getEntityCoordinates(entity) != null) {
-                if (entity instanceof Creature) {
-                    ((Creature) entity).makeMove(worldMap, pathFinder);
-                }
+        for (Creature creature : worldMap.getEntitiesOfType(Creature.class)) {
+            if (worldMap.getEntityCoordinates(creature) != null) {
+                creature.makeMove(worldMap, pathFinder);
             }
         }
     }

@@ -9,12 +9,8 @@ public class HungerAction extends Action{
 
     @Override
     public void execute(WorldMap worldMap) {
-        for (Entity entity : worldMap.getEntities()){
-            if (worldMap.getEntityCoordinates(entity) != null) {
-                if (entity instanceof Creature) {
-                    ((Creature) entity).takeDamage(HUNGER_DAMAGE);
-                }
-            }
+        for (Creature creature : worldMap.getEntitiesOfType(Creature.class)){
+            creature.takeDamage(HUNGER_DAMAGE);
         }
     }
 }
