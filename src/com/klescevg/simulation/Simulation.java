@@ -24,7 +24,7 @@ public class Simulation {
         worldMapConsoleRenderer = new WorldMapConsoleRenderer(worldMap);
 
         initActions = List.of(new SpawnEntitiesAction(entityCounts));
-        turnActions = List.of(new SpawnEntityAction(new GrassFactory()), new MoveCreaturesAction(new PathFinder(worldMap)), new HungerAction());
+        turnActions = List.of(new SpawnEntityAction(new GrassFactory()), new MoveCreaturesAction(new PathFinder(worldMap)), new HungerAction(), new RemoveDeadCreaturesAction());
         //turnActions.add(new SpawnEntityAction(new HerbivoreFactory(simulationConfig.herbivoreHealthPoints(), simulationConfig.herbivoreSpeed())));
 
         executeActions(initActions);
