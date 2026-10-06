@@ -36,6 +36,17 @@ public class Simulation {
         System.out.println(turnCount);
         executeActions(turnActions);
         worldMapConsoleRenderer.render();
+
+        //for test
+        for (Entity e : worldMap.getEntities()){
+            if (e instanceof Herbivore){
+                Herbivore h = (Herbivore) e;
+                System.out.println("Herbivore: " + h.getHealthPoints());
+            } else if (e instanceof Predator){
+                Predator p = (Predator) e;
+                System.out.println("Predator: " + p.getHealthPoints());
+            }
+        }
     }
 
     public void startSimulation() {
@@ -48,13 +59,8 @@ public class Simulation {
                     continue;
                 }
 
-                if (!worldMap.isEntityTypePresent(Herbivore.class)) {
-                    running = false;
-                    break;
-                }
-
                 nextTurn();
-                Thread.sleep(500);
+                Thread.sleep(2000);
             } catch (Exception e) {
 
             }
