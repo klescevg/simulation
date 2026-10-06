@@ -20,10 +20,6 @@ public abstract class Creature extends Entity {
         return healthPoints;
     }
 
-    public void setHealthPoints(int healthPoints) {
-        this.healthPoints = healthPoints;
-    }
-
     public int getSpeed() {
         return speed;
     }
