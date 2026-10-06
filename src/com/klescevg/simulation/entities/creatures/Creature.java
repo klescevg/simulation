@@ -1,20 +1,33 @@
 package com.klescevg.simulation.entities.creatures;
 
+import com.klescevg.simulation.Coordinates;
 import com.klescevg.simulation.WorldMap;
 import com.klescevg.simulation.PathFinder;
 import com.klescevg.simulation.Symbol;
 import com.klescevg.simulation.entities.Entity;
 
-public abstract class Creature extends Entity {
-    protected int healthPoints;
-    protected final int speed;
+import java.util.Stack;
 
-    public abstract void makeMove(WorldMap worldMap, PathFinder pathFinder);
+public abstract class Creature extends Entity {
+    private int healthPoints;
+    private final int speed;
 
     public Creature(Symbol symbol, int healthPoints, int speed) {
         super(symbol);
         this.healthPoints = healthPoints;
         this.speed = speed;
+    }
+
+    public final void makeMove(WorldMap worldMap, PathFinder pathFinder){
+        Stack<Coordinates> path = pathFinder.getPathToEntityBFS(this, getTargetType());
+
+        if (path != null && !path.isEmpty()) {
+            if ((path.size() - 1 <= speed)) {
+                consumeTarget(worldMap, path);
+            } else {
+                moveAlongPath(worldMap, path);
+            }
+        }
     }
 
     public int getHealthPoints() {
@@ -43,5 +56,19 @@ public abstract class Creature extends Entity {
 
     public boolean isAlive() {
         return healthPoints > 0;
+    }
+
+    protected abstract Class<?> getTargetType();
+    protected abstract void consumeTarget(WorldMap worldMap, Stack<Coordinates> path);
+
+    protected void moveAlongPath(WorldMap worldMap, Stack<Coordinates> path) {
+        Coordinates initialPosition = path.pop();
+        Coordinates nextPosition = null;
+
+        for (int i = 0; i < speed && !path.isEmpty(); i++) {
+            nextPosition = path.pop();
+        }
+
+        worldMap.moveEntity(initialPosition, nextPosition);
     }
 }
