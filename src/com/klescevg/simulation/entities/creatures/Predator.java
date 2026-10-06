@@ -31,12 +31,11 @@ public class Predator extends Creature {
 
     private void attackPrey(WorldMap worldMap, Stack<Coordinates> path){
         Creature prey = (Creature) worldMap.getEntity(path.getFirst());
-        if (prey.healthPoints <= attackPower){
+        prey.takeDamage(attackPower);
+        if (!prey.isAlive()){
             worldMap.clearCell(path.getFirst());
             worldMap.moveEntity(path.getLast(), path.getFirst());
             heal(PREY_HEAL);
-        } else {
-            prey.takeDamage(attackPower);
         }
     }
 
