@@ -66,12 +66,12 @@ public class SimulationController {
     public int getMapSize() {
         //System.out.println("Enter the map size: ");
         //return SCANNER.nextInt();
-        return 10;
+        return 20;
     }
 
     public SimulationConfig getSimulationConfig() {
-        return new SimulationConfig(5, 5, 5, 2,
-                1, 100, 2, 100, 3, 35);
+        return new SimulationConfig(10, 10, 10, 4,
+                2, 100, 1, 100, 2, 25);
     }
 
     private Map<EntityFactory, Integer> getEntityCountsMap(SimulationConfig simulationConfig) {
