@@ -25,7 +25,7 @@ public abstract class Creature extends Entity {
             if ((path.size() - 1 <= speed)) {
                 consumeTarget(worldMap, path);
             } else {
-                moveAlongPath(worldMap, path);
+                moveToTarget(worldMap, path);
             }
         }
     }
@@ -61,7 +61,7 @@ public abstract class Creature extends Entity {
     protected abstract Class<?> getTargetType();
     protected abstract void consumeTarget(WorldMap worldMap, Stack<Coordinates> path);
 
-    protected void moveAlongPath(WorldMap worldMap, Stack<Coordinates> path) {
+    protected void moveToTarget(WorldMap worldMap, Stack<Coordinates> path) {
         Coordinates initialPosition = path.pop();
         Coordinates nextPosition = null;
 
