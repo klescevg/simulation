@@ -1,10 +1,10 @@
-package com.klescevg.simulation;
+package com.klescevg.simulation.world;
 
 import com.klescevg.simulation.entities.Entity;
 
 import java.util.*;
 
-import static com.klescevg.simulation.CoordinatesGenerator.random;
+import static com.klescevg.simulation.world.CoordinatesGenerator.random;
 
 public class WorldMap {
     private int sideLength;

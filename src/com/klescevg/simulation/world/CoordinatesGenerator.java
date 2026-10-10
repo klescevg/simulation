@@ -1,4 +1,4 @@
-package com.klescevg.simulation;
+package com.klescevg.simulation.world;
 
 import java.util.Random;
 
