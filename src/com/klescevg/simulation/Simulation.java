@@ -1,11 +1,11 @@
 package com.klescevg.simulation;
 
 import com.klescevg.simulation.actions.*;
-import com.klescevg.simulation.entities.*;
-import com.klescevg.simulation.entities.creatures.Herbivore;
-import com.klescevg.simulation.entities.creatures.Predator;
 import com.klescevg.simulation.factories.*;
+import com.klescevg.simulation.pathfinding.PathfindingStrategy;
+import com.klescevg.simulation.world.WorldMap;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,35 +18,24 @@ public class Simulation {
     private volatile boolean running = false;
     private volatile boolean paused = false;
 
-    public Simulation(WorldMap worldMap, Map<EntityFactory, Integer> entityCounts) {
+    public Simulation(WorldMap worldMap, Map<EntityFactory, Integer> entityCounts, PathfindingStrategy strategy) {
         turnCount = 0;
         this.worldMap = worldMap;
         worldMapConsoleRenderer = new WorldMapConsoleRenderer(worldMap);
 
         initActions = List.of(new SpawnEntitiesAction(entityCounts));
-        turnActions = List.of(new SpawnEntityAction(new GrassFactory()), new MoveCreaturesAction(new PathFinder(worldMap)), new HungerAction(), new RemoveDeadCreaturesAction());
-        //turnActions.add(new SpawnEntityAction(new HerbivoreFactory(simulationConfig.herbivoreHealthPoints(), simulationConfig.herbivoreSpeed())));
-
+        Map<EntityFactory, Integer> grassCounts = new HashMap<>();
+        grassCounts.put(new GrassFactory(), 1);
+        turnActions = List.of(new SpawnEntitiesAction(grassCounts), new MoveCreaturesAction(strategy), new HungerAction(), new RemoveDeadCreaturesAction());
         executeActions(initActions);
     }
 
     public void nextTurn() {
         turnCount++;
+        executeActions(turnActions);
         System.out.print("\033[H\033[2J");
         System.out.println(turnCount);
-        executeActions(turnActions);
         worldMapConsoleRenderer.render();
-
-        //for test
-        for (Entity e : worldMap.getEntities()){
-            if (e instanceof Herbivore){
-                Herbivore h = (Herbivore) e;
-                System.out.println("Herbivore: " + h.getHealthPoints());
-            } else if (e instanceof Predator){
-                Predator p = (Predator) e;
-                System.out.println("Predator: " + p.getHealthPoints());
-            }
-        }
     }
 
     public void startSimulation() {
