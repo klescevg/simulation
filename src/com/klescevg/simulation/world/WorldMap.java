@@ -12,12 +12,6 @@ public class WorldMap {
 
     public WorldMap(int length) {
         this.sideLength = length;
-
-        for (int i = 0; i < sideLength; i++) {
-            for (int j = 0; j < sideLength; j++) {
-                coordinatesWithEntities.put(new Coordinates(i, j), null);
-            }
-        }
     }
 
     public int sideLength() {
