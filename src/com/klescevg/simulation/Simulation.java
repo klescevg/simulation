@@ -11,10 +11,10 @@ import java.util.Map;
 
 public class Simulation {
     private int turnCount;
-    private WorldMap worldMap;
-    private WorldMapConsoleRenderer worldMapConsoleRenderer;
-    private List<Action> initActions;
-    private List<Action> turnActions;
+    private final WorldMap worldMap;
+    private final WorldMapConsoleRenderer worldMapConsoleRenderer;
+    private final List<Action> initActions;
+    private final List<Action> turnActions;
     private volatile boolean running = false;
     private volatile boolean paused = false;
 
@@ -49,7 +49,7 @@ public class Simulation {
                 }
 
                 nextTurn();
-                Thread.sleep(2000);
+                Thread.sleep(300);
             } catch (Exception e) {
                 e.printStackTrace();
             }
