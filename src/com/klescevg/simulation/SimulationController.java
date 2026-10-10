@@ -1,6 +1,8 @@
 package com.klescevg.simulation;
 
 import com.klescevg.simulation.factories.*;
+import com.klescevg.simulation.pathfinding.*;
+import com.klescevg.simulation.world.WorldMap;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,18 +62,19 @@ public class SimulationController {
     public void initSimulation() {
         SimulationConfig simulationConfig = getSimulationConfig();
         WorldMap worldMap = new WorldMap(getMapSize());
-        this.simulation = new Simulation(worldMap, getEntityCountsMap(simulationConfig));
+        PathfindingStrategy strategy = new AStarStrategy(worldMap);
+        this.simulation = new Simulation(worldMap, getEntityCountsMap(simulationConfig), strategy);
     }
 
     public int getMapSize() {
         //System.out.println("Enter the map size: ");
         //return SCANNER.nextInt();
-        return 20;
+        return 100;
     }
 
     public SimulationConfig getSimulationConfig() {
-        return new SimulationConfig(10, 10, 10, 4,
-                2, 100, 1, 100, 2, 25);
+        return new SimulationConfig(100, 100, 1, 1000,
+                200, 1000, 1, 1000, 2, 25);
     }
 
     private Map<EntityFactory, Integer> getEntityCountsMap(SimulationConfig simulationConfig) {
