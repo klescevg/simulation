@@ -8,14 +8,14 @@ import static com.klescevg.simulation.world.CoordinatesGenerator.random;
 
 public class WorldMap {
     private int sideLength;
-    private final HashMap<Coordinates, Entity> map = new HashMap<>();
+    private final Map<Coordinates, Entity> coordinatesWithEntities = new HashMap<>();
 
     public WorldMap(int length) {
         this.sideLength = length;
 
         for (int i = 0; i < sideLength; i++) {
             for (int j = 0; j < sideLength; j++) {
-                map.put(new Coordinates(i, j), null);
+                coordinatesWithEntities.put(new Coordinates(i, j), null);
             }
         }
     }
@@ -25,7 +25,7 @@ public class WorldMap {
     }
 
     public void addEntity(Coordinates entityCoordinates, Entity entity) {
-        map.putIfAbsent(entityCoordinates, entity);
+        coordinatesWithEntities.putIfAbsent(entityCoordinates, entity);
     }
 
     public void addEntityToRandomPosition(Entity entity) {
@@ -33,23 +33,23 @@ public class WorldMap {
         while (!isCellEmpty(randomCoordinates)) {
             randomCoordinates = random(sideLength);
         }
-        map.put(randomCoordinates, entity);
+        coordinatesWithEntities.put(randomCoordinates, entity);
     }
 
     public void moveEntity(Coordinates initialPosition, Coordinates newPosition) {
         if (isCellEmpty(newPosition)) {
-            addEntity(newPosition, map.get(initialPosition));
+            addEntity(newPosition, coordinatesWithEntities.get(initialPosition));
             clearCell(initialPosition);
         }
     }
 
     public Entity getEntity(Coordinates coordinates) {
-        return map.get(coordinates);
+        return coordinatesWithEntities.get(coordinates);
     }
 
     public Coordinates getEntityCoordinates(Entity entity) {
-        for (Coordinates c : map.keySet()) {
-            if (map.get(c) == entity) {
+        for (Coordinates c : coordinatesWithEntities.keySet()) {
+            if (coordinatesWithEntities.get(c) == entity) {
                 return c;
             }
         }
@@ -58,7 +58,7 @@ public class WorldMap {
 
     public Collection<Entity> getEntities() {
         Collection<Entity> entities = new ArrayList<>();
-        for (Entity entity : map.values()){
+        for (Entity entity : coordinatesWithEntities.values()){
             if (entity != null){
                 entities.add(entity);
             }
@@ -68,7 +68,7 @@ public class WorldMap {
 
     public <T extends Entity> Collection<T> getEntitiesOfType(Class<T> type){
         Collection<T> result = new ArrayList<>();
-        for (Entity entity : map.values()){
+        for (Entity entity : coordinatesWithEntities.values()){
             if (type.isInstance(entity)){
                 result.add(type.cast(entity));
             }
@@ -77,13 +77,13 @@ public class WorldMap {
     }
 
     public Set<Coordinates> getCoordinates() {
-        return map.keySet();
+        return coordinatesWithEntities.keySet();
     }
 
     public Set<Coordinates> getCoordinatesOfType(Class<?> type){
         Set<Coordinates> result = new HashSet<>();
-        for (Coordinates coordinates : map.keySet()){
-            if (type.isInstance(map.get(coordinates))){
+        for (Coordinates coordinates : coordinatesWithEntities.keySet()){
+            if (type.isInstance(coordinatesWithEntities.get(coordinates))){
                 result.add(coordinates);
             }
         }
@@ -98,19 +98,19 @@ public class WorldMap {
         Coordinates top = new Coordinates(coordinates.x(), coordinates.y() - 1);
         Coordinates bottom = new Coordinates(coordinates.x(), coordinates.y() + 1);
 
-        if (map.containsKey(left)) {
+        if (coordinatesWithEntities.containsKey(left)) {
             borderCells.add(left);
         }
 
-        if (map.containsKey(right)) {
+        if (coordinatesWithEntities.containsKey(right)) {
             borderCells.add(right);
         }
 
-        if (map.containsKey(top)) {
+        if (coordinatesWithEntities.containsKey(top)) {
             borderCells.add(top);
         }
 
-        if (map.containsKey(bottom)) {
+        if (coordinatesWithEntities.containsKey(bottom)) {
             borderCells.add(bottom);
         }
 
@@ -118,11 +118,11 @@ public class WorldMap {
     }
 
     public boolean isCellEmpty(Coordinates coordinates) {
-        return map.get(coordinates) == null;
+        return coordinatesWithEntities.get(coordinates) == null;
     }
 
     public void clearCell(Coordinates coordinates) {
-        map.replace(coordinates, null);
+        coordinatesWithEntities.replace(coordinates, null);
     }
 
     public boolean isEntityTypePresent(Class<?> entityType){
