@@ -1,9 +1,7 @@
 package com.klescevg.simulation.actions;
 
-import com.klescevg.simulation.PathFinder;
-import com.klescevg.simulation.WorldMap;
-import com.klescevg.simulation.entities.Entity;
-import com.klescevg.simulation.entities.creatures.Creature;
+import com.klescevg.simulation.pathfinding.PathFinder;
+import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.entities.creatures.Herbivore;
 import com.klescevg.simulation.entities.creatures.Predator;
 

@@ -1,10 +1,8 @@
 package com.klescevg.simulation.actions;
 
-import com.klescevg.simulation.SimulationConfig;
-import com.klescevg.simulation.WorldMap;
+import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.factories.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class SpawnEntitiesAction extends Action{

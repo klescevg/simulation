@@ -1,8 +1,7 @@
 package com.klescevg.simulation.entities.creatures;
 
-import com.klescevg.simulation.Coordinates;
-import com.klescevg.simulation.WorldMap;
-import com.klescevg.simulation.PathFinder;
+import com.klescevg.simulation.world.*;
+import com.klescevg.simulation.pathfinding.PathFinder;
 import com.klescevg.simulation.Symbol;
 import com.klescevg.simulation.entities.Entity;
 
@@ -19,7 +18,7 @@ public abstract class Creature extends Entity {
     }
 
     public final void makeMove(WorldMap worldMap, PathFinder pathFinder){
-        Stack<Coordinates> path = pathFinder.getPathToEntityBFS(this, getTargetType());
+        Stack<Coordinates> path = pathFinder.getPathToTarget(this, getTargetType());
 
         if (path != null && !path.isEmpty()) {
             if ((path.size() - 1 <= speed)) {

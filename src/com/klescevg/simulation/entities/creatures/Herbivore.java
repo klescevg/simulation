@@ -1,7 +1,6 @@
 package com.klescevg.simulation.entities.creatures;
 
-import com.klescevg.simulation.Coordinates;
-import com.klescevg.simulation.WorldMap;
+import com.klescevg.simulation.world.*;
 import com.klescevg.simulation.Symbol;
 import com.klescevg.simulation.entities.Entity;
 import com.klescevg.simulation.entities.objects.Grass;

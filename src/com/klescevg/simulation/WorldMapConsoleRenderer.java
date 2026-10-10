@@ -1,5 +1,7 @@
 package com.klescevg.simulation;
 
+import com.klescevg.simulation.world.*;
+
 public class WorldMapConsoleRenderer {
     private final WorldMap worldMap;
 
