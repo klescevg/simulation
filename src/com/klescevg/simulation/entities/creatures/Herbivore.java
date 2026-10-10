@@ -3,6 +3,7 @@ package com.klescevg.simulation.entities.creatures;
 import com.klescevg.simulation.Coordinates;
 import com.klescevg.simulation.WorldMap;
 import com.klescevg.simulation.Symbol;
+import com.klescevg.simulation.entities.Entity;
 import com.klescevg.simulation.entities.objects.Grass;
 
 import java.util.Stack;
@@ -15,7 +16,7 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    protected Class<?> getTargetType(){
+    protected Class<? extends Entity> getTargetType(){
         return Grass.class;
     }
 

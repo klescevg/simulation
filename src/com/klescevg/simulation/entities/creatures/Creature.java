@@ -58,7 +58,7 @@ public abstract class Creature extends Entity {
         return healthPoints > 0;
     }
 
-    protected abstract Class<?> getTargetType();
+    protected abstract Class<? extends Entity> getTargetType();
     protected abstract void consumeTarget(WorldMap worldMap, Stack<Coordinates> path);
 
     protected void moveToTarget(WorldMap worldMap, Stack<Coordinates> path) {

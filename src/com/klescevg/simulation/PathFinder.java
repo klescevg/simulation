@@ -12,7 +12,7 @@ public class PathFinder {
         this.worldMap = worldMap;
     }
 
-    public Stack<Coordinates> getPathToEntityBFS(Entity startEntity, Class<?> goalEntityType) {
+    public Stack<Coordinates> getPathToEntityBFS(Entity startEntity, Class<? extends Entity> goalEntityType) {
         Coordinates start = worldMap.getEntityCoordinates(startEntity);
         Coordinates goal = null;
 
@@ -57,7 +57,7 @@ public class PathFinder {
         return path;
     }
 
-    public Coordinates getNextGoalEntityCoordinates(Entity startEntity, Class<?> goalEntityType) {
+    public Coordinates getNextGoalEntityCoordinates(Entity startEntity, Class<? extends Entity> goalEntityType) {
         Stack<Coordinates> path = getPathToEntityBFS(startEntity, goalEntityType);
 
         if (path == null || path.isEmpty()) {
@@ -67,7 +67,7 @@ public class PathFinder {
         return path.firstElement();
     }
 
-    public int getDistanceToNextGoalEntity(Entity startEntity, Class<?> goalEntityType) {
+    public int getDistanceToNextGoalEntity(Entity startEntity, Class<? extends Entity> goalEntityType) {
         Stack<Coordinates> path = getPathToEntityBFS(startEntity, goalEntityType);
 
         if (path == null || path.isEmpty()) {
@@ -77,7 +77,7 @@ public class PathFinder {
         return path.size() - 1;
     }
 
-    public Coordinates getNextPositionToGoalEntity(Creature startCreature, Class<?> goalEntityType) {
+    public Coordinates getNextPositionToGoalEntity(Creature startCreature, Class<? extends Entity> goalEntityType) {
         Stack<Coordinates> path = getPathToEntityBFS(startCreature, goalEntityType);
 
         if (path == null || path.isEmpty()) {

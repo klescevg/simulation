@@ -3,6 +3,7 @@ package com.klescevg.simulation.entities.creatures;
 import com.klescevg.simulation.Coordinates;
 import com.klescevg.simulation.WorldMap;
 import com.klescevg.simulation.Symbol;
+import com.klescevg.simulation.entities.Entity;
 
 import java.util.Stack;
 
@@ -16,7 +17,7 @@ public class Predator extends Creature {
     }
 
     @Override
-    protected Class<?> getTargetType() {
+    protected Class<? extends Entity> getTargetType() {
         return Herbivore.class;
     }
 
