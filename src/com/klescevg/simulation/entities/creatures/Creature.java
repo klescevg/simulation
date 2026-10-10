@@ -1,7 +1,7 @@
 package com.klescevg.simulation.entities.creatures;
 
+import com.klescevg.simulation.pathfinding.PathfindingStrategy;
 import com.klescevg.simulation.world.*;
-import com.klescevg.simulation.pathfinding.PathFinder;
 import com.klescevg.simulation.Symbol;
 import com.klescevg.simulation.entities.Entity;
 
@@ -17,8 +17,8 @@ public abstract class Creature extends Entity {
         this.speed = speed;
     }
 
-    public final void makeMove(WorldMap worldMap, PathFinder pathFinder){
-        Stack<Coordinates> path = pathFinder.getPathToTarget(this, getTargetType());
+    public final void makeMove(WorldMap worldMap, PathfindingStrategy strategy){
+        Stack<Coordinates> path = strategy.getPathToTarget(this, getTargetType());
 
         if (path != null && !path.isEmpty()) {
             if ((path.size() - 1 <= speed)) {
