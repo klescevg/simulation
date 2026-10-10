@@ -80,6 +80,16 @@ public class WorldMap {
         return map.keySet();
     }
 
+    public Set<Coordinates> getCoordinatesOfType(Class<?> type){
+        Set<Coordinates> result = new HashSet<>();
+        for (Coordinates coordinates : map.keySet()){
+            if (type.isInstance(map.get(coordinates))){
+                result.add(coordinates);
+            }
+        }
+        return result;
+    }
+
     public Set<Coordinates> getBorderCells(Coordinates coordinates) {
         Set<Coordinates> borderCells = new HashSet<>();
 
