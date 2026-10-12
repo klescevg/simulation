@@ -1,10 +1,9 @@
 package com.klescevg.simulation.entities.creatures;
 
+import com.klescevg.simulation.pathfinding.Path;
 import com.klescevg.simulation.world.*;
 import com.klescevg.simulation.Symbol;
 import com.klescevg.simulation.entities.Entity;
-
-import java.util.Stack;
 
 public class Predator extends Creature {
     private static final int PREY_HEAL = 70;
@@ -21,12 +20,12 @@ public class Predator extends Creature {
     }
 
     @Override
-    protected void consumeTarget(WorldMap worldMap, Stack<Coordinates> path) {
-        Creature prey = (Creature) worldMap.getEntity(path.getFirst());
+    protected void consumeTarget(WorldMap worldMap, Path path) {
+        Creature prey = (Creature) worldMap.getEntity(path.target());
         prey.takeDamage(attackPower);
         if (!prey.isAlive()) {
-            worldMap.clearCell(path.getFirst());
-            worldMap.moveEntity(path.getLast(), path.getFirst());
+            worldMap.clearCell(path.target());
+            worldMap.moveEntity(path.start(), path.target());
             heal(PREY_HEAL);
         }
     }

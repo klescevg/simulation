@@ -1,11 +1,10 @@
 package com.klescevg.simulation.entities.creatures;
 
+import com.klescevg.simulation.pathfinding.Path;
 import com.klescevg.simulation.pathfinding.PathfindingStrategy;
 import com.klescevg.simulation.world.*;
 import com.klescevg.simulation.Symbol;
 import com.klescevg.simulation.entities.Entity;
-
-import java.util.Stack;
 
 public abstract class Creature extends Entity {
     private int healthPoints;
@@ -17,11 +16,11 @@ public abstract class Creature extends Entity {
         this.speed = speed;
     }
 
-    public final void makeMove(WorldMap worldMap, PathfindingStrategy strategy){
-        Stack<Coordinates> path = strategy.getPathToTarget(this, getTargetType());
+    public final void makeMove(WorldMap worldMap, PathfindingStrategy strategy) {
+        Path path = strategy.findPath(this, getTargetType());
 
-        if (path != null && !path.isEmpty()) {
-            if ((path.size() - 1 <= speed)) {
+        if (!path.isEmpty()) {
+            if (path.steps() <= speed) {
                 consumeTarget(worldMap, path);
             } else {
                 moveToTarget(worldMap, path);
@@ -58,16 +57,12 @@ public abstract class Creature extends Entity {
     }
 
     protected abstract Class<? extends Entity> getTargetType();
-    protected abstract void consumeTarget(WorldMap worldMap, Stack<Coordinates> path);
 
-    protected void moveToTarget(WorldMap worldMap, Stack<Coordinates> path) {
-        Coordinates initialPosition = path.pop();
-        Coordinates nextPosition = null;
+    protected abstract void consumeTarget(WorldMap worldMap, Path path);
 
-        for (int i = 0; i < speed && !path.isEmpty(); i++) {
-            nextPosition = path.pop();
-        }
+    protected void moveToTarget(WorldMap worldMap, Path path) {
+        Coordinates initialPosition = path.start();
 
-        worldMap.moveEntity(initialPosition, nextPosition);
+        worldMap.moveEntity(initialPosition, path.positionAfter(speed));
     }
 }

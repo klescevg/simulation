@@ -14,7 +14,7 @@ public class AStarStrategy implements PathfindingStrategy {
     }
 
     @Override
-    public Stack<Coordinates> findPath(Entity startEntity, Class<? extends Entity> targetEntityType) {
+    public Path findPath(Entity startEntity, Class<? extends Entity> targetEntityType) {
         Coordinates start = worldMap.getEntityCoordinates(startEntity);
         Coordinates target = findNearestTarget(start, targetEntityType);
 
@@ -22,11 +22,11 @@ public class AStarStrategy implements PathfindingStrategy {
             Map<Coordinates, Coordinates> parents = buildParentsMap(start, target);
 
             if (parents.containsKey(target)) {
-                return reconstructPath(parents, start, target);
+                return Path.fromParents(parents, start, target);
             }
         }
 
-        return new Stack<>();
+        return Path.empty();
     }
 
     private Coordinates findNearestTarget(Coordinates start, Class<? extends Entity> targetEntityType) {
@@ -77,19 +77,6 @@ public class AStarStrategy implements PathfindingStrategy {
         }
 
         return parents;
-    }
-
-    private Stack<Coordinates> reconstructPath(Map<Coordinates, Coordinates> parents, Coordinates start, Coordinates target) {
-        Stack<Coordinates> path = new Stack<>();
-        Coordinates current = target;
-
-        while (current != null && !current.equals(start)) {
-            path.push(current);
-            current = parents.get(current);
-        }
-
-        path.push(start);
-        return path;
     }
 
     private boolean isWalkable(Coordinates cell, Coordinates target) {

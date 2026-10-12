@@ -14,7 +14,7 @@ public class BfsStrategy implements PathfindingStrategy {
     }
 
     @Override
-    public Stack<Coordinates> findPath(Entity startEntity, Class<? extends Entity> targetEntityType) {
+    public Path findPath(Entity startEntity, Class<? extends Entity> targetEntityType) {
         Coordinates start = worldMap.getEntityCoordinates(startEntity);
 
         Queue<Coordinates> queue = new ArrayDeque<>();
@@ -28,7 +28,7 @@ public class BfsStrategy implements PathfindingStrategy {
             Coordinates current = queue.poll();
 
             if (isTarget(current, targetEntityType)) {
-                return reconstructPath(parents, start, current);
+                return Path.fromParents(parents, start, current);
             }
 
             for (Coordinates neighbor : worldMap.getBorderCells(current)) {
@@ -39,20 +39,7 @@ public class BfsStrategy implements PathfindingStrategy {
                 }
             }
         }
-        return new Stack<>();
-    }
-
-    private Stack<Coordinates> reconstructPath(Map<Coordinates, Coordinates> parents, Coordinates start, Coordinates target) {
-        Stack<Coordinates> path = new Stack<>();
-        Coordinates current = target;
-
-        while (current != null && !current.equals(start)) {
-            path.push(current);
-            current = parents.get(current);
-        }
-
-        path.push(start);
-        return path;
+        return Path.empty();
     }
 
     private boolean isWalkable(Coordinates cell, Class<? extends Entity> targetEntityType) {
