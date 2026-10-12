@@ -6,5 +6,5 @@ import com.klescevg.simulation.entities.Entity;
 import java.util.Stack;
 
 public interface PathfindingStrategy {
-    Stack<Coordinates> getPathToTarget(Entity startEntity, Class<? extends Entity> targetEntityType);
+    Stack<Coordinates> findPath(Entity startEntity, Class<? extends Entity> targetEntityType);
 }

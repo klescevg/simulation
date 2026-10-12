@@ -13,12 +13,13 @@ public class AStarStrategy implements PathfindingStrategy {
         this.worldMap = worldMap;
     }
 
-    public Stack<Coordinates> getPathToTarget(Entity startEntity, Class<? extends Entity> targetEntityType) {
+    @Override
+    public Stack<Coordinates> findPath(Entity startEntity, Class<? extends Entity> targetEntityType) {
         Coordinates start = worldMap.getEntityCoordinates(startEntity);
-        Coordinates target = getClosestTarget(start, targetEntityType);
+        Coordinates target = findNearestTarget(start, targetEntityType);
 
         if (target != null) {
-            Map<Coordinates, Coordinates> parents = searchFromStart(start, target);
+            Map<Coordinates, Coordinates> parents = buildParentsMap(start, target);
 
             if (parents.containsKey(target)) {
                 return reconstructPath(parents, start, target);
@@ -28,32 +29,31 @@ public class AStarStrategy implements PathfindingStrategy {
         return new Stack<>();
     }
 
-    private Coordinates getClosestTarget(Coordinates start, Class<? extends Entity> targetEntityType) {
+    private Coordinates findNearestTarget(Coordinates start, Class<? extends Entity> targetEntityType) {
         Coordinates target = null;
         int closestDistance = Integer.MAX_VALUE;
 
         for (Coordinates coordinates : worldMap.getCoordinatesOfType(targetEntityType)) {
-            int h = heuristic(start, coordinates);
-            if (h < closestDistance) {
-                closestDistance = h;
+            int distance = heuristic(start, coordinates);
+            if (distance < closestDistance) {
+                closestDistance = distance;
                 target = coordinates;
             }
         }
         return target;
     }
 
-    private Map<Coordinates, Coordinates> searchFromStart(Coordinates start, Coordinates target) {
+    private Map<Coordinates, Coordinates> buildParentsMap(Coordinates start, Coordinates target) {
         Queue<PrioritizedCell> queue = new PriorityQueue<>(Comparator.comparingInt(PrioritizedCell::priority));
-        Map<Coordinates, Integer> costs = new HashMap<>();
+        Map<Coordinates, Integer> costFromStart = new HashMap<>();
         Map<Coordinates, Coordinates> parents = new HashMap<>();
         Set<Coordinates> processedCells = new HashSet<>();
 
-        costs.put(start, 0);
+        costFromStart.put(start, 0);
         queue.add(new PrioritizedCell(start, heuristic(start, target)));
 
         while (!queue.isEmpty()) {
-            PrioritizedCell currentCell = queue.poll();
-            Coordinates current = currentCell.coordinates();
+            Coordinates current = queue.poll().coordinates();
 
             if (!processedCells.contains(current)) {
                 processedCells.add(current);
@@ -66,9 +66,9 @@ public class AStarStrategy implements PathfindingStrategy {
             }
             for (Coordinates neighbor : worldMap.getBorderCells(current)) {
                 if (isWalkable(neighbor, target) && !processedCells.contains(neighbor)) {
-                    int newCost = costs.get(current) + 1;
-                    if (!costs.containsKey(neighbor) || newCost < costs.get(neighbor)) {
-                        costs.put(neighbor, newCost);
+                    int newCost = costFromStart.get(current) + 1;
+                    if (!costFromStart.containsKey(neighbor) || newCost < costFromStart.get(neighbor)) {
+                        costFromStart.put(neighbor, newCost);
                         parents.put(neighbor, current);
                         queue.add(new PrioritizedCell(neighbor, newCost + heuristic(neighbor, target)));
                     }

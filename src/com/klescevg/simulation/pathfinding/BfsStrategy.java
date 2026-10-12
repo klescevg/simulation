@@ -6,46 +6,43 @@ import com.klescevg.simulation.entities.Entity;
 
 import java.util.*;
 
-public class BfsStrategy implements PathfindingStrategy{
+public class BfsStrategy implements PathfindingStrategy {
     private final WorldMap worldMap;
 
     public BfsStrategy(WorldMap worldMap) {
         this.worldMap = worldMap;
     }
 
-    public Stack<Coordinates> getPathToTarget(Entity startEntity, Class<? extends Entity> targetEntityType) {
+    @Override
+    public Stack<Coordinates> findPath(Entity startEntity, Class<? extends Entity> targetEntityType) {
         Coordinates start = worldMap.getEntityCoordinates(startEntity);
-        Coordinates target = null;
 
-        Queue<Coordinates> queue = new LinkedList<>();
-        Set<Coordinates> processedCells = new HashSet<>();
+        Queue<Coordinates> queue = new ArrayDeque<>();
+        Set<Coordinates> visitedCells = new HashSet<>();
         Map<Coordinates, Coordinates> parents = new HashMap<>();
 
         queue.add(start);
-        processedCells.add(start);
+        visitedCells.add(start);
 
         while (!queue.isEmpty()) {
             Coordinates current = queue.poll();
 
-            if (targetEntityType.isInstance(worldMap.getEntity(current))) {
-                target = current;
-                break;
+            if (isTarget(current, targetEntityType)) {
+                return reconstructPath(parents, start, current);
             }
 
             for (Coordinates neighbor : worldMap.getBorderCells(current)) {
-                if (!processedCells.contains(neighbor)
-                        && (worldMap.isCellEmpty(neighbor) || targetEntityType.isInstance(worldMap.getEntity(neighbor)))) {
-                    processedCells.add(neighbor);
+                if (!visitedCells.contains(neighbor) && isWalkable(neighbor, targetEntityType)) {
+                    visitedCells.add(neighbor);
                     parents.put(neighbor, current);
                     queue.add(neighbor);
                 }
             }
         }
+        return new Stack<>();
+    }
 
-        if (target == null){
-            return new Stack<>();
-        }
-
+    private Stack<Coordinates> reconstructPath(Map<Coordinates, Coordinates> parents, Coordinates start, Coordinates target) {
         Stack<Coordinates> path = new Stack<>();
         Coordinates current = target;
 
@@ -58,4 +55,11 @@ public class BfsStrategy implements PathfindingStrategy{
         return path;
     }
 
+    private boolean isWalkable(Coordinates cell, Class<? extends Entity> targetEntityType) {
+        return worldMap.isCellEmpty(cell) || isTarget(cell, targetEntityType);
+    }
+
+    private boolean isTarget(Coordinates cell, Class<? extends Entity> targetEntityType) {
+        return targetEntityType.isInstance(worldMap.getEntity(cell));
+    }
 }
