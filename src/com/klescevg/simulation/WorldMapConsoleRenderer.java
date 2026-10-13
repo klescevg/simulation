@@ -5,7 +5,7 @@ import com.klescevg.simulation.world.*;
 public class WorldMapConsoleRenderer {
     private final WorldMap worldMap;
 
-    public WorldMapConsoleRenderer(WorldMap worldMap){
+    public WorldMapConsoleRenderer(WorldMap worldMap) {
         this.worldMap = worldMap;
     }
 
@@ -14,11 +14,7 @@ public class WorldMapConsoleRenderer {
             StringBuilder line = new StringBuilder();
             for (int x = 0; x < worldMap.sideLength(); x++) {
                 Coordinates coordinates = new Coordinates(x, y);
-                if (!worldMap.isCellEmpty(coordinates)) {
-                    line.append(" ").append(worldMap.getEntity(coordinates).symbol.getColoredIcon()).append(" ");
-                } else {
-                    line.append(" . ");
-                }
+                line.append(" ").append(worldMap.getEntity(coordinates).map(entity -> entity.symbol.getColoredIcon()).orElse(".")).append(" ");
             }
             System.out.println(line);
         }

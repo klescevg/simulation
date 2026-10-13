@@ -37,8 +37,8 @@ public class WorldMap {
         }
     }
 
-    public Entity getEntity(Coordinates coordinates) {
-        return entities.get(coordinates);
+    public Optional<Entity> getEntity(Coordinates coordinates) {
+        return Optional.ofNullable(entities.get(coordinates));
     }
 
     public Coordinates getEntityCoordinates(Entity entity) {

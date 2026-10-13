@@ -47,6 +47,6 @@ public class BfsStrategy implements PathfindingStrategy {
     }
 
     private boolean isTarget(Coordinates cell, Class<? extends Entity> targetEntityType) {
-        return targetEntityType.isInstance(worldMap.getEntity(cell));
+        return worldMap.getEntity(cell).filter(targetEntityType::isInstance).isPresent();
     }
 }
