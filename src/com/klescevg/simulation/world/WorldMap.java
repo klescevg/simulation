@@ -5,7 +5,7 @@ import com.klescevg.simulation.entities.Entity;
 import java.util.*;
 
 public class WorldMap {
-    private int sideLength;
+    private final int sideLength;
     private final Map<Coordinates, Entity> entities = new HashMap<>();
 
     public WorldMap(int length) {
@@ -82,20 +82,12 @@ public class WorldMap {
         Coordinates top = new Coordinates(coordinates.x(), coordinates.y() - 1);
         Coordinates bottom = new Coordinates(coordinates.x(), coordinates.y() + 1);
 
-        if (isValidCoordinate(left)) {
-            borderCells.add(left);
-        }
+        List<Coordinates> neighbors = List.of(left, right, top, bottom);
 
-        if (isValidCoordinate(right)) {
-            borderCells.add(right);
-        }
-
-        if (isValidCoordinate(top)) {
-            borderCells.add(top);
-        }
-
-        if (isValidCoordinate(bottom)) {
-            borderCells.add(bottom);
+        for (Coordinates neighbor : neighbors){
+            if (isValidCoordinate(neighbor)){
+                borderCells.add(neighbor);
+            }
         }
 
         return borderCells;
