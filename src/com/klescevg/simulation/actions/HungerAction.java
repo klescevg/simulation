@@ -7,8 +7,8 @@ public class HungerAction extends Action{
     private static final int HUNGER_DAMAGE = 5;
 
     @Override
-    public void execute(WorldMap worldMap) {
-        for (Creature creature : worldMap.getEntitiesOfType(Creature.class)){
+    public void execute(WorldMap map) {
+        for (Creature creature : map.getEntitiesOfType(Creature.class)){
             creature.takeDamage(HUNGER_DAMAGE);
         }
     }

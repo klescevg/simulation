@@ -17,14 +17,14 @@ public class SpawnEntitiesAction extends Action {
     }
 
     @Override
-    public void execute(WorldMap worldMap) {
+    public void execute(WorldMap map) {
         for (EntityFactory factory : entityCounts.keySet()) {
             for (int i = 0; i < entityCounts.get(factory); i++) {
-                Coordinates randomCoordinates = random(worldMap.sideLength());
-                while (!worldMap.isCellEmpty(randomCoordinates)) {
-                    randomCoordinates = random(worldMap.sideLength());
+                Coordinates randomCoordinates = random(map.sideLength());
+                while (!map.isCellEmpty(randomCoordinates)) {
+                    randomCoordinates = random(map.sideLength());
                 }
-                worldMap.addEntity(randomCoordinates, factory.create());
+                map.addEntity(randomCoordinates, factory.create());
             }
         }
     }

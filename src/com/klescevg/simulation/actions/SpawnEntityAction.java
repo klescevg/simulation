@@ -15,11 +15,11 @@ public class SpawnEntityAction extends Action{
     }
 
     @Override
-    public void execute(WorldMap worldMap) {
-        Coordinates randomCoordinates = random(worldMap.sideLength());
-        while (!worldMap.isCellEmpty(randomCoordinates)) {
-            randomCoordinates = random(worldMap.sideLength());
+    public void execute(WorldMap map) {
+        Coordinates randomCoordinates = random(map.sideLength());
+        while (!map.isCellEmpty(randomCoordinates)) {
+            randomCoordinates = random(map.sideLength());
         }
-        worldMap.addEntity(randomCoordinates, factory.create());
+        map.addEntity(randomCoordinates, factory.create());
     }
 }

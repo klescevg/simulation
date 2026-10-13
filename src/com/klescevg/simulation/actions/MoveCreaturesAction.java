@@ -13,13 +13,13 @@ public class MoveCreaturesAction extends Action {
     }
 
     @Override
-    public void execute(WorldMap worldMap) {
-        for (Herbivore herbivore : worldMap.getEntitiesOfType(Herbivore.class)) {
-            herbivore.makeMove(worldMap, strategy);
+    public void execute(WorldMap map) {
+        for (Herbivore herbivore : map.getEntitiesOfType(Herbivore.class)) {
+            herbivore.makeMove(map, strategy);
         }
 
-        for (Predator predator : worldMap.getEntitiesOfType(Predator.class)) {
-            predator.makeMove(worldMap, strategy);
+        for (Predator predator : map.getEntitiesOfType(Predator.class)) {
+            predator.makeMove(map, strategy);
         }
     }
 }

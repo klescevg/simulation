@@ -5,10 +5,10 @@ import com.klescevg.simulation.entities.creatures.Creature;
 
 public class RemoveDeadCreaturesAction extends Action {
     @Override
-    public void execute(WorldMap worldMap) {
-        for (Creature creature : worldMap.getEntitiesOfType(Creature.class)) {
+    public void execute(WorldMap map) {
+        for (Creature creature : map.getEntitiesOfType(Creature.class)) {
             if (!creature.isAlive()) {
-                worldMap.removeEntity(worldMap.getEntityCoordinates(creature));
+                map.removeEntity(map.getCoordinates(creature));
             }
         }
     }
