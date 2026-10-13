@@ -8,7 +8,7 @@ public class RemoveDeadCreaturesAction extends Action {
     public void execute(WorldMap worldMap) {
         for (Creature creature : worldMap.getEntitiesOfType(Creature.class)) {
             if (!creature.isAlive()) {
-                worldMap.clearCell(worldMap.getEntityCoordinates(creature));
+                worldMap.removeEntity(worldMap.getEntityCoordinates(creature));
             }
         }
     }

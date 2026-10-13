@@ -24,7 +24,7 @@ public class Predator extends Creature {
         Creature prey = (Creature) worldMap.getEntity(path.target()).orElseThrow();
         prey.takeDamage(attackPower);
         if (!prey.isAlive()) {
-            worldMap.clearCell(path.target());
+            worldMap.removeEntity(path.target());
             worldMap.moveEntity(path.start(), path.target());
             heal(PREY_HEAL);
         }
