@@ -45,13 +45,13 @@ public class WorldMap {
         addEntity(newPosition, entity);
     }
 
-    public Coordinates getEntityCoordinates(Entity entity) {
-        for (Coordinates c : entities.keySet()) {
-            if (entities.get(c) == entity) {
-                return c;
+    public Optional<Coordinates> getCoordinates(Entity entity) {
+        for (Map.Entry<Coordinates, Entity> entry : entities.entrySet()) {
+            if (entry.getValue() == entity) {
+                return Optional.of(entry.getKey());
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     public <T extends Entity> Collection<T> getEntitiesOfType(Class<T> type) {
@@ -84,8 +84,8 @@ public class WorldMap {
 
         List<Coordinates> neighbors = List.of(left, right, top, bottom);
 
-        for (Coordinates neighbor : neighbors){
-            if (isValidCoordinate(neighbor)){
+        for (Coordinates neighbor : neighbors) {
+            if (isValidCoordinate(neighbor)) {
                 borderCells.add(neighbor);
             }
         }
@@ -94,6 +94,7 @@ public class WorldMap {
     }
 
     public boolean isCellEmpty(Coordinates coordinates) {
+        validate(coordinates);
         return !entities.containsKey(coordinates);
     }
 

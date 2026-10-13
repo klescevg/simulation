@@ -15,7 +15,8 @@ public class BfsStrategy implements PathfindingStrategy {
 
     @Override
     public Path findPath(Entity startEntity, Class<? extends Entity> targetEntityType) {
-        Coordinates start = worldMap.getEntityCoordinates(startEntity);
+        Coordinates start = worldMap.getCoordinates(startEntity)
+                .orElseThrow(() -> new IllegalStateException("Start entity is not found on map"));
 
         Queue<Coordinates> queue = new ArrayDeque<>();
         Set<Coordinates> visitedCells = new HashSet<>();
