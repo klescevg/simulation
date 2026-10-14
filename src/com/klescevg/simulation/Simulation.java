@@ -3,6 +3,8 @@ package com.klescevg.simulation;
 import com.klescevg.simulation.actions.*;
 import com.klescevg.simulation.factories.*;
 import com.klescevg.simulation.pathfinding.PathfindingStrategy;
+import com.klescevg.simulation.view.renderer.ConsoleRenderer;
+import com.klescevg.simulation.view.renderer.Renderer;
 import com.klescevg.simulation.world.WorldMap;
 
 import java.util.HashMap;
@@ -12,7 +14,7 @@ import java.util.Map;
 public class Simulation {
     private int turnCount;
     private final WorldMap worldMap;
-    private final WorldMapConsoleRenderer worldMapConsoleRenderer;
+    private final Renderer consoleRenderer;
     private final List<Action> initActions;
     private final List<Action> turnActions;
     private volatile boolean running = false;
@@ -21,7 +23,7 @@ public class Simulation {
     public Simulation(WorldMap worldMap, Map<EntityFactory, Integer> entityCounts, PathfindingStrategy strategy) {
         turnCount = 0;
         this.worldMap = worldMap;
-        worldMapConsoleRenderer = new WorldMapConsoleRenderer(worldMap);
+        consoleRenderer = new ConsoleRenderer();
 
         initActions = List.of(new SpawnEntitiesAction(entityCounts));
         Map<EntityFactory, Integer> grassCounts = new HashMap<>();
@@ -35,7 +37,7 @@ public class Simulation {
         executeActions(turnActions);
         System.out.print("\033[H\033[2J");
         System.out.println(turnCount);
-        worldMapConsoleRenderer.render();
+        consoleRenderer.render(worldMap);
     }
 
     public void startSimulation() {
