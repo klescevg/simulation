@@ -3,15 +3,13 @@ package com.klescevg.simulation.entities.creatures;
 import com.klescevg.simulation.pathfinding.Path;
 import com.klescevg.simulation.pathfinding.PathfindingStrategy;
 import com.klescevg.simulation.world.*;
-import com.klescevg.simulation.Symbol;
 import com.klescevg.simulation.entities.Entity;
 
 public abstract class Creature extends Entity {
     private int healthPoints;
     private final int speed;
 
-    public Creature(Symbol symbol, int healthPoints, int speed) {
-        super(symbol);
+    public Creature(int healthPoints, int speed) {
         this.healthPoints = healthPoints;
         this.speed = speed;
     }

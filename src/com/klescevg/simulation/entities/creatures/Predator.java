@@ -2,7 +2,6 @@ package com.klescevg.simulation.entities.creatures;
 
 import com.klescevg.simulation.pathfinding.Path;
 import com.klescevg.simulation.world.*;
-import com.klescevg.simulation.Symbol;
 import com.klescevg.simulation.entities.Entity;
 
 public class Predator extends Creature {
@@ -10,7 +9,7 @@ public class Predator extends Creature {
     private final int attackPower;
 
     public Predator(int healthPoints, int speed, int attackPower) {
-        super(Symbol.P, healthPoints, speed);
+        super(healthPoints, speed);
         this.attackPower = attackPower;
     }
 
