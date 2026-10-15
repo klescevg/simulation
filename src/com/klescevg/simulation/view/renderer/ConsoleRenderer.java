@@ -2,7 +2,7 @@ package com.klescevg.simulation.view.renderer;
 
 import com.klescevg.simulation.entities.Entity;
 import com.klescevg.simulation.world.WorldMap;
-import com.klescevg.simulation.world.Coordinates;
+import com.klescevg.simulation.world.Coordinate;
 
 public class ConsoleRenderer implements Renderer {
     private static final String ANSI_DEFAULT = "\033[39m";
@@ -16,19 +16,19 @@ public class ConsoleRenderer implements Renderer {
 
     @Override
     public void render(WorldMap map) {
-        for (int y = 0; y < map.sideLength(); y++) {
+        for (int row = 0; row < map.sideLength(); row++) {
             StringBuilder line = new StringBuilder();
-            for (int x = 0; x < map.sideLength(); x++) {
-                Coordinates coordinates = new Coordinates(x, y);
-                line.append(renderCell(map, coordinates));
+            for (int column = 0; column < map.sideLength(); column++) {
+                Coordinate coordinate = new Coordinate(row, column);
+                line.append(renderCell(map, coordinate));
             }
             System.out.println(line);
         }
         System.out.println();
     }
 
-    private String renderCell(WorldMap map, Coordinates coordinates) {
-        Sprite sprite = map.getEntity(coordinates).map(this::toSprite).orElse(Sprite.EMPTY_CELL);
+    private String renderCell(WorldMap map, Coordinate coordinate) {
+        Sprite sprite = map.getEntity(coordinate).map(this::toSprite).orElse(Sprite.EMPTY_CELL);
         return CELL_PADDING + sprite.toColoredString() + CELL_PADDING;
     }
 

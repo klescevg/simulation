@@ -1,6 +1,6 @@
 package com.klescevg.simulation.pathfinding;
 
-import com.klescevg.simulation.world.Coordinates;
+import com.klescevg.simulation.world.Coordinate;
 import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.entities.Entity;
 
@@ -15,24 +15,24 @@ public class BfsStrategy implements PathfindingStrategy {
 
     @Override
     public Path findPath(Entity startEntity, Class<? extends Entity> targetEntityType) {
-        Coordinates start = worldMap.getCoordinates(startEntity)
+        Coordinate start = worldMap.getCoordinate(startEntity)
                 .orElseThrow(() -> new IllegalStateException("Start entity is not found on map"));
 
-        Queue<Coordinates> queue = new ArrayDeque<>();
-        Set<Coordinates> visitedCells = new HashSet<>();
-        Map<Coordinates, Coordinates> parents = new HashMap<>();
+        Queue<Coordinate> queue = new ArrayDeque<>();
+        Set<Coordinate> visitedCells = new HashSet<>();
+        Map<Coordinate, Coordinate> parents = new HashMap<>();
 
         queue.add(start);
         visitedCells.add(start);
 
         while (!queue.isEmpty()) {
-            Coordinates current = queue.poll();
+            Coordinate current = queue.poll();
 
             if (isTarget(current, targetEntityType)) {
                 return Path.fromParents(parents, start, current);
             }
 
-            for (Coordinates neighbor : worldMap.getBorderCells(current)) {
+            for (Coordinate neighbor : worldMap.getBorderCells(current)) {
                 if (!visitedCells.contains(neighbor) && isWalkable(neighbor, targetEntityType)) {
                     visitedCells.add(neighbor);
                     parents.put(neighbor, current);
@@ -43,11 +43,11 @@ public class BfsStrategy implements PathfindingStrategy {
         return Path.empty();
     }
 
-    private boolean isWalkable(Coordinates cell, Class<? extends Entity> targetEntityType) {
+    private boolean isWalkable(Coordinate cell, Class<? extends Entity> targetEntityType) {
         return worldMap.isCellEmpty(cell) || isTarget(cell, targetEntityType);
     }
 
-    private boolean isTarget(Coordinates cell, Class<? extends Entity> targetEntityType) {
+    private boolean isTarget(Coordinate cell, Class<? extends Entity> targetEntityType) {
         return worldMap.getEntity(cell).filter(targetEntityType::isInstance).isPresent();
     }
 }

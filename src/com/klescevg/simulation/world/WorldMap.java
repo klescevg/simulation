@@ -6,36 +6,37 @@ import java.util.*;
 
 public class WorldMap {
     private final int sideLength;
-    private final Map<Coordinates, Entity> entities = new HashMap<>();
+    private final Map<Coordinate, Entity> entities = new HashMap<>();
 
     public WorldMap(int length) {
         this.sideLength = length;
     }
 
-    public Map<Coordinates, Entity> getEntities() {
+    public Map<Coordinate, Entity> getEntities() {
         return new HashMap<>(entities);
     }
 
-    public void addEntity(Coordinates coordinates, Entity entity) {
-        validate(coordinates);
-        entities.put(coordinates, entity);
+    public void addEntity(Coordinate coordinate, Entity entity) {
+        validate(coordinate);
+        entities.put(coordinate, entity);
     }
 
-    public Optional<Entity> getEntity(Coordinates coordinates) {
-        validate(coordinates);
-        return Optional.ofNullable(entities.get(coordinates));
+    public Optional<Entity> getEntity(Coordinate coordinate) {
+        validate(coordinate);
+        return Optional.ofNullable(entities.get(coordinate));
     }
 
-    public void removeEntity(Coordinates coordinates) {
-        validate(coordinates);
-        entities.remove(coordinates);
+    public void removeEntity(Coordinate coordinate) {
+        validate(coordinate);
+        entities.remove(coordinate);
     }
 
-    public void moveEntity(Coordinates initialPosition, Coordinates newPosition) {
+    public void moveEntity(Coordinate initialPosition, Coordinate newPosition) {
         validate(initialPosition);
         validate(newPosition);
 
-        Entity entity = getEntity(initialPosition).orElseThrow(() -> new IllegalStateException("No entity at " + initialPosition));
+        Entity entity = getEntity(initialPosition)
+                .orElseThrow(() -> new IllegalStateException("No entity at " + initialPosition));
 
         if (!isCellEmpty(newPosition)) {
             throw new IllegalStateException("Cell is occupied: " + newPosition);
@@ -45,8 +46,8 @@ public class WorldMap {
         addEntity(newPosition, entity);
     }
 
-    public Optional<Coordinates> getCoordinates(Entity entity) {
-        for (Map.Entry<Coordinates, Entity> entry : entities.entrySet()) {
+    public Optional<Coordinate> getCoordinate(Entity entity) {
+        for (Map.Entry<Coordinate, Entity> entry : entities.entrySet()) {
             if (entry.getValue() == entity) {
                 return Optional.of(entry.getKey());
             }
@@ -64,27 +65,27 @@ public class WorldMap {
         return result;
     }
 
-    public Set<Coordinates> getCoordinatesOfType(Class<?> type) {
-        Set<Coordinates> result = new HashSet<>();
-        for (Coordinates coordinates : entities.keySet()) {
-            if (type.isInstance(entities.get(coordinates))) {
-                result.add(coordinates);
+    public Set<Coordinate> getCoordinatesOfType(Class<?> type) {
+        Set<Coordinate> result = new HashSet<>();
+        for (Coordinate coordinate : entities.keySet()) {
+            if (type.isInstance(entities.get(coordinate))) {
+                result.add(coordinate);
             }
         }
         return result;
     }
 
-    public Set<Coordinates> getBorderCells(Coordinates coordinates) {
-        Set<Coordinates> borderCells = new HashSet<>();
+    public Set<Coordinate> getBorderCells(Coordinate coordinate) {
+        Set<Coordinate> borderCells = new HashSet<>();
 
-        Coordinates left = new Coordinates(coordinates.x() - 1, coordinates.y());
-        Coordinates right = new Coordinates(coordinates.x() + 1, coordinates.y());
-        Coordinates top = new Coordinates(coordinates.x(), coordinates.y() - 1);
-        Coordinates bottom = new Coordinates(coordinates.x(), coordinates.y() + 1);
+        Coordinate left = new Coordinate(coordinate.row(), coordinate.column() - 1);
+        Coordinate right = new Coordinate(coordinate.row(), coordinate.column() + 1);
+        Coordinate top = new Coordinate(coordinate.row() - 1, coordinate.column());
+        Coordinate bottom = new Coordinate(coordinate.row() + 1, coordinate.column());
 
-        List<Coordinates> neighbors = List.of(left, right, top, bottom);
+        List<Coordinate> neighbors = List.of(left, right, top, bottom);
 
-        for (Coordinates neighbor : neighbors) {
+        for (Coordinate neighbor : neighbors) {
             if (isInBounds(neighbor)) {
                 borderCells.add(neighbor);
             }
@@ -93,20 +94,20 @@ public class WorldMap {
         return borderCells;
     }
 
-    public boolean isCellEmpty(Coordinates coordinates) {
-        validate(coordinates);
-        return !entities.containsKey(coordinates);
+    public boolean isCellEmpty(Coordinate coordinate) {
+        validate(coordinate);
+        return !entities.containsKey(coordinate);
     }
 
-    private void validate(Coordinates coordinates) {
-        if (!isInBounds(coordinates)) {
-            throw new IllegalArgumentException("Coordinate is not valid: " + coordinates);
+    private void validate(Coordinate coordinate) {
+        if (!isInBounds(coordinate)) {
+            throw new IllegalArgumentException("Coordinate is not valid: " + coordinate);
         }
     }
 
-    public boolean isInBounds(Coordinates coordinates) {
-        return coordinates.x() >= 0 && coordinates.x() < sideLength &&
-                coordinates.y() >= 0 && coordinates.y() < sideLength;
+    public boolean isInBounds(Coordinate coordinate) {
+        return coordinate.row() >= 0 && coordinate.row() < sideLength &&
+                coordinate.column() >= 0 && coordinate.column() < sideLength;
     }
 
     public int sideLength() {

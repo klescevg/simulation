@@ -1,13 +1,12 @@
 package com.klescevg.simulation.actions;
 
-import com.klescevg.simulation.world.Coordinates;
-import com.klescevg.simulation.world.CoordinatesGenerator;
+import com.klescevg.simulation.world.Coordinate;
 import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.factories.*;
 
 import java.util.Map;
 
-import static com.klescevg.simulation.world.CoordinatesGenerator.random;
+import static com.klescevg.simulation.world.CoordinateGenerator.random;
 
 public class SpawnEntitiesAction extends Action {
     private Map<EntityFactory, Integer> entityCounts;
@@ -20,11 +19,11 @@ public class SpawnEntitiesAction extends Action {
     public void execute(WorldMap map) {
         for (EntityFactory factory : entityCounts.keySet()) {
             for (int i = 0; i < entityCounts.get(factory); i++) {
-                Coordinates randomCoordinates = random(map.sideLength());
-                while (!map.isCellEmpty(randomCoordinates)) {
-                    randomCoordinates = random(map.sideLength());
+                Coordinate randomCoordinate = random(map.sideLength());
+                while (!map.isCellEmpty(randomCoordinate)) {
+                    randomCoordinate = random(map.sideLength());
                 }
-                map.addEntity(randomCoordinates, factory.create());
+                map.addEntity(randomCoordinate, factory.create());
             }
         }
     }

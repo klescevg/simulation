@@ -1,6 +1,6 @@
 package com.klescevg.simulation.pathfinding;
 
-import com.klescevg.simulation.world.Coordinates;
+import com.klescevg.simulation.world.Coordinate;
 import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.entities.Entity;
 
@@ -15,12 +15,12 @@ public class AStarStrategy implements PathfindingStrategy {
 
     @Override
     public Path findPath(Entity startEntity, Class<? extends Entity> targetEntityType) {
-        Coordinates start = worldMap.getCoordinates(startEntity)
+        Coordinate start = worldMap.getCoordinate(startEntity)
                 .orElseThrow(() -> new IllegalStateException("Start entity is not found on map"));
-        Coordinates target = findTarget(start, targetEntityType);
+        Coordinate target = findTarget(start, targetEntityType);
 
         if (target != null) {
-            Map<Coordinates, Coordinates> parents = buildParentsMap(start, target);
+            Map<Coordinate, Coordinate> parents = buildParentsMap(start, target);
 
             if (parents.containsKey(target)) {
                 return Path.fromParents(parents, start, target);
@@ -30,31 +30,31 @@ public class AStarStrategy implements PathfindingStrategy {
         return Path.empty();
     }
 
-    private Coordinates findTarget(Coordinates start, Class<? extends Entity> targetEntityType) {
-        Coordinates target = null;
+    private Coordinate findTarget(Coordinate start, Class<? extends Entity> targetEntityType) {
+        Coordinate target = null;
         int closestDistance = Integer.MAX_VALUE;
 
-        for (Coordinates coordinates : worldMap.getCoordinatesOfType(targetEntityType)) {
-            int distance = heuristic(start, coordinates);
+        for (Coordinate coordinate : worldMap.getCoordinatesOfType(targetEntityType)) {
+            int distance = heuristic(start, coordinate);
             if (distance < closestDistance) {
                 closestDistance = distance;
-                target = coordinates;
+                target = coordinate;
             }
         }
         return target;
     }
 
-    private Map<Coordinates, Coordinates> buildParentsMap(Coordinates start, Coordinates target) {
+    private Map<Coordinate, Coordinate> buildParentsMap(Coordinate start, Coordinate target) {
         Queue<PrioritizedCell> queue = new PriorityQueue<>(Comparator.comparingInt(PrioritizedCell::priority));
-        Map<Coordinates, Integer> costFromStart = new HashMap<>();
-        Map<Coordinates, Coordinates> parents = new HashMap<>();
-        Set<Coordinates> processedCells = new HashSet<>();
+        Map<Coordinate, Integer> costFromStart = new HashMap<>();
+        Map<Coordinate, Coordinate> parents = new HashMap<>();
+        Set<Coordinate> processedCells = new HashSet<>();
 
         costFromStart.put(start, 0);
         queue.add(new PrioritizedCell(start, heuristic(start, target)));
 
         while (!queue.isEmpty()) {
-            Coordinates current = queue.poll().coordinates();
+            Coordinate current = queue.poll().coordinate();
 
             if (!processedCells.contains(current)) {
                 processedCells.add(current);
@@ -65,7 +65,7 @@ public class AStarStrategy implements PathfindingStrategy {
             if (current.equals(target)) {
                 break;
             }
-            for (Coordinates neighbor : worldMap.getBorderCells(current)) {
+            for (Coordinate neighbor : worldMap.getBorderCells(current)) {
                 if (isWalkable(neighbor, target) && !processedCells.contains(neighbor)) {
                     int newCost = costFromStart.get(current) + 1;
                     if (!costFromStart.containsKey(neighbor) || newCost < costFromStart.get(neighbor)) {
@@ -80,15 +80,15 @@ public class AStarStrategy implements PathfindingStrategy {
         return parents;
     }
 
-    private boolean isWalkable(Coordinates cell, Coordinates target) {
+    private boolean isWalkable(Coordinate cell, Coordinate target) {
         return worldMap.isCellEmpty(cell) || cell.equals(target);
     }
 
-    private int heuristic(Coordinates a, Coordinates b) {
-        return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
+    private int heuristic(Coordinate a, Coordinate b) {
+        return Math.abs(a.row() - b.row()) + Math.abs(a.column() - b.column());
     }
 
-    private record PrioritizedCell(Coordinates coordinates, int priority) {
+    private record PrioritizedCell(Coordinate coordinate, int priority) {
 
     }
 }

@@ -59,7 +59,7 @@ public abstract class Creature extends Entity {
     protected abstract void consumeTarget(WorldMap worldMap, Path path);
 
     protected void moveToTarget(WorldMap worldMap, Path path) {
-        Coordinates initialPosition = path.start();
+        Coordinate initialPosition = path.start();
 
         worldMap.moveEntity(initialPosition, path.positionAfter(speed));
     }
