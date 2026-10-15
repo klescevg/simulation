@@ -14,7 +14,7 @@ public class AStarStrategy implements PathfindingStrategy {
     }
 
     @Override
-    public Path findPath(Entity startEntity, Class<? extends Entity> targetEntityType) {
+    public Path find(Entity startEntity, Class<? extends Entity> targetEntityType) {
         Coordinate start = worldMap.getCoordinate(startEntity)
                 .orElseThrow(() -> new IllegalStateException("Start entity is not found on map"));
         Coordinate target = findTarget(start, targetEntityType);
