@@ -112,13 +112,4 @@ public class WorldMap {
     public int sideLength() {
         return sideLength;
     }
-
-    public boolean isEntityTypePresent(Class<?> entityType) {
-        for (Entity mapEntity : getEntities().values()) {
-            if (entityType.isInstance(mapEntity)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
