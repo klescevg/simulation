@@ -35,7 +35,7 @@ public class AStarStrategy implements PathfindingStrategy {
         int closestDistance = Integer.MAX_VALUE;
 
         for (Coordinate coordinate : worldMap.getCoordinatesOfType(targetEntityType)) {
-            int distance = heuristic(start, coordinate);
+            int distance = calculateManhattanDistance(start, coordinate);
             if (distance < closestDistance) {
                 closestDistance = distance;
                 target = coordinate;
@@ -51,7 +51,7 @@ public class AStarStrategy implements PathfindingStrategy {
         Set<Coordinate> processedCells = new HashSet<>();
 
         costFromStart.put(start, 0);
-        queue.add(new PrioritizedCell(start, heuristic(start, target)));
+        queue.add(new PrioritizedCell(start, calculateManhattanDistance(start, target)));
 
         while (!queue.isEmpty()) {
             Coordinate current = queue.poll().coordinate();
@@ -71,7 +71,7 @@ public class AStarStrategy implements PathfindingStrategy {
                     if (!costFromStart.containsKey(neighbor) || newCost < costFromStart.get(neighbor)) {
                         costFromStart.put(neighbor, newCost);
                         parents.put(neighbor, current);
-                        queue.add(new PrioritizedCell(neighbor, newCost + heuristic(neighbor, target)));
+                        queue.add(new PrioritizedCell(neighbor, newCost + calculateManhattanDistance(neighbor, target)));
                     }
                 }
             }
@@ -84,8 +84,8 @@ public class AStarStrategy implements PathfindingStrategy {
         return worldMap.isCellEmpty(cell) || cell.equals(target);
     }
 
-    private int heuristic(Coordinate a, Coordinate b) {
-        return Math.abs(a.row() - b.row()) + Math.abs(a.column() - b.column());
+    private int calculateManhattanDistance(Coordinate from, Coordinate to) {
+        return Math.abs(from.row() - to.row()) + Math.abs(from.column() - to.column());
     }
 
     private record PrioritizedCell(Coordinate coordinate, int priority) {
