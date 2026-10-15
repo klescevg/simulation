@@ -17,7 +17,7 @@ public class AStarStrategy implements PathfindingStrategy {
     public Path findPath(Entity startEntity, Class<? extends Entity> targetEntityType) {
         Coordinates start = worldMap.getCoordinates(startEntity)
                 .orElseThrow(() -> new IllegalStateException("Start entity is not found on map"));
-        Coordinates target = findNearestTarget(start, targetEntityType);
+        Coordinates target = findTarget(start, targetEntityType);
 
         if (target != null) {
             Map<Coordinates, Coordinates> parents = buildParentsMap(start, target);
@@ -30,7 +30,7 @@ public class AStarStrategy implements PathfindingStrategy {
         return Path.empty();
     }
 
-    private Coordinates findNearestTarget(Coordinates start, Class<? extends Entity> targetEntityType) {
+    private Coordinates findTarget(Coordinates start, Class<? extends Entity> targetEntityType) {
         Coordinates target = null;
         int closestDistance = Integer.MAX_VALUE;
 
