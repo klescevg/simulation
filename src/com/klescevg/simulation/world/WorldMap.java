@@ -85,7 +85,7 @@ public class WorldMap {
         List<Coordinates> neighbors = List.of(left, right, top, bottom);
 
         for (Coordinates neighbor : neighbors) {
-            if (isValidCoordinate(neighbor)) {
+            if (isInBounds(neighbor)) {
                 borderCells.add(neighbor);
             }
         }
@@ -99,12 +99,12 @@ public class WorldMap {
     }
 
     private void validate(Coordinates coordinates) {
-        if (!isValidCoordinate(coordinates)) {
+        if (!isInBounds(coordinates)) {
             throw new IllegalArgumentException("Coordinate is not valid: " + coordinates);
         }
     }
 
-    public boolean isValidCoordinate(Coordinates coordinates) {
+    public boolean isInBounds(Coordinates coordinates) {
         return coordinates.x() >= 0 && coordinates.x() < sideLength &&
                 coordinates.y() >= 0 && coordinates.y() < sideLength;
     }
