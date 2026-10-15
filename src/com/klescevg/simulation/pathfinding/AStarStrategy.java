@@ -23,7 +23,7 @@ public class AStarStrategy implements PathfindingStrategy {
             Map<Coordinate, Coordinate> parents = buildParentsMap(start, target);
 
             if (parents.containsKey(target)) {
-                return Path.fromParents(parents, start, target);
+                return Path.reconstruct(parents, start, target);
             }
         }
 

@@ -18,7 +18,7 @@ public abstract class Creature extends Entity {
         Path path = strategy.findPath(this, getTargetType());
 
         if (!path.isEmpty()) {
-            if (path.steps() <= speed) {
+            if (path.getStepCount() <= speed) {
                 consumeTarget(worldMap, path);
             } else {
                 moveToTarget(worldMap, path);
@@ -59,8 +59,8 @@ public abstract class Creature extends Entity {
     protected abstract void consumeTarget(WorldMap worldMap, Path path);
 
     protected void moveToTarget(WorldMap worldMap, Path path) {
-        Coordinate initialPosition = path.start();
+        Coordinate initialPosition = path.getStart();
 
-        worldMap.moveEntity(initialPosition, path.positionAfter(speed));
+        worldMap.moveEntity(initialPosition, path.getPositionAfter(speed));
     }
 }

@@ -29,7 +29,7 @@ public class BfsStrategy implements PathfindingStrategy {
             Coordinate current = queue.poll();
 
             if (isTarget(current, targetEntityType)) {
-                return Path.fromParents(parents, start, current);
+                return Path.reconstruct(parents, start, current);
             }
 
             for (Coordinate neighbor : worldMap.getBorderCells(current)) {

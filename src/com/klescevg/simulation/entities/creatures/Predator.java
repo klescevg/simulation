@@ -20,11 +20,11 @@ public class Predator extends Creature {
 
     @Override
     protected void consumeTarget(WorldMap worldMap, Path path) {
-        Creature prey = (Creature) worldMap.getEntity(path.target()).orElseThrow();
+        Creature prey = (Creature) worldMap.getEntity(path.getTarget()).orElseThrow();
         prey.takeDamage(attackPower);
         if (!prey.isAlive()) {
-            worldMap.removeEntity(path.target());
-            worldMap.moveEntity(path.start(), path.target());
+            worldMap.removeEntity(path.getTarget());
+            worldMap.moveEntity(path.getStart(), path.getTarget());
             heal(PREY_HEAL);
         }
     }

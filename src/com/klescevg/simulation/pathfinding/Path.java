@@ -14,7 +14,7 @@ public class Path {
         this.cells = cells;
     }
 
-    public static Path fromParents(Map<Coordinate, Coordinate> parents, Coordinate start, Coordinate target) {
+    public static Path reconstruct(Map<Coordinate, Coordinate> parents, Coordinate start, Coordinate target) {
         List<Coordinate> cells = new ArrayList<>();
         Coordinate current = target;
 
@@ -37,19 +37,19 @@ public class Path {
         return cells.isEmpty();
     }
 
-    public int steps() {
-        return Math.max(cells.size() - 1, 0);
-    }
-
-    public Coordinate start() {
+    public Coordinate getStart() {
         return cells.getFirst();
     }
 
-    public Coordinate target() {
+    public Coordinate getTarget() {
         return cells.getLast();
     }
 
-    public Coordinate positionAfter(int stepCount) {
+    public int getStepCount() {
+        return Math.max(cells.size() - 1, 0);
+    }
+
+    public Coordinate getPositionAfter(int stepCount) {
         return cells.get(Math.min(stepCount, cells.size() - 1));
     }
 }

@@ -19,8 +19,8 @@ public class Herbivore extends Creature {
 
     @Override
     protected void consumeTarget(WorldMap worldMap, Path path) {
-        worldMap.removeEntity(path.target());
-        worldMap.moveEntity(path.start(), path.target());
+        worldMap.removeEntity(path.getTarget());
+        worldMap.moveEntity(path.getStart(), path.getTarget());
         heal(GRASS_HEAL);
     }
 }
