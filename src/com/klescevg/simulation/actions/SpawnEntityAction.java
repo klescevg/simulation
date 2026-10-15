@@ -4,6 +4,8 @@ import com.klescevg.simulation.world.Coordinate;
 import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.factories.EntityFactory;
 
+import java.util.Optional;
+
 import static com.klescevg.simulation.world.CoordinateGenerator.random;
 
 public class SpawnEntityAction extends Action {
@@ -15,15 +17,18 @@ public class SpawnEntityAction extends Action {
 
     @Override
     public void execute(WorldMap map) {
-        Coordinate randomCoordinate = findRandomEmptyCoordinate(map);
-        map.addEntity(randomCoordinate, factory.create());
+        findRandomEmptyCoordinate(map).ifPresent(coordinate -> map.addEntity(coordinate, factory.create()));
     }
 
-    private Coordinate findRandomEmptyCoordinate(WorldMap map) {
-        Coordinate randomCoordinate = random(map.sideLength());
-        while (!map.isCellEmpty(randomCoordinate)) {
-            randomCoordinate = random(map.sideLength());
+    private Optional<Coordinate> findRandomEmptyCoordinate(WorldMap map) {
+        if (map.isFull()) {
+            return Optional.empty();
         }
-        return randomCoordinate;
+
+        Coordinate coordinate = random(map.sideLength());
+        while (!map.isCellEmpty(coordinate)) {
+            coordinate = random(map.sideLength());
+        }
+        return Optional.of(coordinate);
     }
 }

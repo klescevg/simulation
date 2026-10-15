@@ -110,6 +110,10 @@ public class WorldMap {
                 coordinate.column() >= 0 && coordinate.column() < sideLength;
     }
 
+    public boolean isFull(){
+        return entities.size() == sideLength*sideLength;
+    }
+
     public int sideLength() {
         return sideLength;
     }
