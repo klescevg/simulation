@@ -12,10 +12,12 @@ public class ConsoleRenderer implements Renderer {
     private static final String ANSI_YELLOW = "\033[33m";
     private static final String ANSI_RED = "\033[31m";
     private static final String ANSI_RESET = "\033[0m";
+    private static final String ANSI_CLEAR_CONSOLE = "\033[H\033[2J";
     private static final String CELL_PADDING = " ";
 
     @Override
     public void render(WorldMap map) {
+        System.out.print(ANSI_CLEAR_CONSOLE);
         for (int row = 0; row < map.sideLength(); row++) {
             StringBuilder line = new StringBuilder();
             for (int column = 0; column < map.sideLength(); column++) {
