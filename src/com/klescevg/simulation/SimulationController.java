@@ -13,9 +13,9 @@ public class SimulationController {
     //взаимодействие с пользователем, создание конфига, создание симуляции
 
     private Simulation simulation;
-    private Scanner SCANNER = new Scanner(System.in);
+    private final Scanner SCANNER = new Scanner(System.in);
 
-    public void start() {
+    public void startSimulation() {
         initSimulation();
 
         System.out.println("Do you want to start a simulation?");
@@ -25,7 +25,7 @@ public class SimulationController {
         Thread simulationThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                simulation.startSimulation();
+                simulation.start();
             }
         });
         simulationThread.start();
@@ -35,12 +35,12 @@ public class SimulationController {
             public void run() {
                 while(simulationThread.isAlive()){
                     SCANNER.nextLine();
-                    simulation.pauseSimulation();
+                    simulation.pause();
 
                     System.out.println("Do you want to continue?");
 
                     SCANNER.nextLine();
-                    simulation.resumeSimulation();
+                    simulation.resume();
                 }
             }
         });
@@ -63,7 +63,7 @@ public class SimulationController {
         SimulationConfig simulationConfig = getSimulationConfig();
         WorldMap worldMap = new WorldMap(getMapSize());
         PathfindingStrategy strategy = new AStarStrategy(worldMap);
-        this.simulation = new Simulation(worldMap, getEntityCountsMap(simulationConfig), strategy);
+        simulation = new Simulation(worldMap, getEntityCountsMap(simulationConfig), strategy);
     }
 
     public int getMapSize() {

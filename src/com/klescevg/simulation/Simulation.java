@@ -14,7 +14,7 @@ import java.util.Map;
 public class Simulation {
     private int turnCount;
     private final WorldMap worldMap;
-    private final Renderer consoleRenderer;
+    private final Renderer renderer;
     private final List<Action> initActions;
     private final List<Action> turnActions;
     private volatile boolean running = false;
@@ -23,7 +23,7 @@ public class Simulation {
     public Simulation(WorldMap worldMap, Map<EntityFactory, Integer> entityCounts, PathfindingStrategy strategy) {
         turnCount = 0;
         this.worldMap = worldMap;
-        consoleRenderer = new ConsoleRenderer();
+        renderer = new ConsoleRenderer();
 
         initActions = List.of(new SpawnEntitiesAction(entityCounts));
         Map<EntityFactory, Integer> grassCounts = new HashMap<>();
@@ -37,10 +37,10 @@ public class Simulation {
         executeActions(turnActions);
         System.out.print("\033[H\033[2J");
         System.out.println(turnCount);
-        consoleRenderer.render(worldMap);
+        renderer.render(worldMap);
     }
 
-    public void startSimulation() {
+    public void start() {
         running = true;
 
         while (running) {
@@ -58,11 +58,11 @@ public class Simulation {
         }
     }
 
-    public void pauseSimulation() {
+    public void pause() {
         this.paused = true;
     }
 
-    public void resumeSimulation() {
+    public void resume() {
         this.paused = false;
     }
 
