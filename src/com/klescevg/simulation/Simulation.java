@@ -29,19 +29,11 @@ public class Simulation {
         Map<EntityFactory, Integer> grassCounts = new HashMap<>();
         grassCounts.put(new GrassFactory(), 1);
         turnActions = List.of(new SpawnEntitiesAction(grassCounts), new MoveCreaturesAction(strategy), new HungerAction(), new RemoveDeadCreaturesAction());
-        executeActions(initActions);
-    }
-
-    public void nextTurn() {
-        turnCount++;
-        executeActions(turnActions);
-        System.out.print("\033[H\033[2J");
-        System.out.println(turnCount);
-        renderer.render(worldMap);
     }
 
     public void start() {
         running = true;
+        spawnInitialEntities();
 
         while (running) {
             try {
@@ -66,9 +58,21 @@ public class Simulation {
         this.paused = false;
     }
 
-    public void executeActions(List<Action> actions) {
+    private void spawnInitialEntities() {
+        executeActions(initActions);
+    }
+
+    private void executeActions(List<Action> actions) {
         for (Action action : actions) {
             action.execute(worldMap);
         }
+    }
+
+    public void nextTurn() {
+        turnCount++;
+        executeActions(turnActions);
+        System.out.print("\033[H\033[2J");
+        System.out.println(turnCount);
+        renderer.render(worldMap);
     }
 }
