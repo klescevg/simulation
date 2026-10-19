@@ -2,6 +2,7 @@ package com.klescevg.simulation;
 
 import com.klescevg.simulation.actions.*;
 import com.klescevg.simulation.factories.*;
+import com.klescevg.simulation.pathfinding.*;
 import com.klescevg.simulation.view.renderer.*;
 import com.klescevg.simulation.world.WorldMap;
 
@@ -29,6 +30,19 @@ public class SimulationFactory {
     private List<Action> buildInitActions(SimulationConfig config) {
         Map<EntityFactory, Integer> initialSpawnCounts = buildInitialSpawnCounts(config);
         return List.of(new SpawnEntitiesAction(initialSpawnCounts));
+    }
+
+    private List<Action> buildTurnActions(SimulationConfig config, WorldMap map) {
+        Map<EntityFactory, Integer> turnSpawnCounts = buildTurnSpawnCounts(config);
+        PathfindingStrategy strategy = new AStarStrategy(map);
+        return List.of(new SpawnEntitiesAction(turnSpawnCounts), new MoveCreaturesAction(strategy), new HungerAction(), new RemoveDeadCreaturesAction());
+    }
+
+    private Map<EntityFactory, Integer> buildTurnSpawnCounts(SimulationConfig config) {
+        EntityFactory grassFactory = new GrassFactory();
+        Map<EntityFactory, Integer> turnSpawnCounts = new HashMap<>();
+        turnSpawnCounts.put(grassFactory, config.entityCounts().grassSpawnPerTurn());
+        return turnSpawnCounts;
     }
 
     private Map<EntityFactory, Integer> buildInitialSpawnCounts(SimulationConfig config) {
