@@ -8,8 +8,8 @@ public class WorldMap {
     private final int sideLength;
     private final Map<Coordinate, Entity> entities = new HashMap<>();
 
-    public WorldMap(int length) {
-        this.sideLength = length;
+    public WorldMap(int sideLength) {
+        this.sideLength = sideLength;
     }
 
     public Map<Coordinate, Entity> getEntities() {
