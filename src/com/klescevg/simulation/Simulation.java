@@ -68,7 +68,7 @@ public class Simulation {
         }
     }
 
-    public void nextTurn() {
+    private void nextTurn() {
         turnCount++;
         executeActions(turnActions);
         renderer.render(worldMap);
