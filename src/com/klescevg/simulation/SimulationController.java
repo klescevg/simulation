@@ -1,11 +1,7 @@
 package com.klescevg.simulation;
 
-import com.klescevg.simulation.factories.*;
-import com.klescevg.simulation.pathfinding.*;
-import com.klescevg.simulation.world.WorldMap;
+import com.klescevg.simulation.SimulationConfig.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class SimulationController {
@@ -59,37 +55,15 @@ public class SimulationController {
         System.out.println("Simulation duration: " + (after - before) + " ms");
     }
 
-    public void initSimulation() {
-        SimulationConfig simulationConfig = getSimulationConfig();
-        WorldMap worldMap = new WorldMap(getMapSize());
-        PathfindingStrategy strategy = new AStarStrategy(worldMap);
-        simulation = new Simulation(worldMap, getEntityCountsMap(simulationConfig), strategy);
+    private void initSimulation() {
+        SimulationConfig config = getSimulationConfig();
+        simulation = new SimulationFactory().create(config);
     }
 
-    public int getMapSize() {
-        //System.out.println("Enter the map size: ");
-        //return SCANNER.nextInt();
-        return 100;
-    }
-
-    public SimulationConfig getSimulationConfig() {
-        return new SimulationConfig(100, 100, 1, 1000,
-                200, 1000, 1, 1000, 2, 25);
-    }
-
-    private Map<EntityFactory, Integer> getEntityCountsMap(SimulationConfig simulationConfig) {
-        EntityFactory treeFactory = new TreeFactory();
-        EntityFactory rockFactory = new RockFactory();
-        EntityFactory grassFactory = new GrassFactory();
-        EntityFactory herbivoreFactory = new HerbivoreFactory(simulationConfig.herbivoreHealthPoints(), simulationConfig.herbivoreSpeed());
-        EntityFactory predatorFactory = new PredatorFactory(simulationConfig.predatorHealthPoints(), simulationConfig.predatorSpeed(), simulationConfig.predatorAttackPower());
-
-        Map<EntityFactory, Integer> entityCounts = new HashMap<>();
-        entityCounts.put(treeFactory, simulationConfig.treeCount());
-        entityCounts.put(rockFactory, simulationConfig.rockCount());
-        entityCounts.put(grassFactory, simulationConfig.grassCount());
-        entityCounts.put(herbivoreFactory, simulationConfig.herbivoreCount());
-        entityCounts.put(predatorFactory, simulationConfig.predatorCount());
-        return entityCounts;
+    private SimulationConfig getSimulationConfig() {
+        EntityCounts entityCounts = new EntityCounts(10, 10, 20, 5, 2, 1);
+        HerbivoreStats herbivoreStats = new HerbivoreStats(100, 1);
+        PredatorStats predatorStats = new PredatorStats(100, 2, 25);
+        return new SimulationConfig(10, entityCounts, herbivoreStats, predatorStats);
     }
 }
