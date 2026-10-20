@@ -26,27 +26,17 @@ public abstract class Creature extends Entity {
         }
     }
 
-    public int getHealthPoints() {
-        return healthPoints;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
     public void takeDamage(int amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Damage must be positive, got: " + amount);
+            throw new IllegalArgumentException("Damage must be positive, but was: " + amount);
         }
-
         healthPoints = Math.max(0, healthPoints - amount);
     }
 
     public void heal(int amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Heal amount must be positive, got: " + amount);
+            throw new IllegalArgumentException("Heal amount must be positive, but was: " + amount);
         }
-
         healthPoints += amount;
     }
 
