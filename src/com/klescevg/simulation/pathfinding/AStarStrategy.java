@@ -36,7 +36,7 @@ public class AStarStrategy implements PathfindingStrategy {
         Coordinate target = null;
         int closestDistance = Integer.MAX_VALUE;
 
-        for (Coordinate coordinate : worldMap.getCoordinatesOfType(targetEntityType)) {
+        for (Coordinate coordinate : getCoordinatesOfType(targetEntityType)) {
             int distance = calculateManhattanDistance(start, coordinate);
             if (distance < closestDistance) {
                 closestDistance = distance;
@@ -88,6 +88,16 @@ public class AStarStrategy implements PathfindingStrategy {
 
     private int calculateManhattanDistance(Coordinate from, Coordinate to) {
         return Math.abs(from.row() - to.row()) + Math.abs(from.column() - to.column());
+    }
+
+    private Set<Coordinate> getCoordinatesOfType(Class<?> type) {
+        Set<Coordinate> result = new HashSet<>();
+        for (Map.Entry<Coordinate, Entity> entry : worldMap.getEntities().entrySet()) {
+            if (type.isInstance(entry.getValue())) {
+                result.add(entry.getKey());
+            }
+        }
+        return result;
     }
 
     private record PrioritizedCell(Coordinate coordinate, int priority) {
