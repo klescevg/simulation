@@ -9,20 +9,12 @@ import java.util.*;
 import static com.klescevg.simulation.world.WorldMapUtils.getBorderCells;
 
 public class AStarStrategy implements PathfindingStrategy {
-    private final WorldMap worldMap;
-
-    public AStarStrategy(WorldMap worldMap) {
-        this.worldMap = worldMap;
-    }
-
     @Override
-    public Path find(Entity startEntity, Class<? extends Entity> targetEntityType) {
-        Coordinate start = worldMap.getCoordinate(startEntity)
-                .orElseThrow(() -> new IllegalStateException("Start entity is not found on map"));
-        Coordinate target = findTarget(start, targetEntityType);
+    public Path find(WorldMap map, Coordinate start, Class<? extends Entity> targetType) {
+        Coordinate target = findTarget(map, start, targetType);
 
         if (target != null) {
-            Map<Coordinate, Coordinate> parents = buildParentsMap(start, target);
+            Map<Coordinate, Coordinate> parents = buildParentsMap(map, start, target);
 
             if (parents.containsKey(target)) {
                 return Path.reconstruct(parents, start, target);
@@ -32,11 +24,11 @@ public class AStarStrategy implements PathfindingStrategy {
         return Path.empty();
     }
 
-    private Coordinate findTarget(Coordinate start, Class<? extends Entity> targetEntityType) {
+    private Coordinate findTarget(WorldMap map, Coordinate start, Class<? extends Entity> targetType) {
         Coordinate target = null;
         int closestDistance = Integer.MAX_VALUE;
 
-        for (Coordinate coordinate : getCoordinatesOfType(targetEntityType)) {
+        for (Coordinate coordinate : getCoordinatesOfType(map, targetType)) {
             int distance = calculateManhattanDistance(start, coordinate);
             if (distance < closestDistance) {
                 closestDistance = distance;
@@ -46,7 +38,7 @@ public class AStarStrategy implements PathfindingStrategy {
         return target;
     }
 
-    private Map<Coordinate, Coordinate> buildParentsMap(Coordinate start, Coordinate target) {
+    private Map<Coordinate, Coordinate> buildParentsMap(WorldMap map, Coordinate start, Coordinate target) {
         Queue<PrioritizedCell> queue = new PriorityQueue<>(Comparator.comparingInt(PrioritizedCell::priority));
         Map<Coordinate, Integer> costFromStart = new HashMap<>();
         Map<Coordinate, Coordinate> parents = new HashMap<>();
@@ -67,8 +59,8 @@ public class AStarStrategy implements PathfindingStrategy {
             if (current.equals(target)) {
                 break;
             }
-            for (Coordinate neighbor : getBorderCells(worldMap, current)) {
-                if (isWalkable(neighbor, target) && !processedCells.contains(neighbor)) {
+            for (Coordinate neighbor : getBorderCells(map, current)) {
+                if (isWalkable(map, neighbor, target) && !processedCells.contains(neighbor)) {
                     int newCost = costFromStart.get(current) + 1;
                     if (!costFromStart.containsKey(neighbor) || newCost < costFromStart.get(neighbor)) {
                         costFromStart.put(neighbor, newCost);
@@ -82,17 +74,17 @@ public class AStarStrategy implements PathfindingStrategy {
         return parents;
     }
 
-    private boolean isWalkable(Coordinate cell, Coordinate target) {
-        return worldMap.isCellEmpty(cell) || cell.equals(target);
+    private boolean isWalkable(WorldMap map, Coordinate cell, Coordinate target) {
+        return map.isCellEmpty(cell) || cell.equals(target);
     }
 
     private int calculateManhattanDistance(Coordinate from, Coordinate to) {
         return Math.abs(from.row() - to.row()) + Math.abs(from.column() - to.column());
     }
 
-    private Set<Coordinate> getCoordinatesOfType(Class<?> type) {
+    private Set<Coordinate> getCoordinatesOfType(WorldMap map, Class<?> type) {
         Set<Coordinate> result = new HashSet<>();
-        for (Map.Entry<Coordinate, Entity> entry : worldMap.getEntities().entrySet()) {
+        for (Map.Entry<Coordinate, Entity> entry : map.getEntities().entrySet()) {
             if (type.isInstance(entry.getValue())) {
                 result.add(entry.getKey());
             }

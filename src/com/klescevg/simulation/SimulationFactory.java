@@ -15,7 +15,7 @@ public class SimulationFactory {
         WorldMap map = buildMap(config.mapSideLength());
         Renderer renderer = buildRenderer();
         List<Action> initActions = buildInitActions(config);
-        List<Action> turnActions = buildTurnActions(config, map);
+        List<Action> turnActions = buildTurnActions(config);
         return new Simulation(map, renderer, initActions, turnActions);
     }
 
@@ -32,9 +32,9 @@ public class SimulationFactory {
         return List.of(new SpawnEntitiesAction(initialSpawnCounts));
     }
 
-    private List<Action> buildTurnActions(SimulationConfig config, WorldMap map) {
+    private List<Action> buildTurnActions(SimulationConfig config) {
         Map<EntityFactory, Integer> turnSpawnCounts = buildTurnSpawnCounts(config);
-        PathfindingStrategy strategy = new AStarStrategy(map);
+        PathfindingStrategy strategy = new AStarStrategy();
         return List.of(new SpawnEntitiesAction(turnSpawnCounts), new MoveCreaturesAction(strategy), new HungerAction(), new RemoveDeadCreaturesAction());
     }
 
