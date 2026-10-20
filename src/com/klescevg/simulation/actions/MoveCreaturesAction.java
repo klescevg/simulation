@@ -1,9 +1,10 @@
 package com.klescevg.simulation.actions;
 
+import com.klescevg.simulation.entities.creatures.Creature;
 import com.klescevg.simulation.pathfinding.PathfindingStrategy;
 import com.klescevg.simulation.world.WorldMap;
-import com.klescevg.simulation.entities.creatures.Herbivore;
-import com.klescevg.simulation.entities.creatures.Predator;
+
+import static com.klescevg.simulation.world.WorldMapUtils.getCreatures;
 
 public class MoveCreaturesAction implements Action {
     private final PathfindingStrategy strategy;
@@ -14,12 +15,11 @@ public class MoveCreaturesAction implements Action {
 
     @Override
     public void execute(WorldMap map) {
-        for (Herbivore herbivore : map.getEntitiesOfType(Herbivore.class)) {
-            herbivore.makeMove(map, strategy);
-        }
-
-        for (Predator predator : map.getEntitiesOfType(Predator.class)) {
-            predator.makeMove(map, strategy);
+        for (Creature creature : getCreatures(map)) {
+            //validation in case creature dies before its move
+            if (creature.isAlive()) {
+                creature.makeMove(map, strategy);
+            }
         }
     }
 }
