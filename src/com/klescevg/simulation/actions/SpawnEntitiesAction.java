@@ -5,7 +5,7 @@ import com.klescevg.simulation.factories.*;
 
 import java.util.Map;
 
-public class SpawnEntitiesAction extends Action {
+public class SpawnEntitiesAction implements Action {
     private final Map<EntityFactory, Integer> spawnCounts;
 
     public SpawnEntitiesAction(Map<EntityFactory, Integer> spawnCounts) {

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import static com.klescevg.simulation.world.CoordinateGenerator.random;
 
-public class SpawnEntityAction extends Action {
+public class SpawnEntityAction implements Action {
     private final EntityFactory factory;
 
     public SpawnEntityAction(EntityFactory factory) {

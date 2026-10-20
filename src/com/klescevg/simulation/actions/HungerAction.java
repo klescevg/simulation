@@ -3,7 +3,7 @@ package com.klescevg.simulation.actions;
 import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.entities.creatures.Creature;
 
-public class HungerAction extends Action{
+public class HungerAction implements Action {
     private static final int HUNGER_DAMAGE = 5;
 
     @Override

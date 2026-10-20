@@ -5,7 +5,7 @@ import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.entities.creatures.Herbivore;
 import com.klescevg.simulation.entities.creatures.Predator;
 
-public class MoveCreaturesAction extends Action {
+public class MoveCreaturesAction implements Action {
     private final PathfindingStrategy strategy;
 
     public MoveCreaturesAction(PathfindingStrategy strategy) {
