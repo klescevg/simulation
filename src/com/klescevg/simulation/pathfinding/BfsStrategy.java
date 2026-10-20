@@ -6,6 +6,8 @@ import com.klescevg.simulation.entities.Entity;
 
 import java.util.*;
 
+import static com.klescevg.simulation.world.WorldMapUtils.getBorderCells;
+
 public class BfsStrategy implements PathfindingStrategy {
     private final WorldMap worldMap;
 
@@ -32,7 +34,7 @@ public class BfsStrategy implements PathfindingStrategy {
                 return Path.reconstruct(parents, start, current);
             }
 
-            for (Coordinate neighbor : worldMap.getBorderCells(current)) {
+            for (Coordinate neighbor : getBorderCells(worldMap, current)) {
                 if (!visitedCells.contains(neighbor) && isWalkable(neighbor, targetEntityType)) {
                     visitedCells.add(neighbor);
                     parents.put(neighbor, current);
