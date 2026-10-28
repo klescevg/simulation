@@ -1,4 +1,4 @@
-package com.klescevg.simulation;
+package com.klescevg.simulation.simulation;
 
 import com.klescevg.simulation.actions.*;
 import com.klescevg.simulation.factories.*;

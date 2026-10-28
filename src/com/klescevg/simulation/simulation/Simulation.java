@@ -1,4 +1,4 @@
-package com.klescevg.simulation;
+package com.klescevg.simulation.simulation;
 
 import com.klescevg.simulation.actions.Action;
 import com.klescevg.simulation.view.renderer.Renderer;
@@ -39,7 +39,7 @@ public class Simulation {
                 }
 
                 nextTurn();
-                Thread.sleep(300);
+                Thread.sleep(500);
             } catch (Exception e) {
                 e.printStackTrace();
             }

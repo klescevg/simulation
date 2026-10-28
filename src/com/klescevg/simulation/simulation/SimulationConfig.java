@@ -1,4 +1,4 @@
-package com.klescevg.simulation;
+package com.klescevg.simulation.simulation;
 
 import java.util.Objects;
 
