@@ -48,6 +48,14 @@ public class Simulation {
         this.paused = false;
     }
 
+    public void stop() {
+        this.running = false;
+    }
+
+    public boolean isRunning() {
+        return this.running;
+    }
+
     private void spawnInitialEntities() {
         executeActions(initActions);
     }
