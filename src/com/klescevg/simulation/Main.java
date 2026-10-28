@@ -2,7 +2,7 @@ package com.klescevg.simulation;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         SimulationController simulationController = new SimulationController();
         simulationController.startSimulation();
     }

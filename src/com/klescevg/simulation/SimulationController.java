@@ -5,54 +5,29 @@ import com.klescevg.simulation.SimulationConfig.*;
 import java.util.Scanner;
 
 public class SimulationController {
-    //обработка всего кроме самой симуляции, то есть:
-    //взаимодействие с пользователем, создание конфига, создание симуляции
+    private static final String COMMAND_PAUSE_RESUME = "";
+    private static final String COMMAND_NEXT_TURN = "1";
+    private static final String COMMAND_STOP = "x";
 
     private Simulation simulation;
-    private final Scanner SCANNER = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
-    public void startSimulation() {
+    public void startSimulation() throws InterruptedException {
         initSimulation();
+        Thread simulationThread = new Thread(() -> simulation.start());
 
-        System.out.println("Do you want to start a simulation?");
-        SCANNER.nextLine();
-        long before = System.currentTimeMillis();
-
-        Thread simulationThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                simulation.start();
-            }
-        });
         simulationThread.start();
 
-        Thread inputThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(simulationThread.isAlive()){
-                    SCANNER.nextLine();
-                    simulation.pause();
+        while (simulation.isRunning()) {
+            String command = scanner.nextLine().trim();
 
-                    System.out.println("Do you want to continue?");
-
-                    SCANNER.nextLine();
-                    simulation.resume();
-                }
+            if (simulation.isPaused()) {
+                processCommandWhilePaused(command);
+            } else {
+                processCommandWhileResumed(command);
             }
-        });
-
-        inputThread.setDaemon(true);
-        inputThread.start();
-
-        try {
-            simulationThread.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
-
-        System.out.println("Simulation has finished!");
-        long after = System.currentTimeMillis();
-        System.out.println("Simulation duration: " + (after - before) + " ms");
+        simulationThread.join();
     }
 
     private void initSimulation() {
@@ -65,5 +40,20 @@ public class SimulationController {
         HerbivoreStats herbivoreStats = new HerbivoreStats(100, 1);
         PredatorStats predatorStats = new PredatorStats(100, 2, 25);
         return new SimulationConfig(10, entityCounts, herbivoreStats, predatorStats);
+    }
+
+    private void processCommandWhilePaused(String command) {
+        switch (command) {
+            case COMMAND_PAUSE_RESUME -> simulation.resume();
+            case COMMAND_NEXT_TURN -> simulation.requestStep();
+            case COMMAND_STOP -> simulation.stop();
+            default -> { }
+        }
+    }
+
+    private void processCommandWhileResumed(String command) {
+        if (command.isEmpty()) {
+            simulation.pause();
+        }
     }
 }
