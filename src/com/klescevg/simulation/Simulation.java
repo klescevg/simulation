@@ -11,7 +11,7 @@ public class Simulation {
     private final Renderer renderer;
     private final List<Action> initActions;
     private final List<Action> turnActions;
-    private volatile boolean running = false;
+    private volatile boolean running = true;
     private volatile boolean paused = false;
     private int turnCount;
 
@@ -23,7 +23,6 @@ public class Simulation {
     }
 
     public void start() {
-        running = true;
         spawnInitialEntities();
 
         while (running) {
