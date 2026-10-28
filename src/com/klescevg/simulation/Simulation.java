@@ -12,7 +12,8 @@ public class Simulation {
     private final List<Action> initActions;
     private final List<Action> turnActions;
     private volatile boolean running = true;
-    private volatile boolean paused = false;
+    private volatile boolean paused = true;
+    private volatile boolean stepRequested = false;
     private int turnCount;
 
     public Simulation(WorldMap worldMap, Renderer renderer, List<Action> initActions, List<Action> turnActions) {
@@ -28,7 +29,12 @@ public class Simulation {
         while (running) {
             try {
                 if (paused) {
-                    Thread.sleep(1000);
+                    if (stepRequested) {
+                        stepRequested = false;
+                        nextTurn();
+                    } else {
+                        Thread.sleep(100);
+                    }
                     continue;
                 }
 
@@ -46,10 +52,21 @@ public class Simulation {
 
     public void resume() {
         this.paused = false;
+        this.stepRequested = false;
     }
 
     public void stop() {
         this.running = false;
+    }
+
+    public void requestStep() {
+        if (isPaused()) {
+            this.stepRequested = true;
+        }
+    }
+
+    public boolean isPaused(){
+        return this.paused;
     }
 
     public boolean isRunning() {
