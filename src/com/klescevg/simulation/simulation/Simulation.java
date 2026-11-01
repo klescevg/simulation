@@ -86,7 +86,7 @@ public class Simulation {
     private void nextTurn() {
         currentTurn++;
         executeActions(turnActions);
-        renderer.render(worldMap);
+        renderer.render(worldMap, currentTurn);
     }
 
     private void executeActions(List<Action> actions) {
