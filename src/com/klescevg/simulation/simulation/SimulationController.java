@@ -34,13 +34,13 @@ public class SimulationController {
         simulationThread.start();
         printWelcomeMessage();
 
-        while (simulation.isRunning()) {
+        while (simulation.isActive()) {
             String command = scanner.nextLine().trim();
 
             if (simulation.isPaused()) {
                 processCommandWhilePaused(command);
             } else {
-                processCommandWhileResumed(command);
+                processCommandWhileRunning(command);
             }
         }
         simulationThread.join();
@@ -67,7 +67,7 @@ public class SimulationController {
         }
     }
 
-    private void processCommandWhileResumed(String command) {
+    private void processCommandWhileRunning(String command) {
         if (command.isEmpty()) {
             simulation.pause();
             printPausedMessage();

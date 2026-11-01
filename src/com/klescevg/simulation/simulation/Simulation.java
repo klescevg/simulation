@@ -6,13 +6,14 @@ import com.klescevg.simulation.world.WorldMap;
 
 import java.util.List;
 
+import static com.klescevg.simulation.simulation.SimulationState.*;
+
 public class Simulation {
     private final WorldMap worldMap;
     private final Renderer renderer;
     private final List<Action> initActions;
     private final List<Action> turnActions;
-    private volatile boolean running = true;
-    private volatile boolean paused = true;
+    private volatile SimulationState state = PAUSED;
     private volatile boolean stepRequested = false;
     private int turnCount;
 
@@ -26,9 +27,9 @@ public class Simulation {
     public void start() {
         spawnInitialEntities();
 
-        while (running) {
+        while (isActive()) {
             try {
-                if (paused) {
+                if (isPaused()) {
                     if (stepRequested) {
                         stepRequested = false;
                         nextTurn();
@@ -47,30 +48,38 @@ public class Simulation {
     }
 
     public void pause() {
-        this.paused = true;
+        if (isRunning()) {
+            state = PAUSED;
+        }
     }
 
     public void resume() {
-        this.paused = false;
-        this.stepRequested = false;
+        if (isPaused()) {
+            state = RUNNING;
+            stepRequested = false;
+        }
     }
 
     public void stop() {
-        this.running = false;
+        state = STOPPED;
     }
 
     public void requestStep() {
         if (isPaused()) {
-            this.stepRequested = true;
+            stepRequested = true;
         }
     }
 
-    public boolean isPaused(){
-        return this.paused;
+    public boolean isRunning() {
+        return state == RUNNING;
     }
 
-    public boolean isRunning() {
-        return this.running;
+    public boolean isPaused() {
+        return state == PAUSED;
+    }
+
+    public boolean isActive() {
+        return state != STOPPED;
     }
 
     private void spawnInitialEntities() {
