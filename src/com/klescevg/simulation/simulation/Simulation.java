@@ -28,20 +28,19 @@ public class Simulation {
     }
 
     public void start() {
-        spawnInitialEntities();
-
-        while (isActive()) {
-            try {
+        try {
+            spawnInitialEntities();
+            while (isActive()) {
                 switch (state) {
                     case RUNNING -> {
                         nextTurn();
-                        Thread.sleep(TURN_DELAY_MS);
+                        sleep(TURN_DELAY_MS);
                     }
                     case PAUSED -> handlePause();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } finally {
+            stop();
         }
     }
 
@@ -96,12 +95,21 @@ public class Simulation {
         }
     }
 
-    private void handlePause() throws InterruptedException {
+    private void handlePause() {
         if (stepRequested) {
             stepRequested = false;
             nextTurn();
         } else {
-            Thread.sleep(PAUSE_POLL_INTERVAL_MS);
+            sleep(PAUSE_POLL_INTERVAL_MS);
+        }
+    }
+
+    private void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException("Simulation thread was interrupted", e);
         }
     }
 }
