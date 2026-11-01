@@ -29,18 +29,13 @@ public class Simulation {
 
         while (isActive()) {
             try {
-                if (isPaused()) {
-                    if (stepRequested) {
-                        stepRequested = false;
+                switch (state) {
+                    case RUNNING -> {
                         nextTurn();
-                    } else {
-                        Thread.sleep(100);
+                        Thread.sleep(500);
                     }
-                    continue;
+                    case PAUSED -> handlePause();
                 }
-
-                nextTurn();
-                Thread.sleep(500);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -95,6 +90,15 @@ public class Simulation {
     private void executeActions(List<Action> actions) {
         for (Action action : actions) {
             action.execute(worldMap);
+        }
+    }
+
+    private void handlePause() throws InterruptedException {
+        if (stepRequested) {
+            stepRequested = false;
+            nextTurn();
+        } else {
+            Thread.sleep(100);
         }
     }
 }
