@@ -84,9 +84,13 @@ public class Simulation {
     }
 
     public synchronized void nextTurn() {
-        currentTurn++;
-        executeActions(turnActions);
-        renderer.render(worldMap, currentTurn);
+        if (!isActive()) {
+            throw new IllegalStateException("Cannot make a turn: simulation is stopped");
+        } else {
+            currentTurn++;
+            executeActions(turnActions);
+            renderer.render(worldMap, currentTurn);
+        }
     }
 
     private void executeActions(List<Action> actions) {
