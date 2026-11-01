@@ -18,7 +18,7 @@ public class Simulation {
     private final List<Action> turnActions;
     private volatile SimulationState state = PAUSED;
     private volatile boolean turnRequested = false;
-    private int turnCount;
+    private int currentTurn = 0;
 
     public Simulation(WorldMap worldMap, Renderer renderer, List<Action> initActions, List<Action> turnActions) {
         this.worldMap = worldMap;
@@ -84,7 +84,7 @@ public class Simulation {
     }
 
     private void nextTurn() {
-        turnCount++;
+        currentTurn++;
         executeActions(turnActions);
         renderer.render(worldMap);
     }
