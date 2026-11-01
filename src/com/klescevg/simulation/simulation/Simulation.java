@@ -83,7 +83,7 @@ public class Simulation {
         executeActions(initActions);
     }
 
-    private void nextTurn() {
+    public synchronized void nextTurn() {
         currentTurn++;
         executeActions(turnActions);
         renderer.render(worldMap, currentTurn);
