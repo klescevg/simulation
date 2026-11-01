@@ -10,6 +10,7 @@ public class SimulationController {
     private static final String COMMAND_STOP = "x";
 
     private static final String PAUSED_COMMANDS = "Enter - resume, %s - next turn, %s - stop".formatted(COMMAND_NEXT_TURN, COMMAND_STOP);
+    private static final String COMMAND_PROMPT = "Enter the command: ";
 
     private static final String WELCOME_MESSAGE = """
             Welcome to the Simulation: herbivores eat grass, predators hunt herbivores.
@@ -18,8 +19,6 @@ public class SimulationController {
               Enter - start / pause / resume
               %s     - next turn (only while paused)
               %s     - stop (only while paused)
-            
-            Press Enter to start.
             """.formatted(COMMAND_NEXT_TURN, COMMAND_STOP);
     private static final String PAUSED_MESSAGE = "Paused. Commands: %s".formatted(PAUSED_COMMANDS);
     private static final String UNEXPECTED_COMMAND_MESSAGE = "Unexpected command: ";
@@ -35,9 +34,13 @@ public class SimulationController {
         printWelcomeMessage();
 
         while (simulation.isActive()) {
+            boolean paused = simulation.isPaused();
+            if (paused) {
+                printCommandPrompt();
+            }
             String command = scanner.nextLine().trim();
 
-            if (simulation.isPaused()) {
+            if (paused) {
                 processCommandWhilePaused(command);
             } else {
                 processCommandWhileRunning(command);
@@ -85,8 +88,12 @@ public class SimulationController {
         System.out.println(PAUSED_MESSAGE);
     }
 
+    private void printCommandPrompt() {
+        System.out.println();
+        System.out.print(COMMAND_PROMPT);
+    }
+
     private void printUnexpectedCommandMessage(String command) {
         System.out.println(UNEXPECTED_COMMAND_MESSAGE + command);
-        System.out.println(PAUSED_COMMANDS);
     }
 }
