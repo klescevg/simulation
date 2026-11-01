@@ -61,7 +61,10 @@ public class SimulationController {
     private void processCommandWhilePaused(String command) {
         switch (command) {
             case COMMAND_PAUSE_RESUME -> simulation.resume();
-            case COMMAND_NEXT_TURN -> simulation.requestTurn();
+            case COMMAND_NEXT_TURN -> {
+                simulation.nextTurn();
+                printPausedMessage();
+            }
             case COMMAND_STOP -> simulation.stop();
             default -> printUnexpectedCommandMessage(command);
         }
