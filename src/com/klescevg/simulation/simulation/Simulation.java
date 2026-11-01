@@ -17,7 +17,6 @@ public class Simulation {
     private final List<Action> initActions;
     private final List<Action> turnActions;
     private volatile SimulationState state = PAUSED;
-    private volatile boolean turnRequested = false;
     private int currentTurn = 0;
 
     public Simulation(WorldMap worldMap, Renderer renderer, List<Action> initActions, List<Action> turnActions) {
@@ -36,7 +35,7 @@ public class Simulation {
                         nextTurn();
                         sleep(TURN_DELAY_MS);
                     }
-                    case PAUSED -> handlePause();
+                    case PAUSED -> sleep(PAUSE_POLL_INTERVAL_MS);
                 }
             }
         } finally {
@@ -53,18 +52,11 @@ public class Simulation {
     public void resume() {
         if (isPaused()) {
             state = RUNNING;
-            turnRequested = false;
         }
     }
 
     public void stop() {
         state = STOPPED;
-    }
-
-    public void requestTurn() {
-        if (isPaused()) {
-            turnRequested = true;
-        }
     }
 
     public boolean isRunning() {
@@ -79,10 +71,6 @@ public class Simulation {
         return state != STOPPED;
     }
 
-    private void spawnInitialEntities() {
-        executeActions(initActions);
-    }
-
     public synchronized void nextTurn() {
         if (!isActive()) {
             throw new IllegalStateException("Cannot make a turn: simulation is stopped");
@@ -93,18 +81,13 @@ public class Simulation {
         }
     }
 
+    private void spawnInitialEntities() {
+        executeActions(initActions);
+    }
+
     private void executeActions(List<Action> actions) {
         for (Action action : actions) {
             action.execute(worldMap);
-        }
-    }
-
-    private void handlePause() {
-        if (turnRequested) {
-            turnRequested = false;
-            nextTurn();
-        } else {
-            sleep(PAUSE_POLL_INTERVAL_MS);
         }
     }
 
