@@ -17,7 +17,7 @@ public class Simulation {
     private final List<Action> initActions;
     private final List<Action> turnActions;
     private volatile SimulationState state = PAUSED;
-    private volatile boolean stepRequested = false;
+    private volatile boolean turnRequested = false;
     private int turnCount;
 
     public Simulation(WorldMap worldMap, Renderer renderer, List<Action> initActions, List<Action> turnActions) {
@@ -53,7 +53,7 @@ public class Simulation {
     public void resume() {
         if (isPaused()) {
             state = RUNNING;
-            stepRequested = false;
+            turnRequested = false;
         }
     }
 
@@ -61,9 +61,9 @@ public class Simulation {
         state = STOPPED;
     }
 
-    public void requestStep() {
+    public void requestTurn() {
         if (isPaused()) {
-            stepRequested = true;
+            turnRequested = true;
         }
     }
 
@@ -96,8 +96,8 @@ public class Simulation {
     }
 
     private void handlePause() {
-        if (stepRequested) {
-            stepRequested = false;
+        if (turnRequested) {
+            turnRequested = false;
             nextTurn();
         } else {
             sleep(PAUSE_POLL_INTERVAL_MS);
