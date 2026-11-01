@@ -9,6 +9,9 @@ import java.util.List;
 import static com.klescevg.simulation.simulation.SimulationState.*;
 
 public class Simulation {
+    private static final int TURN_DELAY_MS = 500;
+    private static final int PAUSE_POLL_INTERVAL_MS = 100;
+
     private final WorldMap worldMap;
     private final Renderer renderer;
     private final List<Action> initActions;
@@ -32,7 +35,7 @@ public class Simulation {
                 switch (state) {
                     case RUNNING -> {
                         nextTurn();
-                        Thread.sleep(500);
+                        Thread.sleep(TURN_DELAY_MS);
                     }
                     case PAUSED -> handlePause();
                 }
@@ -98,7 +101,7 @@ public class Simulation {
             stepRequested = false;
             nextTurn();
         } else {
-            Thread.sleep(100);
+            Thread.sleep(PAUSE_POLL_INTERVAL_MS);
         }
     }
 }
