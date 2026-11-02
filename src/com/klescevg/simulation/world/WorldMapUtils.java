@@ -1,7 +1,6 @@
 package com.klescevg.simulation.world;
 
 import com.klescevg.simulation.entities.Entity;
-import com.klescevg.simulation.entities.creatures.Creature;
 
 import java.util.*;
 
@@ -9,11 +8,21 @@ public final class WorldMapUtils {
     private WorldMapUtils() {
     }
 
-    public static List<Creature> getCreatures(WorldMap map) {
-        List<Creature> result = new ArrayList<>();
+    public static <T extends Entity> List<T> getEntitiesOfType(WorldMap map, Class<T> type) {
+        List<T> result = new ArrayList<>();
         for (Entity entity : map.getEntities().values()) {
-            if (entity instanceof Creature) {
-                result.add((Creature) entity);
+            if (type.isInstance(entity)) {
+                result.add(type.cast(entity));
+            }
+        }
+        return result;
+    }
+
+    public static Set<Coordinate> getCoordinatesOfType(WorldMap map, Class<? extends Entity> type) {
+        Set<Coordinate> result = new HashSet<>();
+        for (Map.Entry<Coordinate, Entity> entry : map.getEntities().entrySet()) {
+            if (type.isInstance(entry.getValue())) {
+                result.add(entry.getKey());
             }
         }
         return result;

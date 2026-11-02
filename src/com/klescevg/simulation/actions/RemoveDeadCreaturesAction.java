@@ -7,7 +7,7 @@ import com.klescevg.simulation.entities.creatures.Creature;
 public class RemoveDeadCreaturesAction implements Action {
     @Override
     public void execute(WorldMap map) {
-        for (Creature creature : WorldMapUtils.getCreatures(map)) {
+        for (Creature creature : WorldMapUtils.getEntitiesOfType(map, Creature.class)) {
             if (!creature.isAlive()) {
                 map.getCoordinate(creature).ifPresent(map::removeEntity);
             }

@@ -9,7 +9,7 @@ public class ApplyHungerDamageAction implements Action {
 
     @Override
     public void execute(WorldMap map) {
-        for (Creature creature : WorldMapUtils.getCreatures(map)) {
+        for (Creature creature : WorldMapUtils.getEntitiesOfType(map, Creature.class)) {
             creature.takeDamage(HUNGER_DAMAGE);
         }
     }

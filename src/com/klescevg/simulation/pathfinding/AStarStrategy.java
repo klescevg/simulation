@@ -3,6 +3,7 @@ package com.klescevg.simulation.pathfinding;
 import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.world.Coordinate;
 import com.klescevg.simulation.entities.Entity;
+import com.klescevg.simulation.world.WorldMapUtils;
 
 import java.util.*;
 
@@ -28,7 +29,7 @@ public class AStarStrategy implements PathfindingStrategy {
         Coordinate target = null;
         int closestDistance = Integer.MAX_VALUE;
 
-        for (Coordinate coordinate : getCoordinatesOfType(map, targetType)) {
+        for (Coordinate coordinate : WorldMapUtils.getCoordinatesOfType(map, targetType)) {
             int distance = calculateManhattanDistance(start, coordinate);
             if (distance < closestDistance) {
                 closestDistance = distance;
@@ -80,16 +81,6 @@ public class AStarStrategy implements PathfindingStrategy {
 
     private int calculateManhattanDistance(Coordinate from, Coordinate to) {
         return Math.abs(from.row() - to.row()) + Math.abs(from.column() - to.column());
-    }
-
-    private Set<Coordinate> getCoordinatesOfType(WorldMap map, Class<?> targetType) {
-        Set<Coordinate> result = new HashSet<>();
-        for (Map.Entry<Coordinate, Entity> entry : map.getEntities().entrySet()) {
-            if (targetType.isInstance(entry.getValue())) {
-                result.add(entry.getKey());
-            }
-        }
-        return result;
     }
 
     private record PrioritizedCell(Coordinate coordinate, int priority) {
