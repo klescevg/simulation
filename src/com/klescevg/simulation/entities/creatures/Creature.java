@@ -22,7 +22,7 @@ public abstract class Creature extends Entity {
 
         if (!path.isEmpty()) {
             if (path.getStepCount() <= speed) {
-                consumeTarget(worldMap, path);
+                interactWithTarget(worldMap, path);
             } else {
                 moveToTarget(worldMap, path);
             }
@@ -49,7 +49,7 @@ public abstract class Creature extends Entity {
 
     protected abstract Class<? extends Entity> getTargetType();
 
-    protected abstract void consumeTarget(WorldMap worldMap, Path path);
+    protected abstract void interactWithTarget(WorldMap worldMap, Path path);
 
     private void moveToTarget(WorldMap worldMap, Path path) {
         Coordinate initialPosition = path.getStart();
