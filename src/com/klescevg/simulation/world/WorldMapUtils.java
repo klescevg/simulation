@@ -22,21 +22,20 @@ public final class WorldMapUtils {
         return result;
     }
 
-    public static Set<Coordinate> getBorderCells(WorldMap map, Coordinate coordinate) {
-        Set<Coordinate> borderCells = new HashSet<>();
-
+    public static Set<Coordinate> getNeighbors(WorldMap map, Coordinate coordinate) {
         Coordinate left = new Coordinate(coordinate.row(), coordinate.column() - 1);
         Coordinate right = new Coordinate(coordinate.row(), coordinate.column() + 1);
         Coordinate top = new Coordinate(coordinate.row() - 1, coordinate.column());
         Coordinate bottom = new Coordinate(coordinate.row() + 1, coordinate.column());
 
-        List<Coordinate> neighbors = List.of(left, right, top, bottom);
+        List<Coordinate> allNeighbors = List.of(left, right, top, bottom);
+        Set<Coordinate> neighborsInBounds = new HashSet<>();
 
-        for (Coordinate neighbor : neighbors) {
+        for (Coordinate neighbor : allNeighbors) {
             if (map.isInBounds(neighbor)) {
-                borderCells.add(neighbor);
+                neighborsInBounds.add(neighbor);
             }
         }
-        return borderCells;
+        return neighborsInBounds;
     }
 }

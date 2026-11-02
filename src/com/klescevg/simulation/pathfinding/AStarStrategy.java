@@ -6,7 +6,7 @@ import com.klescevg.simulation.entities.Entity;
 
 import java.util.*;
 
-import static com.klescevg.simulation.world.WorldMapUtils.getBorderCells;
+import static com.klescevg.simulation.world.WorldMapUtils.getNeighbors;
 
 public class AStarStrategy implements PathfindingStrategy {
     @Override
@@ -59,7 +59,7 @@ public class AStarStrategy implements PathfindingStrategy {
             if (current.equals(target)) {
                 break;
             }
-            for (Coordinate neighbor : getBorderCells(map, current)) {
+            for (Coordinate neighbor : getNeighbors(map, current)) {
                 if (isWalkable(map, neighbor, target) && !processedCells.contains(neighbor)) {
                     int newCost = costFromStart.get(current) + 1;
                     if (!costFromStart.containsKey(neighbor) || newCost < costFromStart.get(neighbor)) {
