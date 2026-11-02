@@ -2,9 +2,8 @@ package com.klescevg.simulation.actions;
 
 import com.klescevg.simulation.pathfinding.PathfindingStrategy;
 import com.klescevg.simulation.world.WorldMap;
+import com.klescevg.simulation.world.WorldMapUtils;
 import com.klescevg.simulation.entities.creatures.Creature;
-
-import static com.klescevg.simulation.world.WorldMapUtils.getCreatures;
 
 public class MoveCreaturesAction implements Action {
     private final PathfindingStrategy strategy;
@@ -15,7 +14,7 @@ public class MoveCreaturesAction implements Action {
 
     @Override
     public void execute(WorldMap map) {
-        for (Creature creature : getCreatures(map)) {
+        for (Creature creature : WorldMapUtils.getCreatures(map)) {
             if (creature.isAlive()) {
                 creature.makeMove(map, strategy);
             }
