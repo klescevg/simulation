@@ -12,15 +12,15 @@ public class Simulation {
     private static final int TURN_DELAY_MS = 500;
     private static final int PAUSE_POLL_INTERVAL_MS = 100;
 
-    private final WorldMap worldMap;
+    private final WorldMap map;
     private final Renderer renderer;
     private final List<Action> initActions;
     private final List<Action> turnActions;
     private volatile SimulationState state = PAUSED;
     private int currentTurn = 0;
 
-    public Simulation(WorldMap worldMap, Renderer renderer, List<Action> initActions, List<Action> turnActions) {
-        this.worldMap = worldMap;
+    public Simulation(WorldMap map, Renderer renderer, List<Action> initActions, List<Action> turnActions) {
+        this.map = map;
         this.renderer = renderer;
         this.initActions = initActions;
         this.turnActions = turnActions;
@@ -78,13 +78,13 @@ public class Simulation {
         } else {
             currentTurn++;
             executeActions(turnActions);
-            renderer.render(worldMap, currentTurn);
+            renderer.render(map, currentTurn);
         }
     }
 
     private void executeActions(List<Action> actions) {
         for (Action action : actions) {
-            action.execute(worldMap);
+            action.execute(map);
         }
     }
 
