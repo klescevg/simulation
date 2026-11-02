@@ -5,7 +5,7 @@ import com.klescevg.simulation.entities.creatures.Creature;
 
 import static com.klescevg.simulation.world.WorldMapUtils.getCreatures;
 
-public class HungerAction implements Action {
+public class ApplyHungerDamageAction implements Action {
     private static final int HUNGER_DAMAGE = 5;
 
     @Override
