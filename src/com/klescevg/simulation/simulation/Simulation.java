@@ -1,8 +1,8 @@
 package com.klescevg.simulation.simulation;
 
-import com.klescevg.simulation.actions.Action;
-import com.klescevg.simulation.view.renderer.Renderer;
 import com.klescevg.simulation.world.WorldMap;
+import com.klescevg.simulation.view.renderer.Renderer;
+import com.klescevg.simulation.actions.Action;
 
 import java.util.List;
 

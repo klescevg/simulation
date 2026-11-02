@@ -1,8 +1,8 @@
 package com.klescevg.simulation.actions;
 
-import com.klescevg.simulation.entities.creatures.Creature;
 import com.klescevg.simulation.pathfinding.PathfindingStrategy;
 import com.klescevg.simulation.world.WorldMap;
+import com.klescevg.simulation.entities.creatures.Creature;
 
 import static com.klescevg.simulation.world.WorldMapUtils.getCreatures;
 
