@@ -8,10 +8,8 @@ public class SimulationController {
     private static final String COMMAND_PAUSE_RESUME = "";
     private static final String COMMAND_NEXT_TURN = "1";
     private static final String COMMAND_STOP = "x";
-
     private static final String PAUSED_COMMANDS = "Enter - resume, %s - next turn, %s - stop".formatted(COMMAND_NEXT_TURN, COMMAND_STOP);
     private static final String COMMAND_PROMPT = "Enter the command: ";
-
     private static final String WELCOME_MESSAGE = """
             Welcome to the Simulation: herbivores eat grass, predators hunt herbivores.
             
