@@ -3,10 +3,7 @@ package com.klescevg.simulation.world;
 import com.klescevg.simulation.entities.Entity;
 import com.klescevg.simulation.entities.creatures.Creature;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public final class WorldMapUtils {
     private WorldMapUtils() {
