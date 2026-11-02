@@ -43,19 +43,19 @@ public class WorldMap {
         return Optional.empty();
     }
 
-    public void moveEntity(Coordinate initialPosition, Coordinate newPosition) {
-        validate(initialPosition);
-        validate(newPosition);
+    public void moveEntity(Coordinate from, Coordinate to) {
+        validate(from);
+        validate(to);
 
-        Entity entity = getEntity(initialPosition)
-                .orElseThrow(() -> new IllegalStateException("No entity at " + initialPosition));
+        Entity entity = getEntity(from)
+                .orElseThrow(() -> new IllegalStateException("No entity at " + from));
 
-        if (!isCellEmpty(newPosition)) {
-            throw new IllegalStateException("Cell is occupied: " + newPosition);
+        if (!isCellEmpty(to)) {
+            throw new IllegalStateException("Cell is occupied: " + to);
         }
 
-        removeEntity(initialPosition);
-        addEntity(newPosition, entity);
+        removeEntity(from);
+        addEntity(to, entity);
     }
 
     public boolean isCellEmpty(Coordinate coordinate) {

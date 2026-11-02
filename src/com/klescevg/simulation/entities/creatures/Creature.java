@@ -16,9 +16,9 @@ public abstract class Creature extends Entity {
     }
 
     public final void makeMove(WorldMap worldMap, PathfindingStrategy strategy) {
-        Coordinate currentPosition = worldMap.getCoordinate(this)
+        Coordinate currentCoordinate = worldMap.getCoordinate(this)
                 .orElseThrow(() -> new IllegalStateException("Entity %s is not found on map".formatted(this.getClass().getSimpleName())));
-        Path path = strategy.find(worldMap, currentPosition, getTargetType());
+        Path path = strategy.find(worldMap, currentCoordinate, getTargetType());
 
         if (!path.isEmpty()) {
             if (path.getStepCount() <= speed) {
@@ -52,8 +52,8 @@ public abstract class Creature extends Entity {
     protected abstract void interactWithTarget(WorldMap worldMap, Path path);
 
     private void moveToTarget(WorldMap worldMap, Path path) {
-        Coordinate initialPosition = path.getStart();
+        Coordinate start = path.getStart();
 
-        worldMap.moveEntity(initialPosition, path.getPositionAfter(speed));
+        worldMap.moveEntity(start, path.getCoordinateAfter(speed));
     }
 }

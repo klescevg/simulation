@@ -49,7 +49,7 @@ public class Path {
         return Math.max(cells.size() - 1, 0);
     }
 
-    public Coordinate getPositionAfter(int stepCount) {
+    public Coordinate getCoordinateAfter(int stepCount) {
         return cells.get(Math.min(stepCount, cells.size() - 1));
     }
 }
