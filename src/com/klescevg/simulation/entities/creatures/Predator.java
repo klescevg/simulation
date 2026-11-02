@@ -1,7 +1,7 @@
 package com.klescevg.simulation.entities.creatures;
 
 import com.klescevg.simulation.pathfinding.Path;
-import com.klescevg.simulation.world.*;
+import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.entities.Entity;
 
 public class Predator extends Creature {

@@ -2,7 +2,10 @@ package com.klescevg.simulation.world;
 
 import com.klescevg.simulation.entities.Entity;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 
 public class WorldMap {
     private final int sideLength;
