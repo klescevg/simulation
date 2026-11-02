@@ -82,10 +82,10 @@ public class AStarStrategy implements PathfindingStrategy {
         return Math.abs(from.row() - to.row()) + Math.abs(from.column() - to.column());
     }
 
-    private Set<Coordinate> getCoordinatesOfType(WorldMap map, Class<?> type) {
+    private Set<Coordinate> getCoordinatesOfType(WorldMap map, Class<?> targetType) {
         Set<Coordinate> result = new HashSet<>();
         for (Map.Entry<Coordinate, Entity> entry : map.getEntities().entrySet()) {
-            if (type.isInstance(entry.getValue())) {
+            if (targetType.isInstance(entry.getValue())) {
                 result.add(entry.getKey());
             }
         }
