@@ -28,7 +28,8 @@ public class Simulation {
 
     public void start() {
         try {
-            spawnInitialEntities();
+            executeActions(initActions);
+
             while (isActive()) {
                 switch (state) {
                     case RUNNING -> {
@@ -79,10 +80,6 @@ public class Simulation {
             executeActions(turnActions);
             renderer.render(worldMap, currentTurn);
         }
-    }
-
-    private void spawnInitialEntities() {
-        executeActions(initActions);
     }
 
     private void executeActions(List<Action> actions) {
