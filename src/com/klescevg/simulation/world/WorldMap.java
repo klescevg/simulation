@@ -72,7 +72,7 @@ public class WorldMap {
         return entities.size() == sideLength * sideLength;
     }
 
-    public int sideLength() {
+    public int getSideLength() {
         return sideLength;
     }
 

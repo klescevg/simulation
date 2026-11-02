@@ -21,9 +21,9 @@ public class ConsoleRenderer implements Renderer {
     public void render(WorldMap map, int currentTurn) {
         System.out.print(ANSI_CLEAR_CONSOLE);
         System.out.println(TURN_LABEL + currentTurn);
-        for (int row = 0; row < map.sideLength(); row++) {
+        for (int row = 0; row < map.getSideLength(); row++) {
             StringBuilder line = new StringBuilder();
-            for (int column = 0; column < map.sideLength(); column++) {
+            for (int column = 0; column < map.getSideLength(); column++) {
                 Coordinate coordinate = new Coordinate(row, column);
                 line.append(renderCell(map, coordinate));
             }

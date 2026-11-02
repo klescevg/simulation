@@ -29,9 +29,9 @@ public class SpawnEntitiesAction implements Action {
             return Optional.empty();
         }
 
-        Coordinate coordinate = CoordinateGenerator.random(map.sideLength());
+        Coordinate coordinate = CoordinateGenerator.random(map.getSideLength());
         while (!map.isCellEmpty(coordinate)) {
-            coordinate = CoordinateGenerator.random(map.sideLength());
+            coordinate = CoordinateGenerator.random(map.getSideLength());
         }
         return Optional.of(coordinate);
     }
