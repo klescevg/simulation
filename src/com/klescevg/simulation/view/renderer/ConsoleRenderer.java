@@ -15,12 +15,12 @@ public class ConsoleRenderer implements Renderer {
     private static final String ANSI_CLEAR_CONSOLE = "\033[H\033[2J";
     private static final String CELL_PADDING = " ";
 
-    private static final String TURN_COUNT_MESSAGE = "Turn: ";
+    private static final String TURN_LABEL = "Turn: ";
 
     @Override
     public void render(WorldMap map, int currentTurn) {
         System.out.print(ANSI_CLEAR_CONSOLE);
-        System.out.println(TURN_COUNT_MESSAGE + currentTurn);
+        System.out.println(TURN_LABEL + currentTurn);
         for (int row = 0; row < map.sideLength(); row++) {
             StringBuilder line = new StringBuilder();
             for (int column = 0; column < map.sideLength(); column++) {
