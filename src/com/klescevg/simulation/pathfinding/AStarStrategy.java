@@ -11,7 +11,7 @@ import static com.klescevg.simulation.world.WorldMapUtils.getNeighbors;
 public class AStarStrategy implements PathfindingStrategy {
     @Override
     public Path find(WorldMap map, Coordinate start, Class<? extends Entity> targetType) {
-        Coordinate target = findTarget(map, start, targetType);
+        Coordinate target = findClosestTarget(map, start, targetType);
 
         if (target != null) {
             Map<Coordinate, Coordinate> parents = buildParentsMap(map, start, target);
@@ -24,7 +24,7 @@ public class AStarStrategy implements PathfindingStrategy {
         return Path.empty();
     }
 
-    private Coordinate findTarget(WorldMap map, Coordinate start, Class<? extends Entity> targetType) {
+    private Coordinate findClosestTarget(WorldMap map, Coordinate start, Class<? extends Entity> targetType) {
         Coordinate target = null;
         int closestDistance = Integer.MAX_VALUE;
 
