@@ -26,7 +26,7 @@ public class SimulationController {
     private Simulation simulation;
     private final Scanner scanner = new Scanner(System.in);
 
-    public void startSimulation() throws InterruptedException {
+    public void startSimulation() {
         initSimulation();
         Thread simulationThread = new Thread(() -> simulation.start());
 
@@ -46,7 +46,6 @@ public class SimulationController {
                 processCommandWhileRunning(command);
             }
         }
-        simulationThread.join();
     }
 
     private void initSimulation() {
