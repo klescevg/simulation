@@ -24,7 +24,7 @@ public class SimulationController {
     private Simulation simulation;
     private final Scanner scanner = new Scanner(System.in);
 
-    public void startSimulation() {
+    public void runSimulation() {
         initSimulation();
         Thread simulationThread = new Thread(() -> simulation.start());
 
@@ -47,11 +47,11 @@ public class SimulationController {
     }
 
     private void initSimulation() {
-        SimulationConfig config = getSimulationConfig();
+        SimulationConfig config = buildSimulationConfig();
         simulation = new SimulationFactory().create(config);
     }
 
-    private SimulationConfig getSimulationConfig() {
+    private SimulationConfig buildSimulationConfig() {
         EntityCounts entityCounts = new EntityCounts(10, 10, 20, 5, 2, 1);
         HerbivoreStats herbivoreStats = new HerbivoreStats(100, 1);
         PredatorStats predatorStats = new PredatorStats(100, 2, 25);
