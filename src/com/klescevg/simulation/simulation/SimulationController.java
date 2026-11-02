@@ -31,7 +31,7 @@ public class SimulationController {
         simulationThread.start();
         printWelcomeMessage();
 
-        while (simulation.isActive()) {
+        while (!simulation.isStopped()) {
             boolean paused = simulation.isPaused();
             if (paused) {
                 printCommandPrompt();

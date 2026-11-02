@@ -30,7 +30,7 @@ public class Simulation {
         try {
             executeActions(initActions);
 
-            while (isActive()) {
+            while (!isStopped()) {
                 switch (state) {
                     case RUNNING -> {
                         nextTurn();
@@ -68,12 +68,12 @@ public class Simulation {
         return state == PAUSED;
     }
 
-    public boolean isActive() {
-        return state != STOPPED;
+    public boolean isStopped() {
+        return state == STOPPED;
     }
 
     public synchronized void nextTurn() {
-        if (!isActive()) {
+        if (isStopped()) {
             throw new IllegalStateException("Cannot make a turn: simulation is stopped");
         } else {
             currentTurn++;
