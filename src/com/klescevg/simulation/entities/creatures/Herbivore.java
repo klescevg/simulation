@@ -3,7 +3,7 @@ package com.klescevg.simulation.entities.creatures;
 import com.klescevg.simulation.pathfinding.Path;
 import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.entities.Entity;
-import com.klescevg.simulation.entities.objects.Grass;
+import com.klescevg.simulation.entities.environment.Grass;
 
 public class Herbivore extends Creature {
     private static final int GRASS_HEAL = 30;
