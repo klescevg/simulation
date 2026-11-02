@@ -1,4 +1,4 @@
-package com.klescevg.simulation.simulation;
+package com.klescevg.simulation;
 
 import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.view.renderer.Renderer;
@@ -6,7 +6,7 @@ import com.klescevg.simulation.actions.Action;
 
 import java.util.List;
 
-import static com.klescevg.simulation.simulation.SimulationState.*;
+import static com.klescevg.simulation.SimulationState.*;
 
 public class Simulation {
     private static final int TURN_DELAY_MS = 500;
