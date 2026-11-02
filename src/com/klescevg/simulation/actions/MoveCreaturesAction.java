@@ -16,7 +16,6 @@ public class MoveCreaturesAction implements Action {
     @Override
     public void execute(WorldMap map) {
         for (Creature creature : getCreatures(map)) {
-            //validation in case creature dies before its move
             if (creature.isAlive()) {
                 creature.makeMove(map, strategy);
             }
