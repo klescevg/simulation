@@ -1,6 +1,7 @@
 package com.klescevg.simulation;
 
 import com.klescevg.simulation.actions.*;
+import com.klescevg.simulation.config.SimulationConfig;
 import com.klescevg.simulation.factories.*;
 import com.klescevg.simulation.pathfinding.*;
 import com.klescevg.simulation.view.renderer.*;

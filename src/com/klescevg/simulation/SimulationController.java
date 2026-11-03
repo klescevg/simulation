@@ -1,5 +1,7 @@
 package com.klescevg.simulation;
 
+import com.klescevg.simulation.config.*;
+
 import java.util.Scanner;
 
 public class SimulationController {

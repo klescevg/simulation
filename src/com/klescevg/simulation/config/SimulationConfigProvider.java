@@ -1,6 +1,6 @@
-package com.klescevg.simulation;
+package com.klescevg.simulation.config;
 
-import com.klescevg.simulation.SimulationConfig.*;
+import com.klescevg.simulation.config.SimulationConfig.*;
 
 public class SimulationConfigProvider {
     private static final int INITIAL_TREE_COUNT = 50;
