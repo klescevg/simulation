@@ -3,6 +3,11 @@ package com.klescevg.simulation.view.renderer;
 import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.world.Coordinate;
 import com.klescevg.simulation.entities.Entity;
+import com.klescevg.simulation.entities.creatures.Herbivore;
+import com.klescevg.simulation.entities.creatures.Predator;
+import com.klescevg.simulation.entities.environment.*;
+
+import java.util.Map;
 
 public class ConsoleRenderer implements Renderer {
     private static final String ANSI_DEFAULT = "\033[39m";
@@ -16,6 +21,13 @@ public class ConsoleRenderer implements Renderer {
     private static final String CELL_PADDING = " ";
 
     private static final String TURN_LABEL = "Turn: ";
+
+    private static final Map<Class<? extends Entity>, Sprite> SPRITES = Map.of(
+            Rock.class, Sprite.ROCK,
+            Tree.class, Sprite.TREE,
+            Grass.class, Sprite.GRASS,
+            Herbivore.class, Sprite.HERBIVORE,
+            Predator.class, Sprite.PREDATOR);
 
     @Override
     public void render(WorldMap map, int currentTurn) {
@@ -33,13 +45,16 @@ public class ConsoleRenderer implements Renderer {
     }
 
     private String renderCell(WorldMap map, Coordinate coordinate) {
-        Sprite sprite = map.getEntity(coordinate).map(this::toSprite).orElse(Sprite.EMPTY_CELL);
+        Sprite sprite = map.getEntity(coordinate).map(this::getSprite).orElse(Sprite.EMPTY_CELL);
         return CELL_PADDING + sprite.toColoredString() + CELL_PADDING;
     }
 
-    private Sprite toSprite(Entity entity) {
-        String name = entity.getClass().getSimpleName().toUpperCase();
-        return Sprite.valueOf(name);
+    private Sprite getSprite(Entity entity) {
+        Sprite sprite = SPRITES.get(entity.getClass());
+        if (sprite == null) {
+            throw new IllegalStateException("Missing sprite for entity type: " + entity.getClass().getSimpleName());
+        }
+        return sprite;
     }
 
     private enum Sprite {
