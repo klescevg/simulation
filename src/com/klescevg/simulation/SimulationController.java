@@ -1,7 +1,5 @@
 package com.klescevg.simulation;
 
-import com.klescevg.simulation.SimulationConfig.*;
-
 import java.util.Scanner;
 
 public class SimulationController {
@@ -44,15 +42,8 @@ public class SimulationController {
     }
 
     private void initSimulation() {
-        SimulationConfig config = buildSimulationConfig();
+        SimulationConfig config = new SimulationConfigProvider().getConfig();
         simulation = new SimulationFactory().create(config);
-    }
-
-    private SimulationConfig buildSimulationConfig() {
-        EntityCounts entityCounts = new EntityCounts(10, 10, 20, 5, 2, 1);
-        HerbivoreStats herbivoreStats = new HerbivoreStats(100, 1);
-        PredatorStats predatorStats = new PredatorStats(100, 2, 25);
-        return new SimulationConfig(10, entityCounts, herbivoreStats, predatorStats);
     }
 
     private String readCommand() {
