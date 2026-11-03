@@ -20,6 +20,7 @@ public class SimulationController {
     private static final String PAUSED_MESSAGE = "Paused. Commands: Enter - resume, %s - next turn, %s - stop".formatted(COMMAND_NEXT_TURN, COMMAND_STOP);
     private static final String INPUT_PROMPT = "Enter the command: ";
     private static final String UNEXPECTED_COMMAND_MESSAGE = "Unexpected command: ";
+    private static final String STOPPED_MESSAGE = "Simulation stopped.";
 
     private Simulation simulation;
     private final Scanner scanner = new Scanner(System.in);
@@ -32,18 +33,14 @@ public class SimulationController {
         printWelcomeMessage();
 
         while (!simulation.isStopped()) {
-            boolean paused = simulation.isPaused();
-            if (paused) {
-                printCommandPrompt();
-            }
-            String command = scanner.nextLine().trim();
+            String command = readCommand();
 
-            if (paused) {
-                processCommandWhilePaused(command);
-            } else {
-                processCommandWhileRunning(command);
+            if (!simulation.isStopped()) {
+                processCommand(command);
             }
         }
+
+        printStoppedMessage();
     }
 
     private void initSimulation() {
@@ -56,6 +53,21 @@ public class SimulationController {
         HerbivoreStats herbivoreStats = new HerbivoreStats(100, 1);
         PredatorStats predatorStats = new PredatorStats(100, 2, 25);
         return new SimulationConfig(10, entityCounts, herbivoreStats, predatorStats);
+    }
+
+    private String readCommand() {
+        if (simulation.isPaused()) {
+            printCommandPrompt();
+        }
+        return scanner.nextLine().trim();
+    }
+
+    private void processCommand(String command) {
+        if (simulation.isPaused()) {
+            processCommandWhilePaused(command);
+        } else {
+            processCommandWhileRunning(command);
+        }
     }
 
     private void processCommandWhilePaused(String command) {
@@ -83,6 +95,10 @@ public class SimulationController {
 
     private void printPausedMessage() {
         System.out.println(PAUSED_MESSAGE);
+    }
+
+    private void printStoppedMessage() {
+        System.out.println(STOPPED_MESSAGE);
     }
 
     private void printCommandPrompt() {
