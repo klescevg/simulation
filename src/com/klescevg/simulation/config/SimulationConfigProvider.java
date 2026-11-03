@@ -3,17 +3,20 @@ package com.klescevg.simulation.config;
 import com.klescevg.simulation.config.SimulationConfig.*;
 
 public class SimulationConfigProvider {
-    private static final int INITIAL_TREE_COUNT = 50;
-    private static final int INITIAL_ROCK_COUNT = 50;
+    private static final int INITIAL_TREE_COUNT = 40;
+    private static final int INITIAL_ROCK_COUNT = 40;
     private static final int INITIAL_GRASS_COUNT = 50;
     private static final int INITIAL_HERBIVORE_COUNT = 10;
     private static final int INITIAL_PREDATOR_COUNT = 2;
     private static final int GRASS_SPAWN_PER_TURN = 1;
+
     private static final int HERBIVORE_HEALTH_POINTS = 100;
     private static final int HERBIVORE_SPEED = 1;
+
     private static final int PREDATOR_HEALTH_POINTS = 100;
     private static final int PREDATOR_SPEED = 2;
     private static final int PREDATOR_ATTACK_POWER = 25;
+
     private static final int MAP_SIDE_LENGTH = 20;
 
     public SimulationConfig getConfig() {
