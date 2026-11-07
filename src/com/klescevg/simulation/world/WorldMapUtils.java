@@ -35,13 +35,13 @@ public final class WorldMapUtils {
         Coordinate bottom = new Coordinate(coordinate.row() + 1, coordinate.column());
 
         List<Coordinate> allNeighbors = List.of(left, right, top, bottom);
-        Set<Coordinate> neighborsInBounds = new HashSet<>();
+        Set<Coordinate> neighbors = new HashSet<>();
 
         for (Coordinate neighbor : allNeighbors) {
             if (map.isInBounds(neighbor)) {
-                neighborsInBounds.add(neighbor);
+                neighbors.add(neighbor);
             }
         }
-        return neighborsInBounds;
+        return neighbors;
     }
 }
