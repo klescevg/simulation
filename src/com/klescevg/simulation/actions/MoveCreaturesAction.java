@@ -1,14 +1,14 @@
 package com.klescevg.simulation.actions;
 
-import com.klescevg.simulation.pathfinding.PathfindingStrategy;
+import com.klescevg.simulation.pathfinding.Pathfinder;
 import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.world.WorldMapUtils;
 import com.klescevg.simulation.entities.creatures.Creature;
 
 public class MoveCreaturesAction implements Action {
-    private final PathfindingStrategy strategy;
+    private final Pathfinder strategy;
 
-    public MoveCreaturesAction(PathfindingStrategy strategy) {
+    public MoveCreaturesAction(Pathfinder strategy) {
         this.strategy = strategy;
     }
 

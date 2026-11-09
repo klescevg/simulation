@@ -1,6 +1,6 @@
 package com.klescevg.simulation.entities.creatures;
 
-import com.klescevg.simulation.pathfinding.PathfindingStrategy;
+import com.klescevg.simulation.pathfinding.Pathfinder;
 import com.klescevg.simulation.pathfinding.Path;
 import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.world.Coordinate;
@@ -15,7 +15,7 @@ public abstract class Creature extends Entity {
         this.speed = speed;
     }
 
-    public final void makeMove(WorldMap map, PathfindingStrategy strategy) {
+    public final void makeMove(WorldMap map, Pathfinder strategy) {
         Path path = strategy.find(map, getCurrentCoordinate(map), getTargetType());
 
         if (!path.isEmpty()) {

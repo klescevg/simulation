@@ -9,7 +9,7 @@ import java.util.*;
 
 import static com.klescevg.simulation.world.WorldMapUtils.getNeighbors;
 
-public class AStarStrategy implements PathfindingStrategy {
+public class AStarPathfinder implements Pathfinder {
     @Override
     public Path find(WorldMap map, Coordinate start, Class<? extends Entity> targetType) {
         Coordinate target = findClosestTarget(map, start, targetType);

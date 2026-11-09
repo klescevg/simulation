@@ -35,7 +35,7 @@ public class SimulationFactory {
 
     private List<Action> buildTurnActions(SimulationConfig config) {
         Map<EntityFactory, Integer> turnSpawnCounts = buildTurnSpawnCounts(config);
-        PathfindingStrategy strategy = new AStarStrategy();
+        Pathfinder strategy = new AStarPathfinder();
         return List.of(new SpawnEntitiesAction(turnSpawnCounts), new MoveCreaturesAction(strategy), new ApplyHungerDamageAction(), new RemoveDeadCreaturesAction());
     }
 

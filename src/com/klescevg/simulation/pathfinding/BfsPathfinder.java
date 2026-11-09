@@ -8,7 +8,7 @@ import java.util.*;
 
 import static com.klescevg.simulation.world.WorldMapUtils.getNeighbors;
 
-public class BfsStrategy implements PathfindingStrategy {
+public class BfsPathfinder implements Pathfinder {
     @Override
     public Path find(WorldMap map, Coordinate start, Class<? extends Entity> targetType) {
         Queue<Coordinate> queue = new ArrayDeque<>();
