@@ -8,8 +8,8 @@ import com.klescevg.simulation.entities.creatures.Creature;
 public class MoveCreaturesAction implements Action {
     private final Pathfinder strategy;
 
-    public MoveCreaturesAction(Pathfinder strategy) {
-        this.strategy = strategy;
+    public MoveCreaturesAction(Pathfinder pathfinder) {
+        this.strategy = pathfinder;
     }
 
     @Override

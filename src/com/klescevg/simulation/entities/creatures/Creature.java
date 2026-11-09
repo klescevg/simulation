@@ -17,8 +17,8 @@ public abstract class Creature extends Entity {
         this.targetType = targetType;
     }
 
-    public final void makeMove(WorldMap map, Pathfinder strategy) {
-        Path path = strategy.find(map, getCurrentCoordinate(map), targetType);
+    public final void makeMove(WorldMap map, Pathfinder pathfinder) {
+        Path path = pathfinder.find(map, getCurrentCoordinate(map), targetType);
 
         if (!path.isEmpty()) {
             if (path.getStepCount() <= speed) {
