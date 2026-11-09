@@ -17,7 +17,8 @@ public class SimulationConfigProvider {
     private static final int PREDATOR_SPEED = 2;
     private static final int PREDATOR_ATTACK_POWER = 25;
 
-    private static final int MAP_SIDE_LENGTH = 20;
+    private static final int MAP_WIDTH = 20;
+    private static final int MAP_HEIGHT = 20;
 
     public SimulationConfig getConfig() {
         EntityCounts entityCounts = new EntityCounts(
@@ -34,6 +35,6 @@ public class SimulationConfigProvider {
                 PREDATOR_HEALTH_POINTS,
                 PREDATOR_SPEED,
                 PREDATOR_ATTACK_POWER);
-        return new SimulationConfig(MAP_SIDE_LENGTH, entityCounts, herbivoreStats, predatorStats);
+        return new SimulationConfig(MAP_WIDTH, MAP_HEIGHT, entityCounts, herbivoreStats, predatorStats);
     }
 }

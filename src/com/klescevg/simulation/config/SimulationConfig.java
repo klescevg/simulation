@@ -3,7 +3,8 @@ package com.klescevg.simulation.config;
 import java.util.Objects;
 
 public record SimulationConfig(
-        int mapSideLength,
+        int mapWidth,
+        int mapHeight,
         EntityCounts entityCounts,
         HerbivoreStats herbivoreStats,
         PredatorStats predatorStats) {
@@ -11,15 +12,20 @@ public record SimulationConfig(
     private static final int MAX_SIDE_LENGTH = 46340; //max side length for map capacity to fit in int
 
     public SimulationConfig {
-        if (mapSideLength <= 0 || mapSideLength > MAX_SIDE_LENGTH) {
-            throw new IllegalArgumentException("mapSideLength must be between 1 and " + MAX_SIDE_LENGTH + ", but was " + mapSideLength);
-        }
+        requireValidSideLength("mapWidth", mapWidth);
+        requireValidSideLength("mapHeight", mapHeight);
         Objects.requireNonNull(entityCounts, "entityCounts must not be null");
         Objects.requireNonNull(herbivoreStats, "herbivoreStats must not be null");
         Objects.requireNonNull(predatorStats, "predatorStats must not be null");
-        int mapCapacity = mapSideLength * mapSideLength;
+        int mapCapacity = mapWidth * mapHeight;
         if (entityCounts.initialTotal() >= mapCapacity) {
             throw new IllegalArgumentException("Initial entities " + entityCounts.initialTotal() + " must be fewer than map cells " + mapCapacity);
+        }
+    }
+
+    private static void requireValidSideLength(String name, int value) {
+        if (value <= 0 || value > MAX_SIDE_LENGTH) {
+            throw new IllegalArgumentException(name + " must be between 1 and " + MAX_SIDE_LENGTH + ", but was " + value);
         }
     }
 

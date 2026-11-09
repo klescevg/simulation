@@ -1,6 +1,7 @@
 package com.klescevg.simulation;
 
-import com.klescevg.simulation.config.*;
+import com.klescevg.simulation.config.SimulationConfig;
+import com.klescevg.simulation.config.SimulationConfigProvider;
 
 import java.util.Scanner;
 

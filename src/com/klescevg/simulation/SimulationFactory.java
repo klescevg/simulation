@@ -13,15 +13,15 @@ import java.util.Map;
 
 public class SimulationFactory {
     public Simulation create(SimulationConfig config) {
-        WorldMap map = buildMap(config.mapSideLength());
+        WorldMap map = buildMap(config.mapWidth(), config.mapHeight());
         Renderer renderer = buildRenderer();
         List<Action> initActions = buildInitActions(config);
         List<Action> turnActions = buildTurnActions(config);
         return new Simulation(map, renderer, initActions, turnActions);
     }
 
-    private WorldMap buildMap(int sideLength) {
-        return new WorldMap(sideLength);
+    private WorldMap buildMap(int mapWidth, int mapHeight) {
+        return new WorldMap(mapWidth, mapHeight);
     }
 
     private Renderer buildRenderer() {

@@ -31,14 +31,14 @@ public class SpawnEntitiesAction implements Action {
             return Optional.empty();
         }
 
-        Coordinate coordinate = createRandomCoordinate(map.getSideLength());
+        Coordinate coordinate = createRandomCoordinate(map);
         while (!map.isCellEmpty(coordinate)) {
-            coordinate = createRandomCoordinate(map.getSideLength());
+            coordinate = createRandomCoordinate(map);
         }
         return Optional.of(coordinate);
     }
 
-    private Coordinate createRandomCoordinate(int bound) {
-        return new Coordinate(RANDOM.nextInt(bound), RANDOM.nextInt(bound));
+    private Coordinate createRandomCoordinate(WorldMap map) {
+        return new Coordinate(RANDOM.nextInt(map.getHeight()), RANDOM.nextInt(map.getWidth()));
     }
 }

@@ -8,11 +8,13 @@ import java.util.Optional;
 
 
 public class WorldMap {
-    private final int sideLength;
+    private final int width;
+    private final int height;
     private final Map<Coordinate, Entity> entities = new HashMap<>();
 
-    public WorldMap(int sideLength) {
-        this.sideLength = sideLength;
+    public WorldMap(int width, int height) {
+        this.width = width;
+        this.height = height;
     }
 
     public Map<Coordinate, Entity> getEntities() {
@@ -64,16 +66,20 @@ public class WorldMap {
     }
 
     public boolean isInBounds(Coordinate coordinate) {
-        return coordinate.row() >= 0 && coordinate.row() < sideLength &&
-                coordinate.column() >= 0 && coordinate.column() < sideLength;
+        return coordinate.row() >= 0 && coordinate.row() < height &&
+                coordinate.column() >= 0 && coordinate.column() < width;
     }
 
     public boolean isFull() {
-        return entities.size() == sideLength * sideLength;
+        return entities.size() == width * height;
     }
 
-    public int getSideLength() {
-        return sideLength;
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     private void validate(Coordinate coordinate) {
