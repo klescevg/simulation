@@ -5,6 +5,12 @@ import com.klescevg.simulation.entities.Entity;
 import java.util.*;
 
 public final class WorldMapUtils {
+    private static final List<Coordinate> NEIGHBOR_OFFSET = List.of(
+            new Coordinate(0, -1),
+            new Coordinate(0, 1),
+            new Coordinate(-1, 0),
+            new Coordinate(1, 0));
+
     private WorldMapUtils() {
     }
 
@@ -29,15 +35,10 @@ public final class WorldMapUtils {
     }
 
     public static Set<Coordinate> getNeighbors(WorldMap map, Coordinate coordinate) {
-        Coordinate left = new Coordinate(coordinate.row(), coordinate.column() - 1);
-        Coordinate right = new Coordinate(coordinate.row(), coordinate.column() + 1);
-        Coordinate top = new Coordinate(coordinate.row() - 1, coordinate.column());
-        Coordinate bottom = new Coordinate(coordinate.row() + 1, coordinate.column());
-
-        List<Coordinate> allNeighbors = List.of(left, right, top, bottom);
         Set<Coordinate> neighbors = new HashSet<>();
 
-        for (Coordinate neighbor : allNeighbors) {
+        for (Coordinate offset : NEIGHBOR_OFFSET) {
+            Coordinate neighbor = new Coordinate(coordinate.row() + offset.row(), coordinate.column() + offset.column());
             if (map.isInBounds(neighbor)) {
                 neighbors.add(neighbor);
             }
