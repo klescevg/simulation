@@ -16,15 +16,13 @@ public abstract class Creature extends Entity {
     }
 
     public final void makeMove(WorldMap map, PathfindingStrategy strategy) {
-        Coordinate currentCoordinate = map.getCoordinate(this)
-                .orElseThrow(() -> new IllegalStateException("Entity %s is not found on map".formatted(this.getClass().getSimpleName())));
-        Path path = strategy.find(map, currentCoordinate, getTargetType());
+        Path path = strategy.find(map, getCurrentCoordinate(map), getTargetType());
 
         if (!path.isEmpty()) {
             if (path.getStepCount() <= speed) {
                 interactWithTarget(map, path);
             } else {
-                moveToTarget(map, path);
+                approachTarget(map, path);
             }
         }
     }
@@ -51,9 +49,23 @@ public abstract class Creature extends Entity {
 
     protected abstract void interactWithTarget(WorldMap map, Path path);
 
-    private void moveToTarget(WorldMap map, Path path) {
-        Coordinate start = path.getStart();
+    protected void moveTo(WorldMap map, Coordinate to) {
+        Coordinate from = getCurrentCoordinate(map);
 
-        map.moveEntity(start, path.getCoordinateAfter(speed));
+        if (!map.isCellEmpty(to)) {
+            throw new IllegalStateException("Cell is occupied: " + to);
+        }
+
+        map.removeEntity(from);
+        map.addEntity(to, this);
+    }
+
+    private Coordinate getCurrentCoordinate(WorldMap map) {
+        return map.getCoordinate(this)
+                .orElseThrow(() -> new IllegalStateException("Entity %s is not found on map".formatted(this.getClass().getSimpleName())));
+    }
+
+    private void approachTarget(WorldMap map, Path path) {
+        moveTo(map, path.getCoordinateAfter(speed));
     }
 }

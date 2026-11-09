@@ -37,10 +37,6 @@ public class Path {
         return cells.isEmpty();
     }
 
-    public Coordinate getStart() {
-        return cells.getFirst();
-    }
-
     public Coordinate getTarget() {
         return cells.getLast();
     }

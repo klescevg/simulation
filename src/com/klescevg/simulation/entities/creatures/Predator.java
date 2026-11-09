@@ -24,7 +24,7 @@ public class Predator extends Creature {
         prey.takeDamage(attackPower);
         if (!prey.isAlive()) {
             map.removeEntity(path.getTarget());
-            map.moveEntity(path.getStart(), path.getTarget());
+            moveTo(map, path.getTarget());
             heal(PREY_HEAL);
         }
     }

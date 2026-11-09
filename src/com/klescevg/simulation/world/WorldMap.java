@@ -45,21 +45,6 @@ public class WorldMap {
         return Optional.empty();
     }
 
-    public void moveEntity(Coordinate from, Coordinate to) {
-        validate(from);
-        validate(to);
-
-        Entity entity = getEntity(from)
-                .orElseThrow(() -> new IllegalStateException("No entity at " + from));
-
-        if (!isCellEmpty(to)) {
-            throw new IllegalStateException("Cell is occupied: " + to);
-        }
-
-        removeEntity(from);
-        addEntity(to, entity);
-    }
-
     public boolean isCellEmpty(Coordinate coordinate) {
         validate(coordinate);
         return !entities.containsKey(coordinate);
