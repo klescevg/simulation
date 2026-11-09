@@ -62,7 +62,7 @@ public abstract class Creature extends Entity {
 
     private Coordinate getCurrentCoordinate(WorldMap map) {
         return map.getCoordinate(this)
-                .orElseThrow(() -> new IllegalStateException("Entity %s is not found on map".formatted(this.getClass().getSimpleName())));
+                .orElseThrow(() -> new IllegalArgumentException("Entity %s is not found on map".formatted(this.getClass().getSimpleName())));
     }
 
     private void approachTarget(WorldMap map, Path path) {
