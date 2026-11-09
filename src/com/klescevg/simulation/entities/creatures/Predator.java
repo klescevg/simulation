@@ -2,20 +2,14 @@ package com.klescevg.simulation.entities.creatures;
 
 import com.klescevg.simulation.pathfinding.Path;
 import com.klescevg.simulation.world.WorldMap;
-import com.klescevg.simulation.entities.Entity;
 
 public class Predator extends Creature {
     private static final int PREY_HEAL = 70;
     private final int attackPower;
 
     public Predator(int healthPoints, int speed, int attackPower) {
-        super(healthPoints, speed);
+        super(healthPoints, speed, Herbivore.class);
         this.attackPower = attackPower;
-    }
-
-    @Override
-    protected Class<? extends Entity> getTargetType() {
-        return Herbivore.class;
     }
 
     @Override

@@ -9,14 +9,16 @@ import com.klescevg.simulation.entities.Entity;
 public abstract class Creature extends Entity {
     private int healthPoints;
     private final int speed;
+    private final Class<? extends Entity> targetType;
 
-    public Creature(int healthPoints, int speed) {
+    public Creature(int healthPoints, int speed, Class<? extends Entity> targetType) {
         this.healthPoints = healthPoints;
         this.speed = speed;
+        this.targetType = targetType;
     }
 
     public final void makeMove(WorldMap map, Pathfinder strategy) {
-        Path path = strategy.find(map, getCurrentCoordinate(map), getTargetType());
+        Path path = strategy.find(map, getCurrentCoordinate(map), targetType);
 
         if (!path.isEmpty()) {
             if (path.getStepCount() <= speed) {
@@ -44,8 +46,6 @@ public abstract class Creature extends Entity {
     public boolean isAlive() {
         return healthPoints > 0;
     }
-
-    protected abstract Class<? extends Entity> getTargetType();
 
     protected abstract void interactWithTarget(WorldMap map, Path path);
 
