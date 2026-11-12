@@ -20,8 +20,11 @@ public class SimulationFactory {
     private static final int INITIAL_PREDATOR_COUNT = 2;
     private static final int GRASS_SPAWN_PER_TURN = 1;
 
+    private static final int MAP_WIDTH = 30;
+    private static final int MAP_HEIGHT = 20;
+
     public Simulation create(SimulationConfig config) {
-        WorldMap map = buildMap(config.mapWidth(), config.mapHeight());
+        WorldMap map = buildMap(MAP_WIDTH, MAP_HEIGHT);
         Renderer renderer = buildRenderer();
         EntityFactory factory = new EntityFactory();
         List<Action> initActions = buildInitActions(factory);
