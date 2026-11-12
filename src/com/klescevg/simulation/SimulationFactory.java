@@ -1,7 +1,6 @@
 package com.klescevg.simulation;
 
 import com.klescevg.simulation.actions.*;
-import com.klescevg.simulation.config.SimulationConfig;
 import com.klescevg.simulation.factories.*;
 import com.klescevg.simulation.pathfinding.*;
 import com.klescevg.simulation.view.renderer.*;
@@ -23,7 +22,7 @@ public class SimulationFactory {
     private static final int MAP_WIDTH = 30;
     private static final int MAP_HEIGHT = 20;
 
-    public Simulation create(SimulationConfig config) {
+    public Simulation create() {
         WorldMap map = buildMap(MAP_WIDTH, MAP_HEIGHT);
         Renderer renderer = buildRenderer();
         EntityFactory factory = new EntityFactory();

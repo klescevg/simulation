@@ -1,8 +1,5 @@
 package com.klescevg.simulation;
 
-import com.klescevg.simulation.config.SimulationConfig;
-import com.klescevg.simulation.config.SimulationConfigProvider;
-
 import java.util.Scanner;
 
 public class SimulationController {
@@ -45,8 +42,7 @@ public class SimulationController {
     }
 
     private void initSimulation() {
-        SimulationConfig config = new SimulationConfigProvider().getConfig();
-        simulation = new SimulationFactory().create(config);
+        simulation = new SimulationFactory().create();
     }
 
     private String readCommand() {
