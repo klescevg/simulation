@@ -52,7 +52,7 @@ public class ConsoleRenderer implements Renderer {
     private Sprite getSprite(Entity entity) {
         Sprite sprite = SPRITES.get(entity.getClass());
         if (sprite == null) {
-            throw new IllegalStateException("Missing sprite for entity type: " + entity.getClass().getSimpleName());
+            throw new IllegalArgumentException("Missing sprite for entity type: " + entity.getClass().getSimpleName());
         }
         return sprite;
     }
