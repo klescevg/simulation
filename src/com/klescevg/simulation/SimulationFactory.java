@@ -36,7 +36,7 @@ public class SimulationFactory {
     }
 
     private Renderer buildRenderer() {
-        return new ConsoleRenderer();
+        return new ColorConsoleRenderer();
     }
 
     private List<Action> buildInitActions(EntityFactory factory) {

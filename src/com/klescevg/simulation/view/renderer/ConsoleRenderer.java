@@ -9,29 +9,20 @@ import com.klescevg.simulation.entities.environment.*;
 
 import java.util.Map;
 
-public class ConsoleRenderer implements Renderer {
-    private static final String ANSI_DEFAULT = "\033[39m";
-    private static final String ANSI_GREY = "\033[90m";
-    private static final String ANSI_GREEN = "\033[32m";
-    private static final String ANSI_LIGHT_GREEN = "\033[92m";
-    private static final String ANSI_YELLOW = "\033[33m";
-    private static final String ANSI_RED = "\033[31m";
-    private static final String ANSI_RESET = "\033[0m";
-    private static final String ANSI_CLEAR_CONSOLE = "\033[H\033[2J";
+public abstract class ConsoleRenderer implements Renderer {
     private static final String CELL_PADDING = " ";
-
     private static final String TURN_LABEL = "Turn: ";
 
-    private static final Map<Class<? extends Entity>, Sprite> SPRITES = Map.of(
-            Rock.class, Sprite.ROCK,
-            Tree.class, Sprite.TREE,
-            Grass.class, Sprite.GRASS,
-            Herbivore.class, Sprite.HERBIVORE,
-            Predator.class, Sprite.PREDATOR);
+    private static final Map<Class<? extends Entity>, ConsoleSprite> SPRITES = Map.of(
+            Rock.class, ConsoleSprite.ROCK,
+            Tree.class, ConsoleSprite.TREE,
+            Grass.class, ConsoleSprite.GRASS,
+            Herbivore.class, ConsoleSprite.HERBIVORE,
+            Predator.class, ConsoleSprite.PREDATOR);
 
     @Override
     public void render(WorldMap map, int currentTurn) {
-        System.out.print(ANSI_CLEAR_CONSOLE);
+        startFrame();
         System.out.println(TURN_LABEL + currentTurn);
         for (int row = 0; row < map.getHeight(); row++) {
             StringBuilder line = new StringBuilder();
@@ -45,36 +36,18 @@ public class ConsoleRenderer implements Renderer {
     }
 
     private String renderCell(WorldMap map, Coordinate coordinate) {
-        Sprite sprite = map.getEntity(coordinate).map(this::getSprite).orElse(Sprite.EMPTY_CELL);
-        return CELL_PADDING + sprite.toColoredString() + CELL_PADDING;
+        ConsoleSprite sprite = map.getEntity(coordinate).map(this::getSprite).orElse(ConsoleSprite.EMPTY_CELL);
+        return CELL_PADDING + formatSprite(sprite) + CELL_PADDING;
     }
 
-    private Sprite getSprite(Entity entity) {
-        Sprite sprite = SPRITES.get(entity.getClass());
+    private ConsoleSprite getSprite(Entity entity) {
+        ConsoleSprite sprite = SPRITES.get(entity.getClass());
         if (sprite == null) {
             throw new IllegalArgumentException("Missing sprite for entity type: " + entity.getClass().getSimpleName());
         }
         return sprite;
     }
 
-    private enum Sprite {
-        EMPTY_CELL(".", ANSI_DEFAULT),
-        ROCK("#", ANSI_GREY),
-        TREE("T", ANSI_GREEN),
-        GRASS("*", ANSI_LIGHT_GREEN),
-        HERBIVORE("h", ANSI_YELLOW),
-        PREDATOR("P", ANSI_RED);
-
-        private final String symbol;
-        private final String ansiColor;
-
-        Sprite(String symbol, String ansiColor) {
-            this.symbol = symbol;
-            this.ansiColor = ansiColor;
-        }
-
-        public String toColoredString() {
-            return ansiColor + symbol + ANSI_RESET;
-        }
-    }
+    protected abstract void startFrame();
+    protected abstract String formatSprite(ConsoleSprite sprite);
 }
