@@ -1,5 +1,6 @@
 package com.klescevg.simulation.actions;
 
+import com.klescevg.simulation.entities.EntityType;
 import com.klescevg.simulation.world.Coordinate;
 import com.klescevg.simulation.world.WorldMap;
 import com.klescevg.simulation.factories.*;
@@ -11,17 +12,19 @@ import java.util.Random;
 public class SpawnEntitiesAction implements Action {
     private static final Random RANDOM = new Random();
 
-    private final Map<EntityFactory, Integer> spawnCounts;
+    private final EntityFactory factory;
+    private final Map<EntityType, Integer> spawnCounts;
 
-    public SpawnEntitiesAction(Map<EntityFactory, Integer> spawnCounts) {
+    public SpawnEntitiesAction(EntityFactory factory, Map<EntityType, Integer> spawnCounts) {
+        this.factory = factory;
         this.spawnCounts = spawnCounts;
     }
 
     @Override
     public void execute(WorldMap map) {
-        for (EntityFactory factory : spawnCounts.keySet()) {
-            for (int i = 0; i < spawnCounts.get(factory); i++) {
-                findRandomEmptyCoordinate(map).ifPresent(coordinate -> map.addEntity(coordinate, factory.create()));
+        for (EntityType type : spawnCounts.keySet()) {
+            for (int i = 0; i < spawnCounts.get(type); i++) {
+                findRandomEmptyCoordinate(map).ifPresent(coordinate -> map.addEntity(coordinate, factory.create(type)));
             }
         }
     }

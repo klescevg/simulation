@@ -6,6 +6,7 @@ import com.klescevg.simulation.factories.*;
 import com.klescevg.simulation.pathfinding.*;
 import com.klescevg.simulation.view.renderer.*;
 import com.klescevg.simulation.world.WorldMap;
+import com.klescevg.simulation.entities.EntityType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +16,9 @@ public class SimulationFactory {
     public Simulation create(SimulationConfig config) {
         WorldMap map = buildMap(config.mapWidth(), config.mapHeight());
         Renderer renderer = buildRenderer();
-        List<Action> initActions = buildInitActions(config);
-        List<Action> turnActions = buildTurnActions(config);
+        EntityFactory factory = new EntityFactory();
+        List<Action> initActions = buildInitActions(factory, config);
+        List<Action> turnActions = buildTurnActions(factory, config);
         return new Simulation(map, renderer, initActions, turnActions);
     }
 
@@ -28,37 +30,30 @@ public class SimulationFactory {
         return new ConsoleRenderer();
     }
 
-    private List<Action> buildInitActions(SimulationConfig config) {
-        Map<EntityFactory, Integer> initialSpawnCounts = buildInitialSpawnCounts(config);
-        return List.of(new SpawnEntitiesAction(initialSpawnCounts));
+    private List<Action> buildInitActions(EntityFactory factory, SimulationConfig config) {
+        Map<EntityType, Integer> initialSpawnCounts = buildInitialSpawnCounts(config);
+        return List.of(new SpawnEntitiesAction(factory, initialSpawnCounts));
     }
 
-    private List<Action> buildTurnActions(SimulationConfig config) {
-        Map<EntityFactory, Integer> turnSpawnCounts = buildTurnSpawnCounts(config);
+    private List<Action> buildTurnActions(EntityFactory factory, SimulationConfig config) {
+        Map<EntityType, Integer> turnSpawnCounts = buildTurnSpawnCounts(config);
         Pathfinder pathfinder = new AStarPathfinder();
-        return List.of(new SpawnEntitiesAction(turnSpawnCounts), new MoveCreaturesAction(pathfinder), new ApplyHungerDamageAction(), new RemoveDeadCreaturesAction());
+        return List.of(new SpawnEntitiesAction(factory, turnSpawnCounts), new MoveCreaturesAction(pathfinder), new ApplyHungerDamageAction(), new RemoveDeadCreaturesAction());
     }
 
-    private Map<EntityFactory, Integer> buildTurnSpawnCounts(SimulationConfig config) {
-        EntityFactory grassFactory = new GrassFactory();
-        Map<EntityFactory, Integer> turnSpawnCounts = new HashMap<>();
-        turnSpawnCounts.put(grassFactory, config.entityCounts().grassSpawnPerTurn());
+    private Map<EntityType, Integer> buildTurnSpawnCounts(SimulationConfig config) {
+        Map<EntityType, Integer> turnSpawnCounts = new HashMap<>();
+        turnSpawnCounts.put(EntityType.GRASS, config.entityCounts().grassSpawnPerTurn());
         return turnSpawnCounts;
     }
 
-    private Map<EntityFactory, Integer> buildInitialSpawnCounts(SimulationConfig config) {
-        EntityFactory treeFactory = new TreeFactory();
-        EntityFactory rockFactory = new RockFactory();
-        EntityFactory grassFactory = new GrassFactory();
-        EntityFactory herbivoreFactory = new HerbivoreFactory(config.herbivoreStats().healthPoints(), config.herbivoreStats().speed());
-        EntityFactory predatorFactory = new PredatorFactory(config.predatorStats().healthPoints(), config.predatorStats().speed(), config.predatorStats().attackPower());
-
-        Map<EntityFactory, Integer> spawnCounts = new HashMap<>();
-        spawnCounts.put(treeFactory, config.entityCounts().initialTreeCount());
-        spawnCounts.put(rockFactory, config.entityCounts().initialRockCount());
-        spawnCounts.put(grassFactory, config.entityCounts().initialGrassCount());
-        spawnCounts.put(herbivoreFactory, config.entityCounts().initialHerbivoreCount());
-        spawnCounts.put(predatorFactory, config.entityCounts().initialPredatorCount());
+    private Map<EntityType, Integer> buildInitialSpawnCounts(SimulationConfig config) {
+        Map<EntityType, Integer> spawnCounts = new HashMap<>();
+        spawnCounts.put(EntityType.TREE, config.entityCounts().initialTreeCount());
+        spawnCounts.put(EntityType.ROCK, config.entityCounts().initialRockCount());
+        spawnCounts.put(EntityType.GRASS, config.entityCounts().initialGrassCount());
+        spawnCounts.put(EntityType.HERBIVORE, config.entityCounts().initialHerbivoreCount());
+        spawnCounts.put(EntityType.PREDATOR, config.entityCounts().initialPredatorCount());
         return spawnCounts;
     }
 }
