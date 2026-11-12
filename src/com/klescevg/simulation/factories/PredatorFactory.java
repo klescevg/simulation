@@ -14,6 +14,6 @@ public class PredatorFactory implements EntityFactory{
     }
 
     public Predator create(){
-        return new Predator(healthPoints, speed, attackPower);
+        return new Predator();
     }
 }

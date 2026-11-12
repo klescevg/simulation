@@ -12,6 +12,6 @@ public class HerbivoreFactory implements EntityFactory{
     }
 
     public Herbivore create(){
-        return new Herbivore(healthPoints, speed);
+        return new Herbivore();
     }
 }
