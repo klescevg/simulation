@@ -2,7 +2,7 @@ package com.klescevg.simulation;
 
 import java.util.Scanner;
 
-public class SimulationController {
+public class SimulationConsoleRunner {
     private static final String COMMAND_PAUSE_RESUME = "";
     private static final String COMMAND_NEXT_TURN = "1";
     private static final String COMMAND_STOP = "x";
