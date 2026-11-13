@@ -20,11 +20,14 @@ public class SimulationConsoleRunner {
     private static final String UNEXPECTED_COMMAND_MESSAGE = "Unexpected command: ";
     private static final String STOPPED_MESSAGE = "Simulation stopped.";
 
-    private Simulation simulation;
+    private final Simulation simulation;
     private final Scanner scanner = new Scanner(System.in);
 
+    public SimulationConsoleRunner(Simulation simulation) {
+        this.simulation = simulation;
+    }
+
     public void runSimulation() {
-        initSimulation();
         Thread simulationThread = new Thread(() -> simulation.start());
 
         simulationThread.start();
@@ -39,10 +42,6 @@ public class SimulationConsoleRunner {
         }
 
         printStoppedMessage();
-    }
-
-    private void initSimulation() {
-        simulation = new SimulationFactory().create();
     }
 
     private String readCommand() {

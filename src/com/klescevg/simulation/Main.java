@@ -3,7 +3,8 @@ package com.klescevg.simulation;
 
 public class Main {
     public static void main(String[] args) {
-        SimulationConsoleRunner simulationConsoleRunner = new SimulationConsoleRunner();
+        Simulation simulation = new SimulationFactory().create();
+        SimulationConsoleRunner simulationConsoleRunner = new SimulationConsoleRunner(simulation);
         simulationConsoleRunner.runSimulation();
     }
 }
